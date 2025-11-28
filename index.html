@@ -616,6 +616,36 @@ body {
     }
 }
 
+    /* Animasjon for sjansen for x2 coins */
+    @keyframes pulseEffect {
+        0% {
+            transform: scale(1);
+            opacity: 0.8;
+        }
+        50% {
+            transform: scale(1.05);
+            opacity: 1;
+        }
+        100% {
+            transform: scale(1);
+            opacity: 0.8;
+        }
+    }
+
+    /* Stil for sjansen for x2 coins */
+    .x2-chance-text {
+        color: var(--accent);  /* Bruker den samme aksentfargen som resten */
+        font-weight: 600;
+        font-size: 1.2rem;
+        margin-top: 20px;
+        animation: pulseEffect 2s infinite ease-in-out; /* Pulsende effekt */
+    }
+
+    /* Tidsboksen skal forbli plassert riktig */
+    #quiz-cooldown {
+        margin-top: 20px;
+    }
+
     </style>
 </head>
 
@@ -722,18 +752,24 @@ body {
 
     <h2 style="text-align:center; margin-bottom:10px;">Flodsvin quiz</h2>
 
-        <!-- HUB -->
-        <div id="quiz-hub" style="text-align:center; padding:20px;">
-            <p style="margin-bottom:20px; opacity:0.8;">
-                Test kunnskapen din og vinn Capy Coins!<br>
-                Ny quiz hver 30. minutt.
-            </p>
-            <button id="btn-start-quiz" class="btn" onclick="tryStartQuiz()">Start Quiz ▶</button>
-            <div id="quiz-cooldown" style="display:none;">
-                <div style="font-size:0.9rem; margin-bottom:5px;">Neste quiz om:</div>
-                <div class="timer-display" id="timer-text">--:--</div>
-            </div>
-        </div>
+<!-- HUB -->
+<div id="quiz-hub" style="text-align:center; padding:20px;">
+    <p style="margin-bottom:20px; opacity:0.8;">
+        Ny quiz hver 15. minutt.
+    </p>
+    
+    <!-- 40% sjanse for x2 Coins med animasjon -->
+    <p class="x2-chance-text">
+        40% sjanse for x2 Coins! 🎉
+    </p>
+
+    <button id="btn-start-quiz" class="btn" onclick="tryStartQuiz()">Start Quiz ▶</button>
+    
+    <div id="quiz-cooldown" style="display:none;">
+        <div style="font-size:0.9rem; margin-bottom:5px;">Neste quiz om:</div>
+        <div class="timer-display" id="timer-text">--:--</div>
+    </div>
+</div>
 
         <!-- GAME -->
         <div id="quiz-game" style="display:none;">
@@ -1275,7 +1311,6 @@ function checkCooldown() {
     -------------------------------- */
     if (hubMsg) {
         hubMsg.innerHTML = `
-            Test kunnskapen din og vinn Capy Coins!<br>
             Neste tema: <strong>${nextCat.title}</strong><br>
             ${
                 game.quizDouble 
@@ -1342,7 +1377,7 @@ function startQuiz() {
     qIdx = 0;
     correctCount = 0;
 // 20% sjanse for 2x bonus
-game.quizDouble = Math.random() < 0.35;
+game.quizDouble = Math.random() < 0.40;
 
 // Finn quiz-containeren (hele hvite boksen)
 const quizBox = document.getElementById("quiz-unlocked-view");
