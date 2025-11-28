@@ -767,6 +767,106 @@ body {
     border-color: var(--text-dark);
 }
 
+/* --- FLAPPY LOCKED & UNLOCKED STYLES --- */
+
+/* Låst boks (Grå og kjedelig) */
+.flappy-locked {
+    background: #fff;
+    border: var(--border-thick);
+    box-shadow: var(--shadow-hard);
+    border-radius: var(--radius);
+    padding: 30px;
+    text-align: center;
+    color: #888;
+    position: relative;
+    opacity: 0.9;
+}
+
+/* Låst tittel */
+.flappy-locked h2 {
+    font-size: 2rem; 
+    color: #555; 
+    -webkit-text-stroke: 0; /* Ingen outline på låst tekst */
+    text-shadow: none;
+    margin-bottom: 10px;
+}
+
+/* Progress bar container */
+.bar-container {
+    background: #eee;
+    height: 25px;
+    width: 100%;
+    max-width: 300px;
+    margin: 15px auto;
+    border-radius: 20px;
+    border: 2px solid var(--border-color);
+    overflow: hidden;
+}
+
+/* Selve baren som fylles opp */
+.bar-fill {
+    height: 100%;
+    background: var(--accent); /* Oransje farge */
+    width: 0%;
+    transition: width 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+/* --- ÅPEN BOKS (Svevende himmel) --- */
+@keyframes floatBox {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-12px); }
+}
+
+.flappy-unlocked {
+    background: linear-gradient(135deg, #81ecec 0%, #74b9ff 100%);
+    position: relative;
+    overflow: hidden;
+    text-align: center;
+    border: var(--border-thick);
+    box-shadow: var(--shadow-hard);
+    border-radius: var(--radius);
+    color: var(--text-dark);
+    cursor: pointer;
+    padding: 20px;
+    
+    /* Sveve-animasjon KUN på den åpne boksen */
+    animation: floatBox 3s ease-in-out infinite; 
+    transition: filter 0.2s;
+    display: none; /* Skjult som standard */
+}
+
+.flappy-unlocked:hover {
+    filter: brightness(1.05);
+}
+
+/* Skyer */
+.cloud-bg {
+    position: absolute;
+    background: rgba(255, 255, 255, 0.4);
+    border-radius: 50%;
+    z-index: 0;
+    pointer-events: none;
+}
+.c1 { width: 100px; height: 100px; top: -40px; left: -20px; }
+.c2 { width: 150px; height: 150px; bottom: -50px; right: -30px; }
+.c3 { width: 80px; height: 80px; top: 40px; right: 10%; opacity: 0.3; }
+
+.flappy-content { position: relative; z-index: 2; padding: 10px 0; }
+.rate-badge {
+    background: #fff;
+    border: 3px solid var(--text-dark);
+    padding: 10px 20px;
+    border-radius: 15px;
+    font-weight: 800;
+    font-size: 1.1rem;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    box-shadow: 4px 4px 0 rgba(0,0,0,0.1);
+    margin: 20px 0;
+}
+.btn-flappy { background: #fab1a0; border-color: var(--text-dark); }
+
     </style>
 </head>
 
@@ -915,18 +1015,37 @@ body {
     </div>
 </section>
 
+<!-- =====================
+     FLAPPY PROMO SECTION
+====================== -->
 <section style="padding-top: 0;">
-    <!-- Hele boksen er nå en link via onclick -->
-    <div class="card-box flappy-container" onclick="window.location.href='flappy.html'">
-        
-        <!-- Dekorative skyer -->
+    
+    <!-- VIEW 1: LÅST (Vises til du har 50 per klikk) -->
+<div id="flappy-locked-view" class="flappy-locked">
+    <div style="font-size: 3rem; margin-bottom: 5px;">🔒</div>
+    <h2>Flappy Capy</h2>
+    
+    <!-- ENDRET HER: -->
+    <p style="font-weight:bold;">Krever 500 mynter / klikk</p>
+    
+    <div class="bar-container">
+        <div id="flappy-progress" class="bar-fill"></div>
+    </div>
+    
+    <div style="font-size: 0.9rem; font-weight:bold;">
+        <!-- ENDRET HER OGSÅ: -->
+        <span id="current-cp-display">0</span> / 500
+    </div>
+</div>
+
+    <!-- VIEW 2: ÅPEN (Vises når du har klart det) -->
+    <div id="flappy-unlocked-view" class="flappy-unlocked" onclick="window.location.href='flappy.html'">
+        <!-- Skyer -->
         <div class="cloud-bg c1"></div>
         <div class="cloud-bg c2"></div>
         <div class="cloud-bg c3"></div>
 
         <div class="flappy-content">
-            <!-- Ørnen er fjernet -->
-            
             <h2 style="font-size: 2.8rem; margin-bottom: 5px; color: #fff; -webkit-text-stroke: 2px var(--text-dark);">
                 Flappy Capy
             </h2>
@@ -934,7 +1053,7 @@ body {
                 Fly for å tjene cash!
             </p>
 
-            <!-- Dynamisk Reward Boks -->
+            <!-- Reward info -->
             <div class="rate-badge">
                 <span style="font-size: 1.4rem;">💰</span> 
                 <span>
@@ -946,6 +1065,7 @@ body {
             <span class="btn btn-flappy">SPILL NÅ ▶</span>
         </div>
     </div>
+
 </section>
 
 
@@ -1170,6 +1290,40 @@ if (flappyRewardEl) {
     const flappyRate = cp * 5; 
     flappyRewardEl.innerText = flappyRate.toLocaleString();
 }
+
+/* ===============================
+       FLAPPY LOCK / UNLOCK LOGIC
+    =============================== */
+const flappyLocked   = document.getElementById("flappy-locked-view");
+const flappyUnlocked = document.getElementById("flappy-unlocked-view");
+const flappyBar      = document.getElementById("flappy-progress");
+const currentCpDisp  = document.getElementById("current-cp-display");
+const flappyRewVal   = document.getElementById("flappy-reward-val");
+
+// --- ENDRE TALLET HER FRA 50 TIL 500 ---
+const FLAPPY_REQ = 500; 
+// ---------------------------------------
+
+if (flappyBar && currentCpDisp) {
+    // Resten av koden er lik, den bruker nå 500 automatisk
+    let percent = Math.min(100, (cp / FLAPPY_REQ) * 100);
+    flappyBar.style.width = percent + "%";
+    currentCpDisp.innerText = cp.toLocaleString();
+}
+
+    // Oppdater reward-tallet i den åpne boksen
+    if (flappyRewVal) {
+        flappyRewVal.innerText = (cp * 5).toLocaleString();
+    }
+
+    // Sjekk om vi skal vise Låst eller Åpen boks
+    if (cp >= FLAPPY_REQ) {
+        if (flappyLocked) flappyLocked.style.display = "none";
+        if (flappyUnlocked) flappyUnlocked.style.display = "block";
+    } else {
+        if (flappyLocked) flappyLocked.style.display = "block";
+        if (flappyUnlocked) flappyUnlocked.style.display = "none";
+    }
     });
 }
 
