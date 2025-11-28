@@ -583,6 +583,38 @@ body {
     100% { transform: translateY(-180px); }
 }
 
+body {
+    font-family: 'Fredoka', sans-serif;
+    background: var(--bg-warm);
+    color: var(--text-dark);
+    min-height: 100vh;
+    padding-bottom: 50px;
+    user-select: none;
+    /* Fjernet zoom for å unngå at alt blir for stort på mobil */
+}
+
+/* Responsiv justering for små skjermer */
+@media (max-width: 800px) {
+    body {
+        zoom: 1; /* Fjerner zoom-effekten på små skjermer */
+    }
+
+    #game-layout { 
+        grid-template-columns: 1fr; 
+    }
+    
+    .shop-area { 
+        height: 450px; 
+    }
+
+    h1 { 
+        font-size: 2.5rem; 
+    }
+    
+    .quiz-options-grid { 
+        grid-template-columns: 1fr; 
+    }
+}
 
     </style>
 </head>
