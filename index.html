@@ -646,6 +646,127 @@ body {
         margin-top: 20px;
     }
 
+/* --- FLAPPY PROMO BOX --- */
+.flappy-container {
+    background: linear-gradient(135deg, #81ecec 0%, #74b9ff 100%);
+    position: relative;
+    overflow: hidden;
+    text-align: center;
+    border: var(--border-thick);
+    box-shadow: var(--shadow-hard);
+    color: var(--text-dark);
+}
+
+/* Skyer i bakgrunnen */
+.cloud-bg {
+    position: absolute;
+    background: rgba(255, 255, 255, 0.4);
+    border-radius: 50%;
+    z-index: 0;
+}
+.c1 { width: 100px; height: 100px; top: -40px; left: -20px; }
+.c2 { width: 150px; height: 150px; bottom: -50px; right: -30px; }
+.c3 { width: 80px; height: 80px; top: 40px; right: 10%; opacity: 0.3; }
+
+.flappy-content {
+    position: relative;
+    z-index: 2; /* Sørg for at tekst ligger over skyene */
+}
+
+.flappy-icon {
+    font-size: 3.5rem;
+    filter: drop-shadow(4px 4px 0 rgba(0,0,0,0.1));
+    animation: float 3s ease-in-out infinite;
+    display: inline-block;
+    transform: rotate(-10deg);
+    margin-bottom: 10px;
+}
+
+.rate-badge {
+    background: #fff;
+    border: 3px solid var(--text-dark);
+    padding: 10px 20px;
+    border-radius: 15px;
+    font-weight: 800;
+    font-size: 1.1rem;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    box-shadow: 4px 4px 0 rgba(0,0,0,0.1);
+    margin: 15px 0 20px;
+}
+
+.btn-flappy {
+    background: #fab1a0; /* En kontrastfarge til det blå */
+    border-color: var(--text-dark);
+}
+.btn-flappy:hover {
+    background: #ff7675;
+}
+
+/* --- FLAPPY PROMO BOX --- */
+/* Definer selve sveve-animasjonen */
+@keyframes floatBox {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-12px); }
+}
+
+.flappy-container {
+    background: linear-gradient(135deg, #81ecec 0%, #74b9ff 100%);
+    position: relative;
+    overflow: hidden;
+    text-align: center;
+    border: var(--border-thick);
+    box-shadow: var(--shadow-hard);
+    color: var(--text-dark);
+    cursor: pointer; /* Viser at hele boksen kan klikkes */
+    
+    /* Her aktiveres svevingen for hele boksen */
+    animation: floatBox 3s ease-in-out infinite; 
+    transition: filter 0.2s;
+}
+
+.flappy-container:hover {
+    filter: brightness(1.05); /* Lyser opp litt når du holder over */
+}
+
+/* Skyer i bakgrunnen */
+.cloud-bg {
+    position: absolute;
+    background: rgba(255, 255, 255, 0.4);
+    border-radius: 50%;
+    z-index: 0;
+    pointer-events: none;
+}
+.c1 { width: 100px; height: 100px; top: -40px; left: -20px; }
+.c2 { width: 150px; height: 150px; bottom: -50px; right: -30px; }
+.c3 { width: 80px; height: 80px; top: 40px; right: 10%; opacity: 0.3; }
+
+.flappy-content {
+    position: relative;
+    z-index: 2;
+    padding: 10px 0;
+}
+
+.rate-badge {
+    background: #fff;
+    border: 3px solid var(--text-dark);
+    padding: 10px 20px;
+    border-radius: 15px;
+    font-weight: 800;
+    font-size: 1.1rem;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    box-shadow: 4px 4px 0 rgba(0,0,0,0.1);
+    margin: 20px 0;
+}
+
+.btn-flappy {
+    background: #fab1a0;
+    border-color: var(--text-dark);
+}
+
     </style>
 </head>
 
@@ -758,10 +879,7 @@ body {
         Ny quiz hver 15. minutt.
     </p>
     
-    <!-- 40% sjanse for x2 Coins med animasjon -->
-    <p class="x2-chance-text">
-        40% sjanse for x2 Coins! 🎉
-    </p>
+
 
     <button id="btn-start-quiz" class="btn" onclick="tryStartQuiz()">Start Quiz ▶</button>
     
@@ -796,6 +914,40 @@ body {
         </div>
     </div>
 </section>
+
+<section style="padding-top: 0;">
+    <!-- Hele boksen er nå en link via onclick -->
+    <div class="card-box flappy-container" onclick="window.location.href='flappy.html'">
+        
+        <!-- Dekorative skyer -->
+        <div class="cloud-bg c1"></div>
+        <div class="cloud-bg c2"></div>
+        <div class="cloud-bg c3"></div>
+
+        <div class="flappy-content">
+            <!-- Ørnen er fjernet -->
+            
+            <h2 style="font-size: 2.8rem; margin-bottom: 5px; color: #fff; -webkit-text-stroke: 2px var(--text-dark);">
+                Flappy Capy
+            </h2>
+            <p style="opacity: 0.9; font-weight: 700; font-size: 1.1rem;">
+                Fly for å tjene cash!
+            </p>
+
+            <!-- Dynamisk Reward Boks -->
+            <div class="rate-badge">
+                <span style="font-size: 1.4rem;">💰</span> 
+                <span>
+                    Belønning: <span id="flappy-reward-val" style="color:#0984e3; font-size:1.3rem;">0</span> / poeng
+                </span>
+            </div>
+
+            <br>
+            <span class="btn btn-flappy">SPILL NÅ ▶</span>
+        </div>
+    </div>
+</section>
+
 
 <footer style="text-align:center; padding:20px; opacity:0.6;">
     flodsvin.no
@@ -1011,6 +1163,13 @@ function updateGameUI() {
             </div>
         `;
         list.appendChild(div);
+        // --- OPPDATER FLAPPY REWARD DISPLAY ---
+const flappyRewardEl = document.getElementById("flappy-reward-val");
+if (flappyRewardEl) {
+    // 5x din klikk-styrke
+    const flappyRate = cp * 5; 
+    flappyRewardEl.innerText = flappyRate.toLocaleString();
+}
     });
 }
 
@@ -1037,9 +1196,13 @@ function toggleCosmetic(u) {
 }
 
 function save() {
+    // Lagre selve spillet
     localStorage.setItem("capyRichEdition", JSON.stringify(game));
-}
 
+    // NYTT: Beregn og lagre "Per Klikk" (PPC) så Flappy Bird vet om det
+    const { cp } = getPowers();
+    localStorage.setItem("capy_ppc", cp);
+}
 function resetGame() {
     if (confirm("Slette alt og starte på nytt?")) {
         localStorage.removeItem("capyRichEdition");
@@ -1079,13 +1242,40 @@ setTimeout(() => f.remove(), 800);
     });
 }
 
+/* =====================================================
+   AUTO LOOP & SYNC WITH FLAPPY
+===================================================== */
 setInterval(() => {
+    // 1. Legg til Auto-production (PPS)
     const { ap } = getPowers();
     if (ap > 0) {
         game.score += ap;
-        updateGameUI();
-        save();
     }
+
+    // 2. Sjekk om vi har fått mynter fra Flappy Capy!
+    const pendingCoins = parseInt(localStorage.getItem('capy_pending_coins') || '0');
+    if (pendingCoins > 0) {
+        game.score += pendingCoins;
+        
+        // Nullstill "postkassen"
+        localStorage.setItem('capy_pending_coins', '0');
+
+        // Vis en liten beskjed (floater) om at du fikk penger
+        const f = document.createElement("div");
+        f.className = "floater";
+        f.innerText = `+${pendingCoins} fra Flappy!`;
+        f.style.left = "50%";
+        f.style.top = "50%";
+        f.style.color = "#FFD700"; // Gullfarge
+        f.style.fontSize = "2rem";
+        f.style.zIndex = "9999";
+        document.body.appendChild(f);
+        setTimeout(() => f.remove(), 1500);
+    }
+
+    // Oppdater skjermen og lagre
+    updateGameUI();
+    save();
 }, 1000);
 
 
