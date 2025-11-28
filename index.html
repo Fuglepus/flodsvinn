@@ -1113,52 +1113,52 @@ if (localStorage.getItem("capyRichEdition")) {
 ===================================================== */
 const UPGRADES = [
     /* --- TIER 1: Starten (0 - 1.000 mynter) --- */
-    { id: 'c1', name: 'Kli bak øret', icon: '🤏', cost: 15, power: 1, type: 'click' },       // Den første du kjøper. Dobler klikkene dine.
-    { id: 'a1', name: 'Løvetann', icon: '🌻', cost: 25, power: 1, type: 'auto' },        // Første auto. 1 mynt i sekundet.
-    { id: 'c2', name: 'Gi en kjeks', icon: '🍪', cost: 120, power: 4, type: 'click' },      // Liten boost for aktive spillere.
-    { id: 'a2', name: 'Badeand', icon: '🦆', cost: 250, power: 5, type: 'auto' },        // Første merkbare auto-oppgradering.
-    { id: 'c3', name: 'Massasje', icon: '💆', cost: 600, power: 10, type: 'click' },      // Broen mot 1000-tallet.
+    { id: 'c1', name: 'Kli bak øret', icon: '🤏', cost: 15, power: 0.5, type: 'click' },       // Den første du kjøper. Halver klikkene dine.
+    { id: 'a1', name: 'Løvetann', icon: '🌻', cost: 25, power: 0.5, type: 'auto' },        // Første auto. Halver 1 mynt i sekundet.
+    { id: 'c2', name: 'Gi en kjeks', icon: '🍪', cost: 120, power: 2, type: 'click' },      // Liten boost for aktive spillere, halveres til 2.
+    { id: 'a2', name: 'Badeand', icon: '🦆', cost: 250, power: 2.5, type: 'auto' },        // Første merkbare auto-oppgradering, halveres til 2.5.
+    { id: 'c3', name: 'Massasje', icon: '💆', cost: 600, power: 5, type: 'click' },      // Broen mot 1000-tallet, halveres til 5.
 
     /* --- TIER 2: Early Game (1.000 - 50.000 mynter) --- */
-    { id: 'a3', name: 'Vannmelon', icon: '🍉', cost: 1200, power: 15, type: 'auto' },      // Nå begynner det å rulle.
+    { id: 'a3', name: 'Vannmelon', icon: '🍉', cost: 1200, power: 7.5, type: 'auto' },      // Nå begynner det å rulle, halveres til 7.5.
     { id: 'cos1', name: 'Solbriller', icon: '😎', cost: 2500, type: 'cosmetic', target: 'cosmetic-glasses' },
-    { id: 'c4', name: 'Yoga-instruktør', icon: '🧘', cost: 4000, power: 40, type: 'click' },
-    { id: 'a4', name: 'Yuzu Bad', icon: '🍊', cost: 8500, power: 50, type: 'auto' },
+    { id: 'c4', name: 'Yoga-instruktør', icon: '🧘', cost: 4000, power: 20, type: 'click' }, // Halveres til 20.
+    { id: 'a4', name: 'Yuzu Bad', icon: '🍊', cost: 8500, power: 25, type: 'auto' },       // Halveres til 25.
     { id: 'cos2', name: 'Flosshatt', icon: '🎩', cost: 15000, type: 'cosmetic', target: 'cosmetic-tophat' },
-    { id: 'c5', name: 'Magisk Tommel', icon: '👍', cost: 30000, power: 150, type: 'click' },
+    { id: 'c5', name: 'Magisk Tommel', icon: '👍', cost: 30000, power: 75, type: 'click' }, // Halveres til 75.
 
     /* --- TIER 3: Mid Game (50.000 - 1 Million) --- */
     { id: 'cos3', name: 'Gullkjede', icon: '🪙', cost: 60000, type: 'cosmetic', target: 'cosmetic-chain' },
-    { id: 'a5', name: 'Pelikan-hær', icon: '🐦', cost: 120000, power: 400, type: 'auto' }, // Stor boost.
-    { id: 'c6', name: 'Guddommelig Klapp', icon: '⚡', cost: 350000, power: 1000, type: 'click' },
+    { id: 'a5', name: 'Pelikan-hær', icon: '🐦', cost: 120000, power: 200, type: 'auto' }, // Halveres til 200.
+    { id: 'c6', name: 'Guddommelig Klapp', icon: '⚡', cost: 350000, power: 500, type: 'click' }, // Halveres til 500.
     { id: 'cos5', name: 'Monokkel', icon: '🧐', cost: 750000, type: 'cosmetic', target: 'cosmetic-monocle' },
     
     /* --- TIER 4: The Grind (1 Million - 100 Millioner) --- */
-    { id: 'a6', name: 'Capy Spa Resort', icon: '🧖', cost: 1200000, power: 3000, type: 'auto' }, // 1.2 mill
+    { id: 'a6', name: 'Capy Spa Resort', icon: '🧖', cost: 1200000, power: 1500, type: 'auto' }, // Halveres til 1500.
     { id: 'cos_heart', name: 'Hjertebriller', icon: '😍', cost: 2500000, type: 'cosmetic', target: 'cosmetic-heart-glasses' },
-    { id: 'c7', name: 'Universets Hersker', icon: '🌌', cost: 5000000, power: 8000, type: 'click' },
+    { id: 'c7', name: 'Universets Hersker', icon: '🌌', cost: 5000000, power: 4000, type: 'click' }, // Halveres til 4000.
     { id: 'cos_dog', name: 'Hund på hodet', icon: '🐶', cost: 10000000, type: 'cosmetic', target: 'cosmetic-dog' },
-    { id: 'a7', name: 'Månebase Alpha', icon: '🌑', cost: 25000000, power: 35000, type: 'auto' },
+    { id: 'a7', name: 'Månebase Alpha', icon: '🌑', cost: 25000000, power: 17500, type: 'auto' }, // Halveres til 17500.
     { id: 'cos4', name: 'Kongekrone', icon: '👑', cost: 75000000, type: 'cosmetic', target: 'cosmetic-crown' },
 
     /* --- TIER 5: Late Game (100 Millioner - Milliarder) --- */
-    { id: 'a8', name: 'Tidsmaskin', icon: '⏳', cost: 150000000, power: 150000, type: 'auto' },
-    { id: 'c8', name: 'Galaktisk Kosehånd', icon: '🖐️', cost: 500000000, power: 500000, type: 'click' },
+    { id: 'a8', name: 'Tidsmaskin', icon: '⏳', cost: 150000000, power: 75000, type: 'auto' }, // Halveres til 75000.
+    { id: 'c8', name: 'Galaktisk Kosehånd', icon: '🖐️', cost: 500000000, power: 250000, type: 'click' }, // Halveres til 250000.
     { id: 'cos6', name: 'Romhjelm', icon: '🧑‍🚀', cost: 1000000000, type: 'cosmetic', target: 'cosmetic-space' }, // 1 mrd
-    { id: 'a9', name: 'Multivers Portal', icon: '🌀', cost: 3500000000, power: 1200000, type: 'auto' },
+    { id: 'a9', name: 'Multivers Portal', icon: '🌀', cost: 3500000000, power: 600000, type: 'auto' }, // Halveres til 600000.
 
     /* --- TIER 6: Endgame (Trilliarder - Spillere som ikke gir seg) --- */
-    { id: 'c9', name: 'Kosmisk High-Five', icon: '✋', cost: 15000000000, power: 5000000, type: 'click' },
-    { id: 'a10', name: 'Hyperdimensjons Farm', icon: '🏭', cost: 50000000000, power: 10000000, type: 'auto' },
-    { id: 'c10', name: 'Meta-Klapp', icon: '👏', cost: 250000000000, power: 25000000, type: 'click' },
-    { id: 'a11', name: 'Solstorm Generator', icon: '☀️', cost: 1000000000000, power: 80000000, type: 'auto' }, // 1 Trillion
+    { id: 'c9', name: 'Kosmisk High-Five', icon: '✋', cost: 15000000000, power: 2500000, type: 'click' }, // Halveres til 2500000.
+    { id: 'a10', name: 'Hyperdimensjons Farm', icon: '🏭', cost: 50000000000, power: 5000000, type: 'auto' }, // Halveres til 5000000.
+    { id: 'c10', name: 'Meta-Klapp', icon: '👏', cost: 250000000000, power: 12500000, type: 'click' }, // Halveres til 12500000.
+    { id: 'a11', name: 'Solstorm Generator', icon: '☀️', cost: 1000000000000, power: 40000000, type: 'auto' }, // Halveres til 40000000
     
     /* --- TIER 7: Absurd (For de som lar PCen stå på om natta) --- */
-    { id: 'a12', name: 'Kvante-Flokkleder', icon: '🧬', cost: 5000000000000, power: 300000000, type: 'auto' },
-    { id: 'c11', name: 'Ultimat Capy Klapp', icon: '🐾', cost: 25000000000000, power: 1000000000, type: 'click' },
-    { id: 'a13', name: 'Singularitetsmaskin', icon: '🕳️', cost: 150000000000000, power: 5000000000, type: 'auto' },
-    { id: 'a14', name: 'Capyverse Kontroller', icon: '🎮', cost: 800000000000000, power: 20000000000, type: 'auto' },
-    { id: 'a15', name: 'Evighetsmotor', icon: '♾️', cost: 5000000000000000, power: 100000000000, type: 'auto' }
+    { id: 'a12', name: 'Kvante-Flokkleder', icon: '🧬', cost: 5000000000000, power: 150000000, type: 'auto' }, // Halveres til 150000000.
+    { id: 'c11', name: 'Ultimat Capy Klapp', icon: '🐾', cost: 25000000000000, power: 500000000, type: 'click' }, // Halveres til 500000000.
+    { id: 'a13', name: 'Singularitetsmaskin', icon: '🕳️', cost: 150000000000000, power: 2500000000, type: 'auto' }, // Halveres til 2500000000.
+    { id: 'a14', name: 'Capyverse Kontroller', icon: '🎮', cost: 800000000000000, power: 10000000000, type: 'auto' }, // Halveres til 10000000000.
+    { id: 'a15', name: 'Evighetsmotor', icon: '♾️', cost: 5000000000000000, power: 50000000000, type: 'auto' } // Halveres til 50000000000
 ];
 
 
