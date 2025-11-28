@@ -491,97 +491,8 @@ body {
     right: calc(50% + 120px);
 }
 
-/* Gull-glinsende animert bonusboks */
-.quiz-bonus-active {
-    animation: bonusPulse 1.8s infinite ease-in-out, bonusGlow 2s infinite ease-in-out;
-    background: linear-gradient(135deg, #ffdf73, #ffd54f, #ffecb3);
-    border: 4px solid #d4a100 !important;
-    box-shadow: 0 0 25px rgba(255, 215, 0, 0.8), 0 0 50px rgba(255, 235, 120, 0.7) !important;
-}
 
-/* Hopp / bounce */
-@keyframes bonusPulse {
-    0%   { transform: translateY(0) scale(1); }
-    50%  { transform: translateY(-8px) scale(1.03); }
-    100% { transform: translateY(0) scale(1); }
-}
 
-/* Pulsende glød */
-@keyframes bonusGlow {
-    0%   { box-shadow: 0 0 20px rgba(255, 215, 0, 0.6); }
-    50%  { box-shadow: 0 0 35px rgba(255, 235, 120, 1); }
-    100% { box-shadow: 0 0 20px rgba(255, 215, 0, 0.6); }
-}
-
-/* --- X2 BADGE --- */
-.x2-badge {
-    position: absolute;
-    top: -10px;
-    right: -10px;
-    background: #ffd700;
-    color: #000;
-    font-size: 1.4rem;
-    font-weight: 900;
-    padding: 8px 14px;
-    border-radius: 50%;
-    border: 3px solid #b38700;
-    box-shadow: 0 0 15px rgba(255, 215, 0, 0.8);
-    transform: scale(0);
-    transition: all 0.25s ease-out;
-    z-index: 50;
-}
-
-/* Vises når bonus er aktiv */
-.quiz-bonus-active .x2-badge {
-    transform: scale(1);
-}
-
-/* --- GULLPARTIKLER --- */
-.bonus-particles {
-    position: absolute;
-    inset: 0;
-    overflow: hidden;
-    pointer-events: none;
-    z-index: 5;
-    opacity: 0;
-    transition: 0.3s ease-in-out;
-}
-
-.quiz-bonus-active .bonus-particles {
-    opacity: 1;
-}
-
-/* Partikkelstiler */
-.bonus-particles::before,
-.bonus-particles::after {
-    content: "";
-    position: absolute;
-    width: 6px;
-    height: 6px;
-    background: #ffdd55;
-    border-radius: 50%;
-    box-shadow:
-        20px 40px #ffe578,
-        80px 20px #ffdf73,
-        120px 90px #ffe578,
-        40px 130px #ffdf73,
-        10px 170px #ffe578,
-        150px 40px #ffdf73,
-        200px 130px #ffe578;
-    animation: particleFloat 5s linear infinite;
-}
-
-/* To lag med partikler */
-.bonus-particles::after {
-    animation-duration: 7s;
-    opacity: 0.7;
-}
-
-/* Bevegelsesanimasjon */
-@keyframes particleFloat {
-    0% { transform: translateY(0px); }
-    100% { transform: translateY(-180px); }
-}
 
 body {
     font-family: 'Fredoka', sans-serif;
@@ -615,31 +526,6 @@ body {
         grid-template-columns: 1fr; 
     }
 }
-
-    /* Animasjon for sjansen for x2 coins */
-    @keyframes pulseEffect {
-        0% {
-            transform: scale(1);
-            opacity: 0.8;
-        }
-        50% {
-            transform: scale(1.05);
-            opacity: 1;
-        }
-        100% {
-            transform: scale(1);
-            opacity: 0.8;
-        }
-    }
-
-    /* Stil for sjansen for x2 coins */
-    .x2-chance-text {
-        color: var(--accent);  /* Bruker den samme aksentfargen som resten */
-        font-weight: 600;
-        font-size: 1.2rem;
-        margin-top: 20px;
-        animation: pulseEffect 2s infinite ease-in-out; /* Pulsende effekt */
-    }
 
     /* Tidsboksen skal forbli plassert riktig */
     #quiz-cooldown {
@@ -967,9 +853,6 @@ body {
 
 <div id="quiz-unlocked-view" class="card-box quiz-container" style="display:none; position:relative;">
     
-    <!-- X2 badge + gullpartikler -->
-    <div id="x2-badge" class="x2-badge">x2</div>
-    <div class="bonus-particles"></div>
 
     <h2 style="text-align:center; margin-bottom:10px;">Flodsvin quiz</h2>
 
@@ -1087,7 +970,6 @@ let game = {
     cosmetics: {},
     lastQuizTime: 0,
     quizCategoryIndex: 0,
-    quizDouble: false // ← NEW
 };
 
 // Last inn lagret spill
@@ -1722,7 +1604,6 @@ function startQuiz() {
     qIdx = 0;
     correctCount = 0;
 // 20% sjanse for 2x bonus
-game.quizDouble = Math.random() < 0.40;
 
 // Finn quiz-containeren (hele hvite boksen)
 const quizBox = document.getElementById("quiz-unlocked-view");
