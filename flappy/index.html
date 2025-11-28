@@ -2,47 +2,20 @@
 <html lang="no">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
     <title>Flodsvin.no | Flappy Flodsvin</title>
-    <meta name="description" content="Spill Flappy Flodsvin! Prøv å fly med flodsvinet ditt og få høyest poeng.">
-
-    <!-- Open Graph (Discord, Snapchat, Facebook, Instagram osv.) -->
-    <meta property="og:type" content="website">
-    <meta property="og:url" content="https://flodsvin.no/flappy">
-    <meta property="og:title" content="Flodsvin.no | Flappy Flodsvin">
-    <meta property="og:description" content="Spill Flappy Flodsvin! Prøv å fly med flodsvinet ditt og få høyest poeng.">
-    <meta property="og:image" content="https://flodsvin.no/meta.png">
-
-    <!-- Twitter Card -->
-    <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="Flodsvin.no | Flappy Flodsvin">
-    <meta name="twitter:description" content="Spill Flappy Flodsvin! Prøv å fly med flodsvinet ditt og få høyest poeng.">
-    <meta name="twitter:image" content="https://flodsvin.no/meta.png">
-
-    <!-- Google Fonts -->
+    
+    <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600;800;900&display=swap" rel="stylesheet">
-
-    <!-- Standard favicon for all browsers -->
-    <link rel="icon" type="image/png" href="/favicon.png">
-
-    <!-- Apple iPhone/iPad Home Screen Icon -->
-    <link rel="apple-touch-icon" href="/apple-touch-icon.png">
-
-    <!-- Fallback -->
-    <link rel="shortcut icon" href="/favicon.png">
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600;900&display=swap" rel="stylesheet">
 
 <style>
     :root {
-        --bg-color: #48dbfb;
         --primary: #00b894;
-        --accent: #ff9f43;
-        --danger: #ee5253;
+        --accent: #fdcb6e;
+        --danger: #ff7675;
         --dark: #2d3436;
-        --light: #ffffff;
-        
-        --border-width: 4px;
         --radius-box: 24px;
         --radius-btn: 50px;
     }
@@ -51,57 +24,36 @@
 
     body {
         font-family: 'Fredoka', sans-serif;
-        background: linear-gradient(135deg, #70a1ff, #5352ed);
-        /* 100dvh tilpasser seg adressefeltet på mobil */
+        /* Optimistisk Oransje Bakgrunn */
+        background: linear-gradient(135deg, #f0932b, #ffbe76); 
         height: 100dvh; 
         width: 100%;
         overflow: hidden;
         display: flex;
-        flex-direction: column;
         align-items: center;
         justify-content: center;
-        touch-action: none; /* Hindrer zooming og scrolling */
+        touch-action: none; 
         user-select: none;
-        position: fixed; /* Låser skjermen helt */
+        -webkit-tap-highlight-color: transparent;
     }
 
-    h1 {
-        position: absolute;
-        top: 60px; /* Flyttet litt ned så den ikke krasjer med tilbake-knappen */
-        color: #fff;
-        font-size: 2.5rem; /* Litt mindre på mobil */
-        font-weight: 900;
-        -webkit-text-stroke: 3px var(--dark); 
-        text-shadow: 4px 4px 0px rgba(0,0,0,0.2);
-        z-index: 10;
-        pointer-events: none;
-        transform: rotate(-2deg);
-        width: 100%;
-        text-align: center;
-    }
-
+    /* --- GAME CONTAINER --- */
     #game-container {
         position: relative;
-        background: var(--bg-color);
         width: 100%;
-        max-width: 420px;
-        /* Fyller hele høyden på mobil, men med litt margin på PC */
-        height: 100%; 
-        max-height: 85vh;
-        
-        border-radius: 20px;
-        border: 4px solid var(--dark);
-        box-shadow: 0 10px 20px rgba(0,0,0,0.3);
+        height: 100%;
+        max-width: 480px; 
+        background: #81ecec; /* Default sky color */
         overflow: hidden;
-        cursor: pointer;
+        /* Hvit ramme ser renere/mer optimistisk ut */
+        box-shadow: 0 10px 40px rgba(0,0,0,0.15);
     }
 
     @media (min-width: 600px) {
-        /* På PC ser det ut som en telefon */
         #game-container {
+            height: 90vh;
             border-radius: 30px;
-            border: 6px solid var(--dark);
-            height: 700px;
+            border: 8px solid #ffffff; 
         }
     }
 
@@ -109,272 +61,358 @@
         display: block;
         width: 100%;
         height: 100%;
+        image-rendering: pixelated; 
     }
 
-.back-link {
-        display: block;
-        margin-top: 15px;
+    /* --- UI TEXT --- */
+    h1 {
+        position: absolute;
+        top: 15%;
+        width: 100%;
         text-align: center;
-        color: #747d8c;
-        font-weight: 800;
-        font-size: 1rem;
-        
-        /* LEGG TIL DENNE LINJEN: */
-        cursor: pointer; 
-        
-        position: static; 
-        background: none;
-        border: none;
-        box-shadow: none;
-        padding: 5px;
+        color: #fff;
+        font-size: 3.5rem;
+        font-weight: 900;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+        -webkit-text-stroke: 6px var(--dark);
+        paint-order: stroke fill;
+        text-shadow: 4px 4px 0px rgba(0,0,0,0.1);
+        z-index: 10;
+        pointer-events: none;
+        transform: rotate(-3deg);
+        animation: floatTitle 3s ease-in-out infinite;
+    }
+    @keyframes floatTitle { 0%,100%{transform:rotate(-3deg) translateY(0);} 50%{transform:rotate(-3deg) translateY(-10px);} }
+
+    #game-score {
+        position: absolute; top: 10%; width: 100%; text-align: center;
+        font-size: 5rem; font-weight: 900; color: white;
+        -webkit-text-stroke: 6px var(--dark); 
+        paint-order: stroke fill;
+        pointer-events: none; display: none; z-index: 20;
     }
 
-    .back-link:hover {
-        color: var(--dark);      /* Blir mørkere når du holder over */
-        text-decoration: underline;
-    }
-    
-    .back-link:active {
-        transform: scale(0.95);
-    }
-
-    /* --- UI TEKST --- */
     #instruction-text {
         position: absolute;
-        top: 55%; left: 50%;
+        top: 60%; left: 50%;
         transform: translate(-50%, -50%);
-        font-size: 1.5rem;
-        font-weight: 900;
-        color: white;
-        -webkit-text-stroke: 2px var(--dark);
-        pointer-events: none;
         text-align: center;
-        width: 100%;
-        animation: pulse 1.5s infinite;
+        color: white;
+        font-weight: 900;
+        font-size: 1.8rem;
+        -webkit-text-stroke: 3px var(--dark);
+        paint-order: stroke fill;
+        z-index: 15;
+        pointer-events: none;
+        animation: pulse 1s infinite alternate;
     }
-    @keyframes pulse { 0%,100%{transform:translate(-50%, -50%) scale(1);} 50%{transform:translate(-50%, -50%) scale(1.1);} }
+    @keyframes pulse { from{transform:translate(-50%,-50%) scale(1);} to{transform:translate(-50%,-50%) scale(1.1);} }
 
+    /* --- RESULT SCREEN --- */
     #result-screen {
-        position: absolute;
-        top: 0; left: 0; width: 100%; height: 100%;
-        background: rgba(0,0,0,0.6);
+        position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+        background: rgba(255, 159, 67, 0.8); /* Oransje tint i stedet for svart */
         backdrop-filter: blur(5px);
         display: none;
         flex-direction: column;
         align-items: center;
         justify-content: center;
-        z-index: 20;
+        z-index: 30;
     }
 
     .card {
         background: #fff;
-        padding: 25px;
+        padding: 30px;
         border-radius: var(--radius-box);
-        border: var(--border-width) solid var(--dark);
+        border: 4px solid var(--dark);
+        box-shadow: 8px 8px 0 var(--dark);
         text-align: center;
         width: 85%;
         max-width: 320px;
-        animation: popIn 0.3s ease-out;
+        transform: scale(0.8);
+        opacity: 0;
+        transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
     }
-    @keyframes popIn { from{transform:scale(0.8); opacity:0;} to{transform:scale(1); opacity:1;} }
+    .card.show { transform: scale(1); opacity: 1; }
 
     .card h2 {
-        font-size: 2rem;
+        font-size: 2.2rem;
         color: var(--danger);
+        margin-bottom: 20px;
         font-weight: 900;
-        -webkit-text-stroke: 1.5px var(--dark);
-        margin-bottom: 15px;
-        text-transform: uppercase;
+        -webkit-text-stroke: 2px var(--dark);
+        paint-order: stroke fill;
     }
 
-    .recap-grid {
-        display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 20px;
+    .stats-grid {
+        display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 20px;
     }
-    .recap-box {
-        background: #f1f2f6; border: 2px solid #dfe4ea; border-radius: 12px; padding: 8px;
-        display: flex; flex-direction: column; align-items: center;
+    .stat-box {
+        background: #dfe6e9; border: 3px solid var(--dark); border-radius: 15px; padding: 10px;
     }
-    .recap-label { font-size: 0.75rem; color: #747d8c; font-weight: 800; text-transform: uppercase; }
-    .recap-value { font-size: 1.5rem; font-weight: 900; color: var(--dark); }
+    .stat-label { font-size: 0.8rem; font-weight: 800; color: #636e72; text-transform: uppercase; }
+    .stat-value { font-size: 1.8rem; font-weight: 900; color: var(--dark); }
 
-    .coin-reward-box {
+    .coin-box {
         grid-column: span 2; background: #ffeaa7; color: var(--dark);
-        padding: 10px; border-radius: 12px; border: 2px solid var(--dark);
-        font-weight: 900; font-size: 1.2rem;
-        display: flex; align-items: center; justify-content: center; gap: 8px;
+        border: 3px solid var(--dark); border-radius: 15px; padding: 12px;
+        font-size: 1.4rem; font-weight: 900;
+        display: flex; align-items: center; justify-content: center; gap: 10px;
     }
-    .coin-icon { animation: spin 2s linear infinite; }
-    @keyframes spin { 100% { transform: rotateY(360deg); } }
 
     .btn {
-        background: var(--primary); color: white; font-size: 1.2rem; padding: 12px 0;
-        width: 100%; border-radius: var(--radius-btn); border: var(--border-width) solid var(--dark);
+        background: var(--primary); color: white; font-size: 1.3rem; padding: 15px 0;
+        width: 100%; border-radius: var(--radius-btn); border: 3px solid var(--dark);
         font-weight: 900; cursor: pointer; text-transform: uppercase;
-        box-shadow: 0 4px 0 #008c70; margin-top: 5px;
+        box-shadow: 0 6px 0 #008c70; margin-top: 10px;
+        transition: transform 0.1s;
     }
-    .btn:active { transform: translateY(4px); box-shadow: none; }
+    .btn:active { transform: translateY(6px); box-shadow: none; }
 
-    #game-score {
-        position: absolute; top: 10%; width: 100%; text-align: center;
-        font-size: 4rem; font-weight: 900; color: white;
-        -webkit-text-stroke: 3px var(--dark); pointer-events: none; display: none; z-index: 5;
+    .back-link {
+        margin-top: 20px; color: white; font-weight: 900; cursor: pointer;
+        text-shadow: 0 2px 0px rgba(0,0,0,0.2); 
+        -webkit-text-stroke: 1.5px var(--dark);
+        font-size: 1.1rem;
     }
+
     #flash {
         position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-        background: white; opacity: 0; pointer-events: none; z-index: 15; transition: opacity 0.1s;
+        background: white; opacity: 0; pointer-events: none; z-index: 50; transition: opacity 0.1s;
+    }
+    
+    .shake { animation: shake 0.4s cubic-bezier(.36,.07,.19,.97) both; }
+    @keyframes shake { 
+        10%, 90% { transform: translate3d(-2px, 0, 0); } 
+        20%, 80% { transform: translate3d(4px, 0, 0); } 
+        30%, 50%, 70% { transform: translate3d(-6px, 0, 0); } 
+        40%, 60% { transform: translate3d(6px, 0, 0); } 
     }
 </style>
 </head>
 <body>
 
-    <h1>Flappy Capy</h1>
-
     <div id="game-container">
+        <h1>Flappy Capy</h1>
         <div id="game-score">0</div>
         
         <div id="instruction-text">
-            <span>TAP TO JUMP</span><br>
-            <span style="font-size:3rem;">👆</span>
+            TAP TO FLAP<br>
+            <span style="font-size: 3.5rem;">👆</span>
         </div>
-        
-        <canvas id="gameCanvas"></canvas>
-        <div id="flash"></div>
 
-<!-- Result Screen -->
+        <div id="flash"></div>
+        <canvas id="gameCanvas"></canvas>
+
         <div id="result-screen">
-            <div class="card">
+            <div class="card" id="result-card">
                 <h2>GAME OVER</h2>
                 
-                <div class="recap-grid">
-                    <div class="recap-box">
-                        <span class="recap-label">Score</span>
-                        <span class="recap-value" id="final-score">0</span>
+                <div class="stats-grid">
+                    <div class="stat-box">
+                        <div class="stat-label">Score</div>
+                        <div class="stat-value" id="final-score">0</div>
                     </div>
-                    <div class="recap-box">
-                        <span class="recap-label">Best</span>
-                        <span class="recap-value" id="best-score">0</span>
+                    <div class="stat-box">
+                        <div class="stat-label">Best</div>
+                        <div class="stat-value" id="best-score">0</div>
                     </div>
-                    
-                    <!-- Coin reward display -->
-                    <div class="coin-reward-box">
-                        <span class="coin-icon">💰</span> +<span id="coin-reward">0</span>
+                    <div class="coin-box">
+                        <span>💰</span> +<span id="coin-reward">0</span>
                     </div>
                 </div>
 
-                <button class="btn" onclick="resetGame()">SPILL IGJEN</button>
-                
-                <!-- NY PLASSERING: Rett under knappen -->
+                <button class="btn" onclick="resetGame()">Spill igjen</button>
                 <div class="back-link" onclick="window.location.href='https://flodsvin.no'">← Tilbake til meny</div>
-
-
             </div>
         </div>
-    
+    </div>
 
 <script>
     const canvas = document.getElementById('gameCanvas');
     const ctx = canvas.getContext('2d');
     
-    // Oppløsning
-    canvas.width = 380; // Litt bredere for moderne skjermer
-    canvas.height = 680;
+    // --- 1. ZOOM & OPPLØSNING ---
+    // Vi beholder lav intern oppløsning for å få alt til å se stort ut (zoomet inn)
+    let gameWidth = 320; 
+    let gameHeight = 580; 
 
-    // Elements
+    function resize() {
+        // Beregn aspect ratio for å fylle skjermen uten å strekke bildet
+        const aspect = window.innerHeight / window.innerWidth;
+        
+        if (window.innerWidth < 600) {
+            gameWidth = 340; 
+            gameHeight = gameWidth * aspect;
+        } else {
+            gameWidth = 360;
+            gameHeight = 640;
+        }
+        canvas.width = gameWidth;
+        canvas.height = gameHeight;
+    }
+    window.addEventListener('resize', resize);
+    resize();
+
+    // --- ELEMENTS ---
     const scoreEl = document.getElementById('game-score');
     const resultScreen = document.getElementById('result-screen');
+    const resultCard = document.getElementById('result-card');
     const instructionText = document.getElementById('instruction-text');
+    const titleEl = document.querySelector('h1');
     const flashEl = document.getElementById('flash');
-    const finalScoreEl = document.getElementById('final-score');
-    const bestScoreEl = document.getElementById('best-score');
-    const coinRewardEl = document.getElementById('coin-reward');
+    const container = document.getElementById('game-container');
 
-    // Variables
+    // --- 2. FYSIKK JUSTERING (VIKTIG!) ---
+    // Her fikser vi "game feeling"
+    const GRAVITY = 0.14;       // Mye lavere tyngdekraft (var 0.25)
+    const JUMP_STRENGTH = 4.2;  // Justert hopp (var 6.5)
+    const GAME_SPEED = 2.0;     // Tregere fart sideveis (var 3.0)
+
     let frames = 0;
     let score = 0;
     let highScore = localStorage.getItem('flappyCapyHighScore') || 0;
     let gameState = 'START'; 
 
-    // Coin Multiplier: Hvor mange mynter får du per poeng i Flappy Bird?
-    const COINS_PER_POINT = 10; 
-
-// --- BILDER (OPTIMALISERT FOR MOBIL - FJERNET SKYGGEFILTER) ---
+    // --- 3. NY CHIBI FLODSVIN SVG (Større hode) ---
     const capySvgString = `
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 220">
-        <g id="base-body">
-            <rect x="40" y="80" width="120" height="100" rx="40" fill="#a08276" stroke="#2d3436" stroke-width="6"/>
-            <circle cx="50" cy="85" r="12" fill="#a08276" stroke="#2d3436" stroke-width="5"/>
-            <circle cx="150" cy="85" r="12" fill="#a08276" stroke="#2d3436" stroke-width="5"/>
-            <rect x="70" y="120" width="60" height="40" rx="15" fill="#5D4037"/>
-            <path d="M90 135 L100 145 L110 135" stroke="#2d3436" stroke-width="5" fill="none"/>
-            <line x1="100" y1="145" x2="100" y2="155" stroke="#2d3436" stroke-width="5"/>
-            <circle cx="70" cy="110" r="5" fill="#2d3436"/> <circle cx="130" cy="110" r="5" fill="#2d3436"/>
-            <circle cx="72" cy="108" r="1.5" fill="#fff"/> <circle cx="132" cy="108" r="1.5" fill="#fff"/>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200">
+        <filter id="inset"><feFlood flood-color="rgba(0,0,0,0.1)"/><feComposite operator="out" in2="SourceGraphic"/><feGaussianBlur stdDeviation="3"/><feComposite operator="atop" in2="SourceGraphic"/></filter>
+        <g id="chibi-capy" filter="url(#inset)">
+            <!-- Body (Small) -->
+            <ellipse cx="60" cy="140" rx="40" ry="30" fill="#bf9687" stroke="#2d3436" stroke-width="8"/>
+            <!-- Head (BIG) -->
+            <rect x="40" y="40" width="130" height="100" rx="40" fill="#bf9687" stroke="#2d3436" stroke-width="8"/>
+            <!-- Snout (BIG) -->
+            <rect x="80" y="90" width="80" height="50" rx="20" fill="#6d4c41"/>
+            <!-- Ears -->
+            <circle cx="50" cy="45" r="16" fill="#bf9687" stroke="#2d3436" stroke-width="6"/>
+            <circle cx="160" cy="45" r="16" fill="#bf9687" stroke="#2d3436" stroke-width="6"/>
+            <!-- Eyes (BIG & CUTE) -->
+            <circle cx="70" cy="80" r="10" fill="#2d3436"/> 
+            <circle cx="140" cy="80" r="10" fill="#2d3436"/>
+            <circle cx="73" cy="77" r="3" fill="#fff"/> 
+            <circle cx="143" cy="77" r="3" fill="#fff"/>
+            <!-- Mouth -->
+            <path d="M100 115 L110 125 L120 115" stroke="#2d3436" stroke-width="5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+            <line x1="110" y1="125" x2="110" y2="132" stroke="#2d3436" stroke-width="5" stroke-linecap="round"/>
         </g>
     </svg>`;
     const capyImage = new Image();
     capyImage.src = 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(capySvgString);
 
-    // --- OBJEKTER (JUSTERT FYSIKK) ---
+    // --- CLOUDS ---
+    const clouds = {
+        items: [],
+        init: function() {
+            this.items = [];
+            for(let i=0; i<4; i++) {
+                this.items.push({
+                    x: Math.random() * gameWidth,
+                    y: Math.random() * (gameHeight/2.5),
+                    r: 25 + Math.random() * 30,
+                    s: 0.1 + Math.random() * 0.3
+                });
+            }
+        },
+        draw: function() {
+            ctx.fillStyle = "rgba(255, 255, 255, 0.5)";
+            for(let c of this.items) {
+                ctx.beginPath();
+                ctx.arc(c.x, c.y, c.r, 0, Math.PI*2);
+                ctx.arc(c.x + c.r*0.7, c.y + c.r*0.1, c.r*0.6, 0, Math.PI*2);
+                ctx.arc(c.x - c.r*0.7, c.y + c.r*0.1, c.r*0.6, 0, Math.PI*2);
+                ctx.fill();
+            }
+        },
+        update: function() {
+            for(let c of this.items) {
+                c.x -= c.s;
+                if(c.x + c.r * 2 < 0) {
+                    c.x = gameWidth + c.r * 2;
+                    c.y = Math.random() * (gameHeight/2.5);
+                }
+            }
+        }
+    };
+    clouds.init();
+
+    // --- PLAYER OBJECT ---
     const capy = {
-        x: 50, y: 250, w: 60, h: 66, // Litt mindre hitbox for mobil
+        x: 50, y: 150, 
+        w: 55, h: 55, // Større visuell plass
         velocity: 0, 
-        gravity: 0.15,      // Økt fra 0.20 for raskere respons
-        jumpStrength: 5,    // Økt fra 5.5 for å matche tyngdekraften
         rotation: 0,
         draw: function() {
             ctx.save();
             ctx.translate(this.x + this.w/2, this.y + this.h/2);
-            if (gameState === 'START') this.rotation = 0;
-            else {
-                if (this.velocity < 0) this.rotation = -20 * (Math.PI / 180);
-                else {
-                    this.rotation += 0.08; 
-                    if (this.rotation > 80 * (Math.PI / 180)) this.rotation = 80 * (Math.PI / 180);
-                }
+            
+            // Smidigere rotasjon
+            let targetRot = 0;
+            // Hvis vi stiger, roter litt opp (negativ radian)
+            if (this.velocity < 0) targetRot = -25 * (Math.PI / 180);
+            // Hvis vi faller, roter nedover
+            else if (this.velocity > 0) targetRot = Math.min(this.velocity * 0.1, 1.2);
+            
+            if(gameState === 'PLAYING' || gameState === 'DEAD') {
+               this.rotation += (targetRot - this.rotation) * 0.15; 
+            } else {
+                this.rotation = 0;
             }
+            
             ctx.rotate(this.rotation);
+            
+            // Skygge under flodsvinet
+            if(gameState !== 'DEAD') {
+                ctx.shadowColor = "rgba(0,0,0,0.2)";
+                ctx.shadowBlur = 15;
+                ctx.shadowOffsetY = 10;
+            }
+
             ctx.drawImage(capyImage, -this.w/2, -this.h/2, this.w, this.h);
             ctx.restore();
         },
         update: function() {
-            if (gameState === 'START') this.y = 300 + Math.sin(frames * 0.12) * 8;
-            else if (gameState === 'PLAYING') {
-                this.velocity += this.gravity;
+            if (gameState === 'START') {
+                // Flyter mykt opp og ned
+                this.y = (gameHeight / 2) - 40 + Math.sin(frames * 0.08) * 12;
+            } else if (gameState === 'PLAYING') {
+                this.velocity += GRAVITY;
                 this.y += this.velocity;
-                if (this.y + this.h >= canvas.height - fg.h) { this.y = canvas.height - fg.h - this.h; die(); }
-                if (this.y < 0) { this.y = 0; this.velocity = 0; }
+                
+                // Bakke kollisjon
+                if (this.y + this.h >= gameHeight - fg.h + 10) { 
+                    this.y = gameHeight - fg.h + 10 - this.h; 
+                    die(); 
+                }
+                // Tak kollisjon
+                if (this.y < -this.h) { this.velocity = 0; this.y = -this.h; }
             }
         },
-        jump: function() { this.velocity = -this.jumpStrength; }
+        jump: function() { this.velocity = -JUMP_STRENGTH; }
     };
 
     const fg = {
-        h: 120, x: 0, dx: 2.5,
+        h: 90, x: 0, dx: GAME_SPEED,
         draw: function() {
-            // Tegn en finere bakke
-            // Sand
-            ctx.fillStyle = '#feca57'; 
-            ctx.fillRect(0, canvas.height - this.h, canvas.width, this.h);
+            // Lysere gressfarge (Cartoon stil)
+            ctx.fillStyle = '#55efc4'; 
+            ctx.fillRect(0, gameHeight - this.h, gameWidth, this.h);
             
-            // Gress-topp
-            ctx.fillStyle = '#1dd1a1'; 
-            ctx.fillRect(0, canvas.height - this.h, canvas.width, 20);
-            
-            // Border stripe
-            ctx.beginPath(); 
-            ctx.moveTo(0, canvas.height - this.h); 
-            ctx.lineTo(canvas.width, canvas.height - this.h);
-            ctx.strokeStyle = "#2d3436"; 
-            ctx.lineWidth = 4; 
+            ctx.beginPath();
+            ctx.moveTo(0, gameHeight - this.h);
+            ctx.lineTo(gameWidth, gameHeight - this.h);
+            ctx.strokeStyle = "#2d3436";
+            ctx.lineWidth = 6;
             ctx.stroke();
 
-            // Mønster i bakken (tegneserie-aktig)
-            ctx.fillStyle = 'rgba(0,0,0,0.05)';
-            for (let i = 0; i < canvas.width + 50; i+=50) {
-                let pos = (i - (this.x % 50));
-                ctx.beginPath(); 
-                ctx.arc(pos, canvas.height - this.h + 40, 10, 0, Math.PI*2);
-                ctx.arc(pos + 20, canvas.height - this.h + 80, 6, 0, Math.PI*2);
+            // Mønster
+            ctx.fillStyle = '#00b894';
+            for (let i = 0; i < gameWidth + 50; i += 50) {
+                let offset = this.x % 50;
+                ctx.beginPath();
+                ctx.arc(i - offset, gameHeight - this.h + 50, 15, 0, Math.PI*2);
                 ctx.fill();
             }
         },
@@ -382,88 +420,111 @@
     };
 
     const pipes = {
-        items: [], w: 70, gap: 175, dx: 2.5,
+        items: [], w: 70, gap: 170, dx: GAME_SPEED, // Økt gap litt for å gjøre det lettere
         draw: function() {
             for(let i = 0; i < this.items.length; i++) {
                 let p = this.items[i];
                 let bottomY = p.y + p.h + this.gap;
                 
-                // Rør farger (Cartoon Green)
-                let pipeColor = '#10ac84';
-                let pipeHighlight = '#55efc4';
-                
+                // Lyst og fint rør design
+                let colorMain = '#7bed9f';
+                let colorDark = '#2ed573';
+
                 ctx.lineWidth = 4;
                 ctx.strokeStyle = '#2d3436';
 
-                // --- TOP PIPE ---
-                ctx.fillStyle = pipeColor;
+                // --- TOP ---
+                ctx.fillStyle = colorMain;
                 ctx.fillRect(p.x, p.y, this.w, p.h);
                 ctx.strokeRect(p.x, p.y, this.w, p.h);
-                // Highlight
-                ctx.fillStyle = pipeHighlight;
-                ctx.fillRect(p.x + 8, p.y, 8, p.h);
+                // Skyggekant
+                ctx.fillStyle = colorDark;
+                ctx.fillRect(p.x + this.w - 15, p.y, 10, p.h);
                 // Cap
-                ctx.fillStyle = pipeColor;
-                ctx.fillRect(p.x - 4, p.y + p.h - 35, this.w + 8, 35);
-                ctx.strokeRect(p.x - 4, p.y + p.h - 35, this.w + 8, 35);
+                ctx.fillStyle = colorMain;
+                ctx.fillRect(p.x - 5, p.y + p.h - 35, this.w + 10, 35);
+                ctx.strokeRect(p.x - 5, p.y + p.h - 35, this.w + 10, 35);
 
-                // --- BOTTOM PIPE ---
-                let bH = canvas.height - bottomY - fg.h;
-                ctx.fillStyle = pipeColor;
+                // --- BOTTOM ---
+                let bH = gameHeight - bottomY - fg.h;
+                ctx.fillStyle = colorMain;
                 ctx.fillRect(p.x, bottomY, this.w, bH);
                 ctx.strokeRect(p.x, bottomY, this.w, bH);
-                // Highlight
-                ctx.fillStyle = pipeHighlight;
-                ctx.fillRect(p.x + 8, bottomY, 8, bH);
+                // Skyggekant
+                ctx.fillStyle = colorDark;
+                ctx.fillRect(p.x + this.w - 15, bottomY, 10, bH);
                 // Cap
-                ctx.fillStyle = pipeColor;
-                ctx.fillRect(p.x - 4, bottomY, this.w + 8, 35);
-                ctx.strokeRect(p.x - 4, bottomY, this.w + 8, 35);
+                ctx.fillStyle = colorMain;
+                ctx.fillRect(p.x - 5, bottomY, this.w + 10, 35);
+                ctx.strokeRect(p.x - 5, bottomY, this.w + 10, 35);
             }
         },
         update: function() {
+            // Frekvens basert på fart (ca hvert 2000ms eller avstand)
+            // Justert tallet her for å matche lavere fart
             if (frames % 140 === 0) {
-                let rY = Math.floor(Math.random() * (-180 - -400 + 1) + -400);
-                this.items.push({ x: canvas.width, y: rY, h: 500, passed: false });
+                let minPipeH = 40;
+                let maxPipeH = gameHeight - fg.h - this.gap - minPipeH;
+                // Enkel random høyde
+                let h = Math.random() * (gameHeight - fg.h - this.gap - 120) + 60;
+                
+                this.items.push({ 
+                    x: gameWidth, 
+                    y: h - 500, // Tegner rør langt opp
+                    h: 500, 
+                    passed: false 
+                });
             }
+            
             for(let i = 0; i < this.items.length; i++) {
                 let p = this.items[i];
                 p.x -= this.dx;
                 
-                // Kollisjon (litt tilgivende hitbox)
-                let hitMargin = 8;
-                let hitX = capy.x + hitMargin;
-                let hitY = capy.y + hitMargin;
-                let hitW = capy.w - (hitMargin*2);
-                let hitH = capy.h - (hitMargin*2);
+                // Hitbox: Vi gjør den ganske "snill" (trekker fra piksler)
+                let hitMargin = 10; 
+                let cX = capy.x + hitMargin;
+                let cY = capy.y + hitMargin;
+                let cW = capy.w - (hitMargin*2);
+                let cH = capy.h - (hitMargin*2);
 
-                if (hitX + hitW > p.x && hitX < p.x + this.w) {
-                    if (hitY < p.y + p.h || hitY + hitH > p.y + p.h + this.gap) die();
+                if (cX + cW > p.x && cX < p.x + this.w) {
+                    let pipeTopY = p.y + p.h;
+                    let pipeBotY = p.y + p.h + this.gap;
+                    if (cY < pipeTopY || cY + cH > pipeBotY) {
+                        die();
+                    }
                 }
                 
-                if(p.x + this.w < capy.x && !p.passed) { score++; scoreEl.innerText = score; p.passed = true; }
-                if(p.x + this.w < -20) { this.items.shift(); i--; }
+                if(p.x + this.w < capy.x && !p.passed) { 
+                    score++; 
+                    scoreEl.innerText = score; 
+                    p.passed = true; 
+                    // Bouncy score effekt
+                    scoreEl.style.transform = "scale(1.4)";
+                    setTimeout(()=>scoreEl.style.transform="scale(1)", 150);
+                }
+                
+                if(p.x + this.w < -60) { this.items.shift(); i--; }
             }
         },
         reset: function() { this.items = []; }
     };
 
-    // --- LOGIC ---
+    // --- LOOP ---
     function loop() {
-        // Tegn himmel (lysere blå)
-        ctx.fillStyle = "#48dbfb"; 
-        ctx.fillRect(0, 0, canvas.width, canvas.height);
-        
-        // Bakgrunnsskyer (paralax effekt kan legges til senere, her er de statiske eller sakte)
-        ctx.fillStyle = "rgba(255,255,255,0.6)";
-        ctx.beginPath(); ctx.arc(80, 480, 50, 0, Math.PI*2); ctx.fill();
-        ctx.beginPath(); ctx.arc(140, 500, 60, 0, Math.PI*2); ctx.fill();
-        ctx.beginPath(); ctx.arc(300, 400, 40, 0, Math.PI*2); ctx.fill();
+        // Blå himmel som fader til lysere (Solrik dag)
+        let skyGrad = ctx.createLinearGradient(0, 0, 0, gameHeight);
+        skyGrad.addColorStop(0, '#48dbfb'); // Dyp blå
+        skyGrad.addColorStop(1, '#c7ecee'); // Lys hvit/blå
+        ctx.fillStyle = skyGrad;
+        ctx.fillRect(0, 0, gameWidth, gameHeight);
 
+        clouds.draw();
         pipes.draw(); 
         fg.draw(); 
         capy.draw();
         
+        clouds.update(); 
         if (gameState !== 'DEAD') { fg.update(); capy.update(); }
         if (gameState === 'PLAYING') { pipes.update(); }
         
@@ -471,70 +532,69 @@
         requestAnimationFrame(loop);
     }
 
+    // --- INPUT & CONTROL ---
     function inputAction() {
         if (gameState === 'START') {
-            gameState = 'PLAYING'; scoreEl.style.display = 'block'; instructionText.style.display = 'none'; capy.jump();
-        } else if (gameState === 'PLAYING') capy.jump();
-    }
-
-    function sendCoinsToMainGame(amount) {
-        let pending = parseInt(localStorage.getItem('capy_pending_coins') || '0');
-        let ppc = parseInt(localStorage.getItem('capy_ppc') || '1');
-        let reward = amount * ppc * 5; // Formelen din
-        localStorage.setItem('capy_pending_coins', pending + reward);
-        return reward;
+            gameState = 'PLAYING'; 
+            scoreEl.style.display = 'block'; 
+            titleEl.style.display = 'none';
+            instructionText.style.display = 'none'; 
+            capy.jump();
+        } else if (gameState === 'PLAYING') {
+            capy.jump();
+        }
     }
 
     function die() {
+        if(gameState === 'DEAD') return;
         gameState = 'DEAD';
-        flashEl.style.opacity = 1; setTimeout(() => { flashEl.style.opacity = 0; }, 150);
-        if(score > highScore) { highScore = score; localStorage.setItem('flappyCapyHighScore', highScore); }
+        
+        flashEl.style.opacity = 0.6; 
+        setTimeout(() => { flashEl.style.opacity = 0; }, 100);
+        container.classList.add('shake');
+        setTimeout(() => { container.classList.remove('shake'); }, 500);
 
-        let earned = sendCoinsToMainGame(score);
+        if(score > highScore) { highScore = score; localStorage.setItem('flappyCapyHighScore', highScore); }
+        let earned = score * 10;
+        let pending = parseInt(localStorage.getItem('capy_pending_coins') || '0');
+        localStorage.setItem('capy_pending_coins', pending + earned);
 
         setTimeout(() => {
             scoreEl.style.display = 'none';
             resultScreen.style.display = 'flex';
-            finalScoreEl.innerText = score;
-            bestScoreEl.innerText = highScore;
-            coinRewardEl.innerText = earned.toLocaleString();
+            requestAnimationFrame(() => resultCard.classList.add('show'));
+            document.getElementById('final-score').innerText = score;
+            document.getElementById('best-score').innerText = highScore;
+            document.getElementById('coin-reward').innerText = earned;
         }, 600);
     }
 
-    function resetGame() {
-        gameState = 'START'; capy.y = 300; capy.velocity = 0; capy.rotation = 0;
-        score = 0; frames = 0; pipes.reset();
-        scoreEl.innerText = "0"; resultScreen.style.display = 'none'; instructionText.style.display = 'block';
+    window.resetGame = function() {
+        resultCard.classList.remove('show');
+        setTimeout(() => {
+            gameState = 'START'; 
+            capy.y = gameHeight / 2; 
+            capy.velocity = 0; 
+            capy.rotation = 0;
+            score = 0; frames = 0; pipes.reset();
+            scoreEl.innerText = "0"; 
+            resultScreen.style.display = 'none'; 
+            titleEl.style.display = 'block';
+            instructionText.style.display = 'block';
+        }, 300);
     }
 
-    function handleInput(e) {
-        // Sjekk om vi trykker på "Spill igjen"-knappen ELLER "Tilbake"-linken
-        // .closest gjør at det virker selv om du treffer teksten inni boksen
-        if (e.target.closest('.btn') || e.target.closest('.back-link')) {
-            return; // IKKE hopp, la knappen gjøre jobben sin
-        }
+    const handleInput = (e) => {
+        if (e.target.closest('.btn') || e.target.closest('.back-link')) return;
+        if (e.type === 'touchstart') e.preventDefault();
+        inputAction();
+    };
 
-        // Hvis vi trykker andre steder (på selve spillet):
-        if (e.type === 'touchstart') {
-            e.preventDefault(); // Hindre scrolling
-        }
-        inputAction(); // Hopp!
-    }
+    window.addEventListener('mousedown', handleInput);
+    window.addEventListener('touchstart', handleInput, {passive: false});
+    window.addEventListener('keydown', (e) => { if(e.code === 'Space') inputAction(); });
 
-    // Lytt etter trykk (både mus og touch)
-    window.addEventListener('mousedown', (e) => {
-        handleInput(e);
-    });
-
-    window.addEventListener('touchstart', (e) => {
-        handleInput(e);
-    }, {passive: false});
-
-    window.addEventListener('keydown', (e) => { 
-        if(e.code === 'Space') inputAction(); 
-    });
-
-    resetGame(); loop();
+    loop();
 </script>
 </body>
 </html>
