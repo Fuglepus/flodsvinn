@@ -986,56 +986,57 @@ if (localStorage.getItem("capyRichEdition")) {
    UPGRADE LIST (original + nye)
 ===================================================== */
 const UPGRADES = [
-{ id: 'c1', name: 'Kli bak øret', icon: '🤏', cost: 15, power: 1, type: 'click' },
-{ id: 'a1', name: 'Løvetann', icon: '🌻', cost: 25, power: 1, type: 'auto' },
-{ id: 'c2', name: 'Gi en kjeks', icon: '🍪', cost: 100, power: 5, type: 'click' },
-{ id: 'a2', name: 'Badeand', icon: '🦆', cost: 150, power: 5, type: 'auto' },
-{ id: 'c3', name: 'Massasje', icon: '💆', cost: 500, power: 15, type: 'click' },
-{ id: 'a3', name: 'Vannmelon', icon: '🍉', cost: 1000, power: 20, type: 'auto' },
-{ id: 'cos1', name: 'Solbriller', icon: '😎', cost: 2500, type: 'cosmetic', target: 'cosmetic-glasses' },
-{ id: 'a4', name: 'Yuzu Bad', icon: '🍊', cost: 5000, power: 60, type: 'auto' },
-{ id: 'cos2', name: 'Flosshatt', icon: '🎩', cost: 10000, type: 'cosmetic', target: 'cosmetic-tophat' },
-{ id: 'c4', name: 'Yoga-instruktør', icon: '🧘', cost: 20000, power: 150, type: 'click' },
-{ id: 'cos3', name: 'Gullkjede', icon: '🪙', cost: 50000, type: 'cosmetic', target: 'cosmetic-chain' },
-{ id: 'a5', name: 'Pelikan-hær', icon: '🐦', cost: 100000, power: 500, type: 'auto' },
-{ id: 'c5', name: 'Magisk Tommel', icon: '👍', cost: 500000, power: 2000, type: 'click' },
-{ id: 'cos5', name: 'Monokkel', icon: '🧐', cost: 1000000, type: 'cosmetic', target: 'cosmetic-monocle' },
-{ id: 'cos_heart', name: 'Hjertebriller', icon: '😍', cost: 1500000, type: 'cosmetic', target: 'cosmetic-heart-glasses' },
-{ id: 'cos_dog', name: 'Hund på hodet', icon: '🐶', cost: 1750000, type: 'cosmetic', target: 'cosmetic-dog' },
-{ id: 'a6', name: 'Capy Spa Resort', icon: '🧖', cost: 2500000, power: 5000, type: 'auto' },
-{ id: 'c6', name: 'Guddommelig Klapp', icon: '⚡', cost: 10000000, power: 15000, type: 'click' },
-{ id: 'a7', name: 'Månebase Alpha', icon: '🌑', cost: 50000000, power: 60000, type: 'auto' },
-{ id: 'cos4', name: 'Kongekrone', icon: '👑', cost: 100000000, type: 'cosmetic', target: 'cosmetic-crown' },
-{ id: 'a8', name: 'Tidsmaskin', icon: '⏳', cost: 500000000, power: 300000, type: 'auto' },
-{ id: 'cos6', name: 'Romhjelm', icon: '🧑‍🚀', cost: 1000000000, type: 'cosmetic', target: 'cosmetic-space' },
-{ id: 'a9', name: 'Multivers Portal', icon: '🌀', cost: 5000000000, power: 2000000, type: 'auto' },
-{ id: 'c7', name: 'Universets Hersker', icon: '🌌', cost: 25000000000, power: 10000000, type: 'click' },
+    { id: 'c1', name: 'Kli bak øret', icon: '🤏', cost: 15, power: 0.1, type: 'click' }, // Senket PPC til 10% av original
+    { id: 'a1', name: 'Løvetann', icon: '🌻', cost: 25, power: 0.1, type: 'auto' }, // Senket CPS til 10% av original
+    { id: 'c2', name: 'Gi en kjeks', icon: '🍪', cost: 100, power: 0.5, type: 'click' }, // Senket PPC
+    { id: 'a2', name: 'Badeand', icon: '🦆', cost: 150, power: 0.5, type: 'auto' }, // Senket CPS
+    { id: 'c3', name: 'Massasje', icon: '💆', cost: 500, power: 1.5, type: 'click' }, // Senket PPC
+    { id: 'a3', name: 'Vannmelon', icon: '🍉', cost: 1000, power: 2, type: 'auto' }, // Senket CPS
+    { id: 'cos1', name: 'Solbriller', icon: '😎', cost: 2500, type: 'cosmetic', target: 'cosmetic-glasses' },
+    { id: 'a4', name: 'Yuzu Bad', icon: '🍊', cost: 5000, power: 6, type: 'auto' }, // Senket CPS
+    { id: 'cos2', name: 'Flosshatt', icon: '🎩', cost: 10000, type: 'cosmetic', target: 'cosmetic-tophat' },
+    { id: 'c4', name: 'Yoga-instruktør', icon: '🧘', cost: 20000, power: 15, type: 'click' }, // Senket PPC
+    { id: 'cos3', name: 'Gullkjede', icon: '🪙', cost: 50000, type: 'cosmetic', target: 'cosmetic-chain' },
+    { id: 'a5', name: 'Pelikan-hær', icon: '🐦', cost: 100000, power: 50, type: 'auto' }, // Senket CPS
+    { id: 'c5', name: 'Magisk Tommel', icon: '👍', cost: 500000, power: 200, type: 'click' }, // Senket PPC
+    { id: 'cos5', name: 'Monokkel', icon: '🧐', cost: 1000000, type: 'cosmetic', target: 'cosmetic-monocle' },
+    { id: 'cos_heart', name: 'Hjertebriller', icon: '😍', cost: 1500000, type: 'cosmetic', target: 'cosmetic-heart-glasses' },
+    { id: 'cos_dog', name: 'Hund på hodet', icon: '🐶', cost: 1750000, type: 'cosmetic', target: 'cosmetic-dog' },
+    { id: 'a6', name: 'Capy Spa Resort', icon: '🧖', cost: 2500000, power: 500, type: 'auto' }, // Senket CPS
+    { id: 'c6', name: 'Guddommelig Klapp', icon: '⚡', cost: 10000000, power: 1500, type: 'click' }, // Senket PPC
+    { id: 'a7', name: 'Månebase Alpha', icon: '🌑', cost: 50000000, power: 6000, type: 'auto' }, // Senket CPS
+    { id: 'cos4', name: 'Kongekrone', icon: '👑', cost: 100000000, type: 'cosmetic', target: 'cosmetic-crown' },
+    { id: 'a8', name: 'Tidsmaskin', icon: '⏳', cost: 500000000, power: 30000, type: 'auto' }, // Senket CPS
+    { id: 'cos6', name: 'Romhjelm', icon: '🧑‍🚀', cost: 1000000000, type: 'cosmetic', target: 'cosmetic-space' },
+    { id: 'a9', name: 'Multivers Portal', icon: '🌀', cost: 5000000000, power: 200000, type: 'auto' }, // Senket CPS
+    { id: 'c7', name: 'Universets Hersker', icon: '🌌', cost: 25000000000, power: 1000000, type: 'click' }, // Senket PPC
 
 
     /* =====================================================
        NEW BALANCED UPGRADES (NO NEW COSMETICS)
     ====================================================== */
 
-    { id: 'a10', name: 'Hyperdimensjons Farm', icon: '🏭', cost: 150000000000, power: 8000000, type: 'auto' },
+    { id: 'a10', name: 'Hyperdimensjons Farm', icon: '🏭', cost: 150000000000, power: 800000, type: 'auto' }, // Senket CPS
 
-    { id: 'c8', name: 'Galaktisk Kosehånd', icon: '🖐️', cost: 100000000000, power: 30000000, type: 'click' },
+    { id: 'c8', name: 'Galaktisk Kosehånd', icon: '🖐️', cost: 100000000000, power: 3000000, type: 'click' }, // Senket PPC
 
-    { id: 'a11', name: 'Solstorm Generator', icon: '☀️', cost: 1200000000000, power: 50000000, type: 'auto' },
+    { id: 'a11', name: 'Solstorm Generator', icon: '☀️', cost: 1200000000000, power: 5000000, type: 'auto' }, // Senket CPS
 
-    { id: 'c9', name: 'Kosmisk High-Five', icon: '✋', cost: 750000000000, power: 150000000, type: 'click' },
+    { id: 'c9', name: 'Kosmisk High-Five', icon: '✋', cost: 750000000000, power: 15000000, type: 'click' }, // Senket PPC
 
-    { id: 'a12', name: 'Kvante-Flokkleder', icon: '🧬', cost: 6500000000000, power: 300000000, type: 'auto' },
+    { id: 'a12', name: 'Kvante-Flokkleder', icon: '🧬', cost: 6500000000000, power: 30000000, type: 'auto' }, // Senket CPS
 
-    { id: 'a13', name: 'Singularitetsmaskin', icon: '🕳️', cost: 25000000000000, power: 2500000000, type: 'auto' },
+    { id: 'a13', name: 'Singularitetsmaskin', icon: '🕳️', cost: 25000000000000, power: 250000000, type: 'auto' }, // Senket CPS
 
-    { id: 'c10', name: 'Meta-Klapp', icon: '👏', cost: 50000000000000, power: 25000000000, type: 'click' },
+    { id: 'c10', name: 'Meta-Klapp', icon: '👏', cost: 50000000000000, power: 2500000000, type: 'click' }, // Senket PPC
 
-    { id: 'a14', name: 'Capyverse Kontroller', icon: '🎮', cost: 100000000000000, power: 8000000000, type: 'auto' },
+    { id: 'a14', name: 'Capyverse Kontroller', icon: '🎮', cost: 100000000000000, power: 800000000, type: 'auto' }, // Senket CPS
 
-    { id: 'a15', name: 'Evighetsmotor', icon: '♾️', cost: 500000000000000, power: 30000000000, type: 'auto' },
+    { id: 'a15', name: 'Evighetsmotor', icon: '♾️', cost: 500000000000000, power: 3000000000, type: 'auto' }, // Senket CPS
 
-    { id: 'c11', name: 'Ultimat Capy Klapp', icon: '🐾', cost: 2500000000000000, power: 200000000000, type: 'click' }
+    { id: 'c11', name: 'Ultimat Capy Klapp', icon: '🐾', cost: 2500000000000000, power: 20000000000, type: 'click' } // Senket PPC
 ];
+
 
 
 /* =====================================================
@@ -1541,7 +1542,7 @@ function checkCooldown() {
             Neste tema: <strong>${nextCat.title}</strong><br>
             ${
                 game.quizDouble 
-                ? `<div class="quiz-bonus-alert"> <strong>2x Coins!</strong> </div>`
+                ? `<div class="quiz-bonus-alert"> <strong>Normal rewards!</strong> </div>`
                 : `<div style="opacity:0.6;">Normal reward</div>`
             }
         `;
