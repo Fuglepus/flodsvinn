@@ -753,6 +753,116 @@ body {
 }
 .btn-flappy { background: #fab1a0; border-color: var(--text-dark); }
 
+    /* Modal bakgrunn */
+    .confirmation-modal {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.5);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        z-index: 1000;
+    }
+
+    .modal-content {
+        background: #fff;
+        padding: 20px;
+        border-radius: 10px;
+        width: 300px;
+        text-align: center;
+    }
+
+    .modal-buttons {
+        margin-top: 20px;
+    }
+
+    .modal-buttons .btn {
+        font-size: 1rem;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        margin: 0 10px;
+    }
+        /* Modal bakgrunn */
+    .confirmation-modal {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.7); /* Mørkere bakgrunn for å få modal til å skille seg ut */
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        z-index: 1000;
+    }
+
+    .modal-content {
+        background: #fff;
+        padding: 30px;
+        border-radius: 12px;
+        width: 350px;  /* Størrelse på modal */
+        text-align: center;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    }
+
+    .modal-content h3 {
+        font-size: 1.5rem;
+        color: #333;
+        margin-bottom: 15px;
+    }
+
+    .modal-content p {
+        font-size: 1rem;
+        color: #555;
+        margin-bottom: 20px;
+    }
+
+    .modal-buttons {
+        display: flex;
+        justify-content: center;
+        gap: 15px; /* Legger litt plass mellom knappene */
+    }
+
+    .btn {
+        font-size: 1rem;
+        padding: 12px 25px;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        width: 120px;
+    }
+
+    /* Bekreftelsesknapp (grønn) */
+    .confirm-btn {
+        background-color: #27ae60;
+        color: white;
+    }
+
+    .confirm-btn:hover {
+        background-color: #2ecc71;
+    }
+
+    /* Avbryt-knapp (grå) */
+    .cancel-btn {
+        background-color: #95a5a6;
+        color: white;
+    }
+
+    .cancel-btn:hover {
+        background-color: #7f8c8d;
+    }
+
+    /* Knappene når de er inaktiv (disabled) */
+    .btn:disabled {
+        background-color: #bdc3c7;
+        cursor: not-allowed;
+    }
     </style>
 </head>
 
@@ -949,6 +1059,22 @@ body {
             <span class="btn btn-flappy">SPILL NÅ ▶</span>
         </div>
     </div>
+
+<div style="text-align: center; margin-top: 20px;">
+    <button id="restart-button" class="btn" style="font-size: 1rem; padding: 8px 16px; background: red; color: #fff; border: none; border-radius: 20px; opacity: 0.8; transition: opacity 0.3s;">Restart</button>
+</div>
+
+<!-- Custom Confirmation Modal -->
+<div id="confirmation-modal" class="confirmation-modal" style="display: none;">
+    <div class="modal-content">
+        <h3>Er du sikker på at du vil starte på nytt?</h3>
+        <p>All fremgang vil bli tapt.</p>
+        <div class="modal-buttons">
+            <button id="confirm-restart" class="btn confirm-btn">Bekreft</button>
+            <button id="cancel-restart" class="btn cancel-btn">Avbryt</button>
+        </div>
+    </div>
+</div>
 
 </section>
 
@@ -1786,6 +1912,28 @@ document.addEventListener("DOMContentLoaded", function() {
         game.capyName = nameInput.value;
         save();
     });
+
+// Legg til en event listener for Restart-knappen
+document.getElementById("restart-button").addEventListener("click", function() {
+    // Vis custom confirmation modal
+    document.getElementById("confirmation-modal").style.display = "flex";
+});
+
+// Håndter bekreftelse (Restart)
+document.getElementById("confirm-restart").addEventListener("click", function() {
+    // Slett all fremgang fra localStorage hvis bekreftelse er gitt
+    localStorage.removeItem("capyRichEdition");
+    localStorage.removeItem("capy_ppc");
+
+    // Last inn spillet på nytt
+    location.reload();
+});
+
+// Håndter avbrytelse (Steng modal)
+document.getElementById("cancel-restart").addEventListener("click", function() {
+    // Skjul modal uten å gjøre noe
+    document.getElementById("confirmation-modal").style.display = "none";
+});
 
     checkCooldown();
     updateGameUI();
