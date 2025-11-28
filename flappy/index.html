@@ -1,0 +1,544 @@
+﻿<!DOCTYPE html>
+<html lang="no">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Flodsvin.no | Flappy Flodsvin</title>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600;800;900&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --bg-color: #48dbfb; /* Cartoon Sky Blue */
+            --primary: #00b894;
+            --accent: #ff9f43;
+            --danger: #ee5253;
+            --dark: #2d3436;
+            --light: #ffffff;
+            
+            --border-width: 4px;
+            --shadow-depth: 6px;
+            --radius-box: 24px;
+            --radius-btn: 50px;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Fredoka', sans-serif;
+            background: linear-gradient(135deg, #70a1ff, #5352ed); /* Kulere bakgrunn utenfor spillet */
+            height: 100vh;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            touch-action: none;
+            user-select: none;
+        }
+
+        /* --- LOGO / TITTEL --- */
+        h1 {
+            position: absolute;
+            top: 25px;
+            color: #fff;
+            font-size: 3rem;
+            font-weight: 900;
+            /* Cartoon stroke effekt */
+            -webkit-text-stroke: 3px var(--dark); 
+            text-shadow: 4px 4px 0px rgba(0,0,0,0.2);
+            z-index: 10;
+            pointer-events: none;
+            transform: rotate(-2deg);
+            animation: floatTitle 3s ease-in-out infinite;
+        }
+        @keyframes floatTitle { 0%,100%{transform:rotate(-2deg) translateY(0);} 50%{transform:rotate(2deg) translateY(-10px);} }
+
+        /* --- SPILLRAMME --- */
+        #game-container {
+            position: relative;
+            background: var(--bg-color); /* Himmelblå */
+            width: 100%;
+            max-width: 420px;
+            height: 700px;
+            max-height: 90vh;
+            
+            /* Mobil-look */
+            border-radius: 30px;
+            border: 6px solid var(--dark);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.4), inset 0 0 40px rgba(255,255,255,0.3);
+            overflow: hidden;
+            cursor: pointer;
+        }
+
+        canvas {
+            display: block;
+            width: 100%;
+            height: 100%;
+        }
+
+        /* --- UI TEKST --- */
+        #instruction-text {
+            position: absolute;
+            top: 55%; left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 1.8rem;
+            font-weight: 900;
+            color: white;
+            -webkit-text-stroke: 2px var(--dark);
+            text-shadow: 3px 3px 0 rgba(0,0,0,0.3);
+            pointer-events: none;
+            text-align: center;
+            width: 100%;
+            animation: pulse 1.5s infinite;
+        }
+        @keyframes pulse { 0%,100%{transform:translate(-50%, -50%) scale(1);} 50%{transform:translate(-50%, -50%) scale(1.1);} }
+
+        /* --- RESULT SCREEN (MODAL) --- */
+        #result-screen {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.5); /* Semi-transparent mørk */
+            backdrop-filter: blur(8px); /* Blur effekt bak */
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            z-index: 20;
+        }
+
+        .card {
+            background: #fff;
+            padding: 30px 20px;
+            border-radius: var(--radius-box);
+            border: var(--border-width) solid var(--dark);
+            box-shadow: 0 10px 0 rgba(0,0,0,0.2);
+            text-align: center;
+            width: 85%;
+            max-width: 340px;
+            position: relative;
+            animation: popIn 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        @keyframes popIn { from{transform:scale(0.5); opacity:0;} to{transform:scale(1); opacity:1;} }
+
+        .card h2 {
+            font-size: 2.5rem;
+            color: var(--danger);
+            font-weight: 900;
+            text-transform: uppercase;
+            -webkit-text-stroke: 2px var(--dark);
+            margin-bottom: 20px;
+            letter-spacing: 2px;
+            margin-top: -10px;
+        }
+
+        /* --- STATS GRID --- */
+        .recap-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+
+        .recap-box {
+            background: #f1f2f6;
+            border: 3px solid #dfe4ea;
+            border-radius: 15px;
+            padding: 10px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .recap-label {
+            font-size: 0.85rem;
+            color: #747d8c;
+            font-weight: 800;
+            text-transform: uppercase;
+            margin-bottom: 5px;
+        }
+
+        .recap-value {
+            font-size: 1.8rem;
+            font-weight: 900;
+            color: var(--dark);
+        }
+
+        /* --- COIN REWARD --- */
+        .coin-reward-box {
+            grid-column: span 2;
+            background: #ffeaa7;
+            background-image: radial-gradient(#fdcb6e 20%, transparent 20%);
+            background-size: 10px 10px;
+            color: var(--dark);
+            padding: 15px;
+            border-radius: 15px;
+            border: 3px solid var(--dark);
+            text-align: center;
+            font-size: 1.3rem;
+            font-weight: 900;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            box-shadow: 0 4px 0 rgba(0,0,0,0.1);
+        }
+        .coin-icon { font-size: 1.6rem; animation: spin 2s linear infinite; display:inline-block; }
+        @keyframes spin { 100% { transform: rotateY(360deg); } }
+
+        /* --- BUTTON --- */
+        .btn {
+            background: var(--primary);
+            color: white;
+            font-size: 1.4rem;
+            padding: 15px 0;
+            width: 100%;
+            border-radius: var(--radius-btn);
+            border: var(--border-width) solid var(--dark);
+            font-weight: 900;
+            cursor: pointer;
+            text-transform: uppercase;
+            box-shadow: 0 var(--shadow-depth) 0 #008c70; /* Mørkere grønn skygge */
+            transition: all 0.1s;
+            position: relative;
+            top: 0;
+        }
+        .btn:active {
+            top: var(--shadow-depth);
+            box-shadow: 0 0 0 #008c70;
+        }
+        .btn:hover { filter: brightness(1.1); }
+
+        /* --- IN-GAME SCORE --- */
+        #game-score {
+            position: absolute;
+            top: 10%;
+            width: 100%;
+            text-align: center;
+            font-size: 5rem;
+            font-weight: 900;
+            color: white;
+            -webkit-text-stroke: 4px var(--dark);
+            text-shadow: 5px 5px 0 rgba(0,0,0,0.2);
+            z-index: 2;
+            pointer-events: none;
+            display: none; 
+        }
+
+        /* --- FLASH EFFECT --- */
+        #flash {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: white;
+            opacity: 0;
+            pointer-events: none;
+            z-index: 15;
+            transition: opacity 0.15s ease-out;
+        }
+        
+        .back-link {
+            position: absolute;
+            bottom: 20px;
+            color: rgba(255,255,255,0.8);
+            text-decoration: none;
+            font-weight: 800;
+            font-size: 1rem;
+            background: rgba(0,0,0,0.2);
+            padding: 8px 16px;
+            border-radius: 20px;
+            transition: 0.2s;
+        }
+        .back-link:hover { background: rgba(0,0,0,0.4); }
+
+    </style>
+</head>
+<body>
+
+    <h1>Flappy Capy</h1>
+
+    <div id="game-container">
+        <div id="game-score">0</div>
+        
+        <div id="instruction-text">
+            <span>TAP TO JUMP</span><br>
+            <span style="font-size:3rem;">👆</span>
+        </div>
+        
+        <canvas id="gameCanvas"></canvas>
+        <div id="flash"></div>
+
+        <!-- Result Screen -->
+        <div id="result-screen">
+            <div class="card">
+                <h2>GAME OVER</h2>
+                
+                <div class="recap-grid">
+                    <div class="recap-box">
+                        <span class="recap-label">Score</span>
+                        <span class="recap-value" id="final-score">0</span>
+                    </div>
+                    <div class="recap-box">
+                        <span class="recap-label">Best</span>
+                        <span class="recap-value" id="best-score">0</span>
+                    </div>
+                    
+                    <!-- Coin reward display -->
+                    <div class="coin-reward-box">
+                        <span class="coin-icon">💰</span> +<span id="coin-reward">0</span>
+                    </div>
+                </div>
+
+                <button class="btn" onclick="resetGame()">SPILL IGJEN</button>
+            </div>
+        </div>
+    </div>
+    
+<a href="/" class="back-link">← Tilbake til Flodsvin.no</a>
+
+<script>
+    const canvas = document.getElementById('gameCanvas');
+    const ctx = canvas.getContext('2d');
+    
+    // Oppløsning
+    canvas.width = 380; // Litt bredere for moderne skjermer
+    canvas.height = 680;
+
+    // Elements
+    const scoreEl = document.getElementById('game-score');
+    const resultScreen = document.getElementById('result-screen');
+    const instructionText = document.getElementById('instruction-text');
+    const flashEl = document.getElementById('flash');
+    const finalScoreEl = document.getElementById('final-score');
+    const bestScoreEl = document.getElementById('best-score');
+    const coinRewardEl = document.getElementById('coin-reward');
+
+    // Variables
+    let frames = 0;
+    let score = 0;
+    let highScore = localStorage.getItem('flappyCapyHighScore') || 0;
+    let gameState = 'START'; 
+
+    // Coin Multiplier: Hvor mange mynter får du per poeng i Flappy Bird?
+    const COINS_PER_POINT = 10; 
+
+    // --- BILDER ---
+    const capySvgString = `
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 220">
+        <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
+          <feDropShadow dx="0" dy="4" stdDeviation="2" flood-color="rgba(0,0,0,0.3)"/>
+        </filter>
+        <g id="base-body" filter="url(#shadow)">
+            <rect x="40" y="80" width="120" height="100" rx="40" fill="#a08276" stroke="#2d3436" stroke-width="6"/>
+            <circle cx="50" cy="85" r="12" fill="#a08276" stroke="#2d3436" stroke-width="5"/>
+            <circle cx="150" cy="85" r="12" fill="#a08276" stroke="#2d3436" stroke-width="5"/>
+            <rect x="70" y="120" width="60" height="40" rx="15" fill="#5D4037"/>
+            <path d="M90 135 L100 145 L110 135" stroke="#2d3436" stroke-width="5" fill="none"/>
+            <line x1="100" y1="145" x2="100" y2="155" stroke="#2d3436" stroke-width="5"/>
+            <circle cx="70" cy="110" r="5" fill="#2d3436"/> <circle cx="130" cy="110" r="5" fill="#2d3436"/>
+            <circle cx="72" cy="108" r="1.5" fill="#fff"/> <circle cx="132" cy="108" r="1.5" fill="#fff"/>
+        </g>
+    </svg>`;
+    const capyImage = new Image();
+    capyImage.src = 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(capySvgString);
+
+    // --- OBJEKTER ---
+    const capy = {
+        x: 60, y: 250, w: 70, h: 77, // Litt større og mer tydelig
+        velocity: 0, gravity: 0.20, jumpStrength: 5.5, rotation: 0,
+        draw: function() {
+            ctx.save();
+            ctx.translate(this.x + this.w/2, this.y + this.h/2);
+            if (gameState === 'START') this.rotation = 0;
+            else {
+                if (this.velocity < 0) this.rotation = -20 * (Math.PI / 180);
+                else {
+                    this.rotation += 0.05; 
+                    if (this.rotation > 80 * (Math.PI / 180)) this.rotation = 80 * (Math.PI / 180);
+                }
+            }
+            ctx.rotate(this.rotation);
+            ctx.drawImage(capyImage, -this.w/2, -this.h/2, this.w, this.h);
+            ctx.restore();
+        },
+        update: function() {
+            if (gameState === 'START') this.y = 300 + Math.sin(frames * 0.12) * 8; // Tydeligere sveve-animasjon
+            else if (gameState === 'PLAYING') {
+                this.velocity += this.gravity;
+                this.y += this.velocity;
+                if (this.y + this.h >= canvas.height - fg.h) { this.y = canvas.height - fg.h - this.h; die(); }
+                if (this.y < 0) { this.y = 0; this.velocity = 0; }
+            }
+        },
+        jump: function() { this.velocity = -this.jumpStrength; }
+    };
+
+    const fg = {
+        h: 120, x: 0, dx: 2.5,
+        draw: function() {
+            // Tegn en finere bakke
+            // Sand
+            ctx.fillStyle = '#feca57'; 
+            ctx.fillRect(0, canvas.height - this.h, canvas.width, this.h);
+            
+            // Gress-topp
+            ctx.fillStyle = '#1dd1a1'; 
+            ctx.fillRect(0, canvas.height - this.h, canvas.width, 20);
+            
+            // Border stripe
+            ctx.beginPath(); 
+            ctx.moveTo(0, canvas.height - this.h); 
+            ctx.lineTo(canvas.width, canvas.height - this.h);
+            ctx.strokeStyle = "#2d3436"; 
+            ctx.lineWidth = 4; 
+            ctx.stroke();
+
+            // Mønster i bakken (tegneserie-aktig)
+            ctx.fillStyle = 'rgba(0,0,0,0.05)';
+            for (let i = 0; i < canvas.width + 50; i+=50) {
+                let pos = (i - (this.x % 50));
+                ctx.beginPath(); 
+                ctx.arc(pos, canvas.height - this.h + 40, 10, 0, Math.PI*2);
+                ctx.arc(pos + 20, canvas.height - this.h + 80, 6, 0, Math.PI*2);
+                ctx.fill();
+            }
+        },
+        update: function() { if(gameState !== 'DEAD') this.x += this.dx; }
+    };
+
+    const pipes = {
+        items: [], w: 70, gap: 175, dx: 2.5,
+        draw: function() {
+            for(let i = 0; i < this.items.length; i++) {
+                let p = this.items[i];
+                let bottomY = p.y + p.h + this.gap;
+                
+                // Rør farger (Cartoon Green)
+                let pipeColor = '#10ac84';
+                let pipeHighlight = '#55efc4';
+                
+                ctx.lineWidth = 4;
+                ctx.strokeStyle = '#2d3436';
+
+                // --- TOP PIPE ---
+                ctx.fillStyle = pipeColor;
+                ctx.fillRect(p.x, p.y, this.w, p.h);
+                ctx.strokeRect(p.x, p.y, this.w, p.h);
+                // Highlight
+                ctx.fillStyle = pipeHighlight;
+                ctx.fillRect(p.x + 8, p.y, 8, p.h);
+                // Cap
+                ctx.fillStyle = pipeColor;
+                ctx.fillRect(p.x - 4, p.y + p.h - 35, this.w + 8, 35);
+                ctx.strokeRect(p.x - 4, p.y + p.h - 35, this.w + 8, 35);
+
+                // --- BOTTOM PIPE ---
+                let bH = canvas.height - bottomY - fg.h;
+                ctx.fillStyle = pipeColor;
+                ctx.fillRect(p.x, bottomY, this.w, bH);
+                ctx.strokeRect(p.x, bottomY, this.w, bH);
+                // Highlight
+                ctx.fillStyle = pipeHighlight;
+                ctx.fillRect(p.x + 8, bottomY, 8, bH);
+                // Cap
+                ctx.fillStyle = pipeColor;
+                ctx.fillRect(p.x - 4, bottomY, this.w + 8, 35);
+                ctx.strokeRect(p.x - 4, bottomY, this.w + 8, 35);
+            }
+        },
+        update: function() {
+            if (frames % 140 === 0) {
+                let rY = Math.floor(Math.random() * (-180 - -400 + 1) + -400);
+                this.items.push({ x: canvas.width, y: rY, h: 500, passed: false });
+            }
+            for(let i = 0; i < this.items.length; i++) {
+                let p = this.items[i];
+                p.x -= this.dx;
+                
+                // Kollisjon (litt tilgivende hitbox)
+                let hitMargin = 8;
+                let hitX = capy.x + hitMargin;
+                let hitY = capy.y + hitMargin;
+                let hitW = capy.w - (hitMargin*2);
+                let hitH = capy.h - (hitMargin*2);
+
+                if (hitX + hitW > p.x && hitX < p.x + this.w) {
+                    if (hitY < p.y + p.h || hitY + hitH > p.y + p.h + this.gap) die();
+                }
+                
+                if(p.x + this.w < capy.x && !p.passed) { score++; scoreEl.innerText = score; p.passed = true; }
+                if(p.x + this.w < -20) { this.items.shift(); i--; }
+            }
+        },
+        reset: function() { this.items = []; }
+    };
+
+    // --- LOGIC ---
+    function loop() {
+        // Tegn himmel (lysere blå)
+        ctx.fillStyle = "#48dbfb"; 
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+        
+        // Bakgrunnsskyer (paralax effekt kan legges til senere, her er de statiske eller sakte)
+        ctx.fillStyle = "rgba(255,255,255,0.6)";
+        ctx.beginPath(); ctx.arc(80, 480, 50, 0, Math.PI*2); ctx.fill();
+        ctx.beginPath(); ctx.arc(140, 500, 60, 0, Math.PI*2); ctx.fill();
+        ctx.beginPath(); ctx.arc(300, 400, 40, 0, Math.PI*2); ctx.fill();
+
+        pipes.draw(); 
+        fg.draw(); 
+        capy.draw();
+        
+        if (gameState !== 'DEAD') { fg.update(); capy.update(); }
+        if (gameState === 'PLAYING') { pipes.update(); }
+        
+        frames++; 
+        requestAnimationFrame(loop);
+    }
+
+    function inputAction() {
+        if (gameState === 'START') {
+            gameState = 'PLAYING'; scoreEl.style.display = 'block'; instructionText.style.display = 'none'; capy.jump();
+        } else if (gameState === 'PLAYING') capy.jump();
+    }
+
+    function sendCoinsToMainGame(amount) {
+        let pending = parseInt(localStorage.getItem('capy_pending_coins') || '0');
+        let ppc = parseInt(localStorage.getItem('capy_ppc') || '1');
+        let reward = amount * ppc * 5; // Formelen din
+        localStorage.setItem('capy_pending_coins', pending + reward);
+        return reward;
+    }
+
+    function die() {
+        gameState = 'DEAD';
+        flashEl.style.opacity = 1; setTimeout(() => { flashEl.style.opacity = 0; }, 150);
+        if(score > highScore) { highScore = score; localStorage.setItem('flappyCapyHighScore', highScore); }
+
+        let earned = sendCoinsToMainGame(score);
+
+        setTimeout(() => {
+            scoreEl.style.display = 'none';
+            resultScreen.style.display = 'flex';
+            finalScoreEl.innerText = score;
+            bestScoreEl.innerText = highScore;
+            coinRewardEl.innerText = earned.toLocaleString();
+        }, 600);
+    }
+
+    function resetGame() {
+        gameState = 'START'; capy.y = 300; capy.velocity = 0; capy.rotation = 0;
+        score = 0; frames = 0; pipes.reset();
+        scoreEl.innerText = "0"; resultScreen.style.display = 'none'; instructionText.style.display = 'block';
+    }
+
+    window.addEventListener('mousedown', (e) => { if(e.target.tagName !== 'BUTTON') inputAction(); });
+    window.addEventListener('touchstart', (e) => { if(e.target.tagName !== 'BUTTON') { e.preventDefault(); inputAction(); } }, {passive: false});
+    window.addEventListener('keydown', (e) => { if(e.code === 'Space') inputAction(); });
+
+    resetGame(); loop();
+</script>
+</body>
+</html>
