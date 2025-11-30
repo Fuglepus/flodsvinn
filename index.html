@@ -1372,32 +1372,38 @@ function resetGame() {
     }
 }
 
+// Legg til en lyd når flodsvinet blir klikket
+const clickSound = new Audio('click.mp3'); // Sett riktig sti til filen, f.eks. 'sounds/click.mp3'
+
 const capyEl = document.getElementById("main-capy");
 if (capyEl) {
     capyEl.addEventListener("mousedown", e => {
+        // Spill av klikkelyden
+        clickSound.play();
+
         const { cp } = getPowers();
         game.score += cp;
 
-capyEl.classList.remove("pop"); // reset for rapid clicking
-void capyEl.offsetWidth;        // forces reflow so animation can retrigger
-capyEl.classList.add("pop");
-setTimeout(() => capyEl.classList.remove("pop"), 200);
+        capyEl.classList.remove("pop"); // reset for rapid clicking
+        void capyEl.offsetWidth;        // forces reflow so animation can retrigger
+        capyEl.classList.add("pop");
+        setTimeout(() => capyEl.classList.remove("pop"), 200);
 
-const f = document.createElement("div");
-f.className = "floater";
-f.innerText = `+${cp}`;
+        const f = document.createElement("div");
+        f.className = "floater";
+        f.innerText = `+${cp}`;
 
-// plasser floater der du klikker
-const rect = capyEl.getBoundingClientRect();
-const x = e.clientX - rect.left;
-const y = e.clientY - rect.top;
+        // Plasser floater der du klikker
+        const rect = capyEl.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
 
-f.style.left = x + "px";
-f.style.top = y + "px";
+        f.style.left = x + "px";
+        f.style.top = y + "px";
 
-capyEl.appendChild(f);
+        capyEl.appendChild(f);
 
-setTimeout(() => f.remove(), 800);
+        setTimeout(() => f.remove(), 800);
 
         updateGameUI();
         save();
