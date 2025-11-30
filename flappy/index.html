@@ -80,12 +80,12 @@
         }
     }
 
-    canvas {
-        display: block;
-        width: 100%;
-        height: 100%;
-        image-rendering: pixelated; 
-    }
+canvas {
+    display: block;
+    width: 100%;
+    height: 100%;
+    image-rendering: pixelated;
+}
 
     /* --- UI TEXT --- */
     h1 {
@@ -281,6 +281,9 @@
     </div>
 
 <script>
+
+const container = document.getElementById('game-container');
+
 // === CANVAS ===
 const canvas = document.getElementById('gameCanvas');
 const ctx = canvas.getContext('2d');
@@ -309,16 +312,20 @@ let gameWidth = 320;
 let gameHeight = 580;
 
 function resize() {
-    const aspect = window.innerHeight / window.innerWidth;
-    if (window.innerWidth < 600) {
-        gameWidth = 340;
-        gameHeight = gameWidth * aspect;
-    } else {
-        gameWidth = 360;
-        gameHeight = 640;
-    }
-    canvas.width = gameWidth;
-    canvas.height = gameHeight;
+    const dpr = window.devicePixelRatio || 1;
+    const rect = container.getBoundingClientRect();
+
+    // Oppdater gameWidth og gameHeight basert på containerens størrelse
+    gameWidth = rect.width;
+    gameHeight = rect.height;
+
+    // Sett intern canvas-oppløsning (pixelbuffer)
+    canvas.width = rect.width * dpr;
+    canvas.height = rect.height * dpr;
+
+    // Unngå å bruke gammel skalering – nullstill så sett ny
+    ctx.setTransform(1, 0, 0, 1, 0, 0);
+    ctx.scale(dpr, dpr);
 }
 window.addEventListener('resize', resize);
 resize();
@@ -330,7 +337,6 @@ const resultCard = document.getElementById('result-card');
 const instructionText = document.getElementById('instruction-text');
 const titleEl = document.querySelector('h1');
 const flashEl = document.getElementById('flash');
-const container = document.getElementById('game-container');
 const coinRewardEl = document.getElementById('coin-reward');
 
 // === LOGIKK ===
