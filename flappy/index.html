@@ -214,11 +214,36 @@
         30%, 50%, 70% { transform: translate3d(-6px, 0, 0); } 
         40%, 60% { transform: translate3d(6px, 0, 0); } 
     }
+
+    #mute-btn {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    background: rgba(0,0,0,0.3);
+    color: white;
+    font-size: 1.8rem;
+    padding: 8px 12px;
+    border-radius: 12px;
+    border: 3px solid #2d3436;
+    cursor: pointer;
+    z-index: 999;
+    transition: background 0.2s, transform 0.1s;
+}
+
+#mute-btn:active {
+    transform: scale(0.85);
+}
+
+#mute-btn.muted {
+    background: rgba(0,0,0,0.6);
+}
+
 </style>
 </head>
 <body>
 
     <div id="game-container">
+    <div id="mute-btn">🔊</div>
         <h1>Flappy Capy</h1>
         <div id="game-score">0</div>
         
@@ -256,329 +281,462 @@
     </div>
 
 <script>
-    const canvas = document.getElementById('gameCanvas');
-    const ctx = canvas.getContext('2d');
-    
-    // --- ZOOM & OPPLØSNING ---
-    let gameWidth = 320; 
-    let gameHeight = 580; 
+// === CANVAS ===
+const canvas = document.getElementById('gameCanvas');
+const ctx = canvas.getContext('2d');
 
-    function resize() {
-        const aspect = window.innerHeight / window.innerWidth;
-        if (window.innerWidth < 600) {
-            gameWidth = 340; 
-            gameHeight = gameWidth * aspect;
+// === LYD ===
+const sfxPoint = new Audio("point.mp3");
+const sfxDie   = new Audio("die.mp3");
+const bgMusic = new Audio("music.mp3");
+sfxPoint.volume = 0.7;
+sfxDie.volume   = 0.9;
+
+// --- MUTE SYSTEM ---
+let isMuted = localStorage.getItem('capy_muted') === 'true';
+
+function applyMuteState() {
+    const muteBtn = document.getElementById("mute-btn");
+    muteBtn.classList.toggle("muted", isMuted);
+    muteBtn.innerText = isMuted ? "🔇" : "🔊";
+
+    sfxPoint.muted = isMuted;
+    sfxDie.muted = isMuted;
+}
+
+// === GAME SIZE ===
+let gameWidth = 320;
+let gameHeight = 580;
+
+function resize() {
+    const aspect = window.innerHeight / window.innerWidth;
+    if (window.innerWidth < 600) {
+        gameWidth = 340;
+        gameHeight = gameWidth * aspect;
+    } else {
+        gameWidth = 360;
+        gameHeight = 640;
+    }
+    canvas.width = gameWidth;
+    canvas.height = gameHeight;
+}
+window.addEventListener('resize', resize);
+resize();
+
+// === ELEMENTER ===
+const scoreEl = document.getElementById('game-score');
+const resultScreen = document.getElementById('result-screen');
+const resultCard = document.getElementById('result-card');
+const instructionText = document.getElementById('instruction-text');
+const titleEl = document.querySelector('h1');
+const flashEl = document.getElementById('flash');
+const container = document.getElementById('game-container');
+const coinRewardEl = document.getElementById('coin-reward');
+
+// === LOGIKK ===
+let frames = 0;
+let score = 0;
+let highScore = localStorage.getItem('flappyCapyHighScore') || 0;
+let gameState = 'START';
+
+// === FYSIKK ===
+const GRAVITY = 0.14;
+const JUMP_STRENGTH = 4.2;
+const GAME_SPEED = 2.0;
+
+// === COIN TRANSFER (skal ikke røres) ===
+function sendCoinsToMainGame(amount) {
+    let pending = parseInt(localStorage.getItem('capy_pending_coins') || '0');
+    let ppc = parseInt(localStorage.getItem('capy_ppc') || '1');
+    let reward = amount * ppc * 5;
+    localStorage.setItem('capy_pending_coins', pending + reward);
+    return reward;
+}
+
+// === FLODSVIN GRAFIKK ===
+const capySvgString = `
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200">
+    <filter id="inset"><feFlood flood-color="rgba(0,0,0,0.1)"/><feComposite operator="out" in2="SourceGraphic"/><feGaussianBlur stdDeviation="3"/><feComposite operator="atop" in2="SourceGraphic"/></filter>
+    <g id="chibi-capy" filter="url(#inset)">
+        <ellipse cx="60" cy="140" rx="40" ry="30" fill="#bf9687" stroke="#2d3436" stroke-width="8"/>
+        <rect x="40" y="40" width="130" height="100" rx="40" fill="#bf9687" stroke="#2d3436" stroke-width="8"/>
+        <rect x="80" y="90" width="80" height="50" rx="20" fill="#6d4c41"/>
+        <circle cx="50" cy="45" r="16" fill="#bf9687" stroke="#2d3436" stroke-width="6"/>
+        <circle cx="160" cy="45" r="16" fill="#bf9687" stroke="#2d3436" stroke-width="6"/>
+        <circle cx="70" cy="80" r="10" fill="#2d3436"/>
+        <circle cx="140" cy="80" r="10" fill="#2d3436"/>
+        <circle cx="73" cy="77" r="3" fill="#fff"/>
+        <circle cx="143" cy="77" r="3" fill="#fff"/>
+        <path d="M100 115 L110 125 L120 115" stroke="#2d3436" stroke-width="5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+        <line x1="110" y1="125" x2="110" y2="132" stroke="#2d3436" stroke-width="5" stroke-linecap="round"/>
+    </g>
+</svg>`;
+const capyImage = new Image();
+capyImage.src = 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(capySvgString);
+
+// === SKYER ===
+const clouds = {
+    items: [],
+    init() {
+        this.items = [];
+        for (let i = 0; i < 4; i++) {
+            this.items.push({
+                x: Math.random() * gameWidth,
+                y: Math.random() * (gameHeight / 2.5),
+                r: 25 + Math.random() * 30,
+                s: 0.1 + Math.random() * 0.3
+            });
+        }
+    },
+    draw() {
+        ctx.fillStyle = "rgba(255, 255, 255, 0.5)";
+        for (let c of this.items) {
+            ctx.beginPath();
+            ctx.arc(c.x, c.y, c.r, 0, Math.PI * 2);
+            ctx.arc(c.x + c.r * 0.7, c.y + c.r * 0.1, c.r * 0.6, 0, Math.PI * 2);
+            ctx.arc(c.x - c.r * 0.7, c.y + c.r * 0.1, c.r * 0.6, 0, Math.PI * 2);
+            ctx.fill();
+        }
+    },
+    update() {
+        for (let c of this.items) {
+            c.x -= c.s;
+            if (c.x + c.r * 2 < 0) {
+                c.x = gameWidth + c.r * 2;
+                c.y = Math.random() * (gameHeight / 2.5);
+            }
+        }
+    }
+};
+clouds.init();
+
+// === FLODSVIN ===
+const capy = {
+    x: 50,
+    y: 150,
+    w: 55,
+    h: 55,
+    velocity: 0,
+    rotation: 0,
+
+    draw() {
+        ctx.save();
+        ctx.translate(this.x + this.w / 2, this.y + this.h / 2);
+
+        let targetRot = 0;
+        if (this.velocity < 0) targetRot = -25 * (Math.PI / 180);
+        else if (this.velocity > 0) targetRot = Math.min(this.velocity * 0.1, 1.2);
+
+        if (gameState === 'PLAYING' || gameState === 'DEAD') {
+            this.rotation += (targetRot - this.rotation) * 0.15;
         } else {
-            gameWidth = 360;
-            gameHeight = 640;
+            this.rotation = 0;
         }
-        canvas.width = gameWidth;
-        canvas.height = gameHeight;
-    }
-    window.addEventListener('resize', resize);
-    resize();
 
-    // --- ELEMENTS ---
-    const scoreEl = document.getElementById('game-score');
-    const resultScreen = document.getElementById('result-screen');
-    const resultCard = document.getElementById('result-card');
-    const instructionText = document.getElementById('instruction-text');
-    const titleEl = document.querySelector('h1');
-    const flashEl = document.getElementById('flash');
-    const container = document.getElementById('game-container');
-    const coinRewardEl = document.getElementById('coin-reward');
+        ctx.rotate(this.rotation);
 
-    // --- LOGIKK VARIABLER ---
-    let frames = 0;
-    let score = 0;
-    let highScore = localStorage.getItem('flappyCapyHighScore') || 0;
-    let gameState = 'START'; 
-
-    // --- FYSIKK (TUNET FOR BEDRE FEELING) ---
-    const GRAVITY = 0.14;       // Lavere tyngdekraft (roligere fall)
-    const JUMP_STRENGTH = 4.2;  // Tilpasset hoppstyrke
-    const GAME_SPEED = 2.0;     // Behagelig fart
-
-    // --- FUNKSJON FOR MYNTER (RESTAURERT FRA ORIGINALKODEN DIN) ---
-    function sendCoinsToMainGame(amount) {
-        // Hent eksisterende pending coins
-        let pending = parseInt(localStorage.getItem('capy_pending_coins') || '0');
-        
-        // Sjekk PPC (Points Per Coin) fra localStorage, default til 1
-        let ppc = parseInt(localStorage.getItem('capy_ppc') || '1');
-        
-        // Kalkuler belønning (Bruker formelen din: amount * ppc * 5)
-        let reward = amount * ppc * 5; 
-        
-        // Lagre ny total
-        localStorage.setItem('capy_pending_coins', pending + reward);
-        
-        return reward;
-    }
-
-    // --- CHIBI FLODSVIN GRAFIKK (STORE ØYNE/HODE) ---
-    const capySvgString = `
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200">
-        <filter id="inset"><feFlood flood-color="rgba(0,0,0,0.1)"/><feComposite operator="out" in2="SourceGraphic"/><feGaussianBlur stdDeviation="3"/><feComposite operator="atop" in2="SourceGraphic"/></filter>
-        <g id="chibi-capy" filter="url(#inset)">
-            <!-- Body (Small) -->
-            <ellipse cx="60" cy="140" rx="40" ry="30" fill="#bf9687" stroke="#2d3436" stroke-width="8"/>
-            <!-- Head (BIG) -->
-            <rect x="40" y="40" width="130" height="100" rx="40" fill="#bf9687" stroke="#2d3436" stroke-width="8"/>
-            <!-- Snout (BIG) -->
-            <rect x="80" y="90" width="80" height="50" rx="20" fill="#6d4c41"/>
-            <!-- Ears -->
-            <circle cx="50" cy="45" r="16" fill="#bf9687" stroke="#2d3436" stroke-width="6"/>
-            <circle cx="160" cy="45" r="16" fill="#bf9687" stroke="#2d3436" stroke-width="6"/>
-            <!-- Eyes (BIG & CUTE) -->
-            <circle cx="70" cy="80" r="10" fill="#2d3436"/> 
-            <circle cx="140" cy="80" r="10" fill="#2d3436"/>
-            <circle cx="73" cy="77" r="3" fill="#fff"/> 
-            <circle cx="143" cy="77" r="3" fill="#fff"/>
-            <!-- Mouth -->
-            <path d="M100 115 L110 125 L120 115" stroke="#2d3436" stroke-width="5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
-            <line x1="110" y1="125" x2="110" y2="132" stroke="#2d3436" stroke-width="5" stroke-linecap="round"/>
-        </g>
-    </svg>`;
-    const capyImage = new Image();
-    capyImage.src = 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(capySvgString);
-
-    // --- SKYER (PYNT) ---
-    const clouds = {
-        items: [],
-        init: function() {
-            this.items = [];
-            for(let i=0; i<4; i++) {
-                this.items.push({
-                    x: Math.random() * gameWidth,
-                    y: Math.random() * (gameHeight/2.5),
-                    r: 25 + Math.random() * 30,
-                    s: 0.1 + Math.random() * 0.3
-                });
-            }
-        },
-        draw: function() {
-            ctx.fillStyle = "rgba(255, 255, 255, 0.5)";
-            for(let c of this.items) {
-                ctx.beginPath();
-                ctx.arc(c.x, c.y, c.r, 0, Math.PI*2);
-                ctx.arc(c.x + c.r*0.7, c.y + c.r*0.1, c.r*0.6, 0, Math.PI*2);
-                ctx.arc(c.x - c.r*0.7, c.y + c.r*0.1, c.r*0.6, 0, Math.PI*2);
-                ctx.fill();
-            }
-        },
-        update: function() {
-            for(let c of this.items) {
-                c.x -= c.s;
-                if(c.x + c.r * 2 < 0) {
-                    c.x = gameWidth + c.r * 2;
-                    c.y = Math.random() * (gameHeight/2.5);
-                }
-            }
+        if (gameState !== 'DEAD') {
+            ctx.shadowColor = "rgba(0,0,0,0.2)";
+            ctx.shadowBlur = 15;
+            ctx.shadowOffsetY = 10;
         }
-    };
-    clouds.init();
 
-    // --- FLODSVIN OBJEKT ---
-    const capy = {
-        x: 50, y: 150, w: 55, h: 55, 
-        velocity: 0, 
-        rotation: 0,
-        draw: function() {
-            ctx.save();
-            ctx.translate(this.x + this.w/2, this.y + this.h/2);
-            
-            // Smidigere rotasjon
-            let targetRot = 0;
-            if (this.velocity < 0) targetRot = -25 * (Math.PI / 180);
-            else if (this.velocity > 0) targetRot = Math.min(this.velocity * 0.1, 1.2);
-            
-            if(gameState === 'PLAYING' || gameState === 'DEAD') {
-               this.rotation += (targetRot - this.rotation) * 0.15; 
-            } else {
-                this.rotation = 0;
-            }
-            
-            ctx.rotate(this.rotation);
-            if(gameState !== 'DEAD') {
-                ctx.shadowColor = "rgba(0,0,0,0.2)";
-                ctx.shadowBlur = 15;
-                ctx.shadowOffsetY = 10;
-            }
-            ctx.drawImage(capyImage, -this.w/2, -this.h/2, this.w, this.h);
-            ctx.restore();
-        },
-        update: function() {
-            if (gameState === 'START') {
-                this.y = (gameHeight / 2) - 40 + Math.sin(frames * 0.08) * 12;
-            } else if (gameState === 'PLAYING') {
-                this.velocity += GRAVITY;
-                this.y += this.velocity;
-                if (this.y + this.h >= gameHeight - fg.h + 10) { 
-                    this.y = gameHeight - fg.h + 10 - this.h; 
-                    die(); 
-                }
-                if (this.y < -this.h) { this.velocity = 0; this.y = -this.h; }
-            }
-        },
-        jump: function() { this.velocity = -JUMP_STRENGTH; }
-    };
+        ctx.drawImage(capyImage, -this.w / 2, -this.h / 2, this.w, this.h);
+        ctx.restore();
+    },
 
-    const fg = {
-        h: 90, x: 0, dx: GAME_SPEED,
-        draw: function() {
-            ctx.fillStyle = '#55efc4'; 
-            ctx.fillRect(0, gameHeight - this.h, gameWidth, this.h);
-            
-            ctx.beginPath(); ctx.moveTo(0, gameHeight - this.h); ctx.lineTo(gameWidth, gameHeight - this.h);
-            ctx.strokeStyle = "#2d3436"; ctx.lineWidth = 6; ctx.stroke();
-
-            ctx.fillStyle = '#00b894';
-            for (let i = 0; i < gameWidth + 50; i += 50) {
-                let offset = this.x % 50;
-                ctx.beginPath();
-                ctx.arc(i - offset, gameHeight - this.h + 50, 15, 0, Math.PI*2);
-                ctx.fill();
-            }
-        },
-        update: function() { if(gameState !== 'DEAD') this.x += this.dx; }
-    };
-
-    const pipes = {
-        items: [], w: 70, gap: 170, dx: GAME_SPEED,
-        draw: function() {
-            for(let i = 0; i < this.items.length; i++) {
-                let p = this.items[i];
-                let bottomY = p.y + p.h + this.gap;
-                let colorMain = '#7bed9f';
-                let colorDark = '#2ed573';
-
-                ctx.lineWidth = 4; ctx.strokeStyle = '#2d3436';
-
-                // TOP
-                ctx.fillStyle = colorMain; ctx.fillRect(p.x, p.y, this.w, p.h); ctx.strokeRect(p.x, p.y, this.w, p.h);
-                ctx.fillStyle = colorDark; ctx.fillRect(p.x + this.w - 15, p.y, 10, p.h);
-                ctx.fillStyle = colorMain; ctx.fillRect(p.x - 5, p.y + p.h - 35, this.w + 10, 35); ctx.strokeRect(p.x - 5, p.y + p.h - 35, this.w + 10, 35);
-
-                // BOTTOM
-                let bH = gameHeight - bottomY - fg.h;
-                ctx.fillStyle = colorMain; ctx.fillRect(p.x, bottomY, this.w, bH); ctx.strokeRect(p.x, bottomY, this.w, bH);
-                ctx.fillStyle = colorDark; ctx.fillRect(p.x + this.w - 15, bottomY, 10, bH);
-                ctx.fillStyle = colorMain; ctx.fillRect(p.x - 5, bottomY, this.w + 10, 35); ctx.strokeRect(p.x - 5, bottomY, this.w + 10, 35);
-            }
-        },
-        update: function() {
-            if (frames % 140 === 0) {
-                let minPipeH = 40;
-                let h = Math.random() * (gameHeight - fg.h - this.gap - 120) + 60;
-                this.items.push({ x: gameWidth, y: h - 500, h: 500, passed: false });
-            }
-            
-            for(let i = 0; i < this.items.length; i++) {
-                let p = this.items[i];
-                p.x -= this.dx;
-                
-                let hitMargin = 10; 
-                let cX = capy.x + hitMargin; let cY = capy.y + hitMargin;
-                let cW = capy.w - (hitMargin*2); let cH = capy.h - (hitMargin*2);
-
-                if (cX + cW > p.x && cX < p.x + this.w) {
-                    if (cY < p.y + p.h || cY + cH > p.y + p.h + this.gap) die();
-                }
-                
-                if(p.x + this.w < capy.x && !p.passed) { 
-                    score++; scoreEl.innerText = score; p.passed = true; 
-                    scoreEl.style.transform = "scale(1.4)";
-                    setTimeout(()=>scoreEl.style.transform="scale(1)", 150);
-                }
-                if(p.x + this.w < -60) { this.items.shift(); i--; }
-            }
-        },
-        reset: function() { this.items = []; }
-    };
-
-    // --- MAIN LOOP ---
-    function loop() {
-        let skyGrad = ctx.createLinearGradient(0, 0, 0, gameHeight);
-        skyGrad.addColorStop(0, '#48dbfb');
-        skyGrad.addColorStop(1, '#c7ecee');
-        ctx.fillStyle = skyGrad;
-        ctx.fillRect(0, 0, gameWidth, gameHeight);
-
-        clouds.draw(); pipes.draw(); fg.draw(); capy.draw();
-        
-        clouds.update(); 
-        if (gameState !== 'DEAD') { fg.update(); capy.update(); }
-        if (gameState === 'PLAYING') { pipes.update(); }
-        
-        frames++; 
-        requestAnimationFrame(loop);
-    }
-
-    function inputAction() {
+    update() {
         if (gameState === 'START') {
-            gameState = 'PLAYING'; 
-            scoreEl.style.display = 'block'; 
-            titleEl.style.display = 'none';
-            instructionText.style.display = 'none'; 
-            capy.jump();
-        } else if (gameState === 'PLAYING') {
-            capy.jump();
+            this.y = (gameHeight / 2) - 40 + Math.sin(frames * 0.08) * 12;
+            return;
         }
+
+        if (gameState === 'PLAYING') {
+            this.velocity += GRAVITY;
+            this.y += this.velocity;
+
+            if (this.y + this.h >= gameHeight - fg.h + 10) {
+                this.y = gameHeight - fg.h + 10 - this.h;
+                die();
+            }
+
+            if (this.y < -this.h) {
+                this.velocity = 0;
+                this.y = -this.h;
+            }
+        }
+    },
+
+    jump() {
+        this.velocity = -JUMP_STRENGTH;
+    }
+};
+
+// === BAKKEN ===
+const fg = {
+    h: 90,
+    x: 0,
+    dx: GAME_SPEED,
+
+    draw() {
+        ctx.fillStyle = '#55efc4';
+        ctx.fillRect(0, gameHeight - this.h, gameWidth, this.h);
+
+        ctx.beginPath();
+        ctx.moveTo(0, gameHeight - this.h);
+        ctx.lineTo(gameWidth, gameHeight - this.h);
+        ctx.strokeStyle = "#2d3436";
+        ctx.lineWidth = 6;
+        ctx.stroke();
+
+        ctx.fillStyle = '#00b894';
+        for (let i = 0; i < gameWidth + 50; i += 50) {
+            let offset = this.x % 50;
+            ctx.beginPath();
+            ctx.arc(i - offset, gameHeight - this.h + 50, 15, 0, Math.PI * 2);
+            ctx.fill();
+        }
+    },
+
+    update() {
+        if (gameState !== 'DEAD') this.x += this.dx;
+    }
+};
+
+// === PIPER ===
+const pipes = {
+    items: [],
+    w: 70,
+    gap: 170,
+    dx: GAME_SPEED,
+
+    draw() {
+        for (let p of this.items) {
+            let bottomY = p.y + p.h + this.gap;
+
+            const colorMain = '#7bed9f';
+            const colorDark = '#2ed573';
+
+            ctx.lineWidth = 4;
+            ctx.strokeStyle = '#2d3436';
+
+            // TOP PIPE
+            ctx.fillStyle = colorMain;
+            ctx.fillRect(p.x, p.y, this.w, p.h);
+            ctx.strokeRect(p.x, p.y, this.w, p.h);
+
+            ctx.fillStyle = colorDark;
+            ctx.fillRect(p.x + this.w - 15, p.y, 10, p.h);
+
+            ctx.fillStyle = colorMain;
+            ctx.fillRect(p.x - 5, p.y + p.h - 35, this.w + 10, 35);
+            ctx.strokeRect(p.x - 5, p.y + p.h - 35, this.w + 10, 35);
+
+            // BOTTOM PIPE
+            let bH = gameHeight - bottomY - fg.h;
+
+            ctx.fillStyle = colorMain;
+            ctx.fillRect(p.x, bottomY, this.w, bH);
+            ctx.strokeRect(p.x, bottomY, this.w, bH);
+
+            ctx.fillStyle = colorDark;
+            ctx.fillRect(p.x + this.w - 15, bottomY, 10, bH);
+
+            ctx.fillStyle = colorMain;
+            ctx.fillRect(p.x - 5, bottomY, this.w + 10, 35);
+            ctx.strokeRect(p.x - 5, bottomY, this.w + 10, 35);
+        }
+    },
+
+    update() {
+        // Lag ny pipe
+        if (frames % 140 === 0) {
+            let h = Math.random() * (gameHeight - fg.h - this.gap - 120) + 60;
+            this.items.push({
+                x: gameWidth,
+                y: h - 500,
+                h: 500,
+                passed: false
+            });
+        }
+
+        // Oppdater eksisterende
+        for (let i = 0; i < this.items.length; i++) {
+            let p = this.items[i];
+            p.x -= this.dx;
+
+            const hitMargin = 10;
+            const cX = capy.x + hitMargin;
+            const cY = capy.y + hitMargin;
+            const cW = capy.w - hitMargin * 2;
+            const cH = capy.h - hitMargin * 2;
+
+            const pipeTopBottom = p.y + p.h;
+            const pipeGapBottom = pipeTopBottom + this.gap;
+
+            // Kollisjon
+            if (cX + cW > p.x && cX < p.x + this.w) {
+                if (cY < pipeTopBottom || cY + cH > pipeGapBottom) {
+                    die();
+                }
+            }
+
+            // Poeng
+            if (p.x + this.w < capy.x && !p.passed) {
+                score++;
+                scoreEl.innerText = score;
+                p.passed = true;
+
+                scoreEl.style.transform = "scale(1.4)";
+                setTimeout(() => scoreEl.style.transform = "scale(1)", 150);
+
+                // LYD
+                sfxPoint.currentTime = 0;
+                sfxPoint.play();
+            }
+
+            // Fjern pipe
+            if (p.x + this.w < -60) {
+                this.items.splice(i, 1);
+                i--;
+            }
+        }
+    },
+
+    reset() {
+        this.items = [];
+    }
+};
+
+// === GAME LOOP ===
+function loop() {
+    let skyGrad = ctx.createLinearGradient(0, 0, 0, gameHeight);
+    skyGrad.addColorStop(0, '#48dbfb');
+    skyGrad.addColorStop(1, '#c7ecee');
+    ctx.fillStyle = skyGrad;
+    ctx.fillRect(0, 0, gameWidth, gameHeight);
+
+    clouds.draw();
+    pipes.draw();
+    fg.draw();
+    capy.draw();
+
+    clouds.update();
+    if (gameState !== 'DEAD') fg.update();
+    if (gameState !== 'DEAD') capy.update();
+    if (gameState === 'PLAYING') pipes.update();
+
+    frames++;
+    requestAnimationFrame(loop);
+}
+
+// === INPUT ===
+function inputAction() {
+    if (gameState === 'START') {
+
+        gameState = 'PLAYING';
+        scoreEl.style.display = 'block';
+        titleEl.style.display = 'none';
+        instructionText.style.display = 'none';
+        capy.jump();
+
+        // Start musikk fra starten – og respekter mute
+        bgMusic.pause();
+        bgMusic.currentTime = 0;
+        bgMusic.muted = isMuted;
+        bgMusic.play().catch(() => {});
+
+        return;
     }
 
-    function die() {
-        if(gameState === 'DEAD') return;
-        gameState = 'DEAD';
-        
-        // Effects
-        flashEl.style.opacity = 0.6; 
-        setTimeout(() => { flashEl.style.opacity = 0; }, 100);
-        container.classList.add('shake');
-        setTimeout(() => { container.classList.remove('shake'); }, 500);
+    if (gameState === 'PLAYING') {
+        capy.jump();
+    }
+}
 
-        // Score logic
-        if(score > highScore) { highScore = score; localStorage.setItem('flappyCapyHighScore', highScore); }
-        
-        // --- COIN LOGIC CALL ---
-        // Kaller funksjonen som henter capy_ppc og regner ut total
-        let earned = sendCoinsToMainGame(score);
+function die() {
+    if (gameState === 'DEAD') return;
+    gameState = 'DEAD';
 
-        setTimeout(() => {
-            scoreEl.style.display = 'none';
-            resultScreen.style.display = 'flex';
-            requestAnimationFrame(() => resultCard.classList.add('show'));
-            
-            document.getElementById('final-score').innerText = score;
-            document.getElementById('best-score').innerText = highScore;
-            coinRewardEl.innerText = earned.toLocaleString(); // Viser utregnet sum
-        }, 600);
+    // stopp bakgrunnsmusikken
+    bgMusic.pause();
+
+    sfxDie.currentTime = 0;
+    sfxDie.play();
+
+    sfxDie.currentTime = 0;
+    sfxDie.play();
+
+    flashEl.style.opacity = 0.6;
+    setTimeout(() => (flashEl.style.opacity = 0), 100);
+
+    container.classList.add('shake');
+    setTimeout(() => container.classList.remove('shake'), 500);
+
+    if (score > highScore) {
+        highScore = score;
+        localStorage.setItem('flappyCapyHighScore', highScore);
     }
 
-    window.resetGame = function() {
-        resultCard.classList.remove('show');
-        setTimeout(() => {
-            gameState = 'START'; 
-            capy.y = gameHeight / 2; capy.velocity = 0; capy.rotation = 0;
-            score = 0; frames = 0; pipes.reset();
-            scoreEl.innerText = "0"; 
-            resultScreen.style.display = 'none'; 
-            titleEl.style.display = 'block';
-            instructionText.style.display = 'block';
-        }, 300);
-    }
+    let earned = sendCoinsToMainGame(score);
 
-    const handleInput = (e) => {
-        if (e.target.closest('.btn') || e.target.closest('.back-link')) return;
-        if (e.type === 'touchstart') e.preventDefault();
-        inputAction();
-    };
+    setTimeout(() => {
+        scoreEl.style.display = 'none';
+        resultScreen.style.display = 'flex';
+        requestAnimationFrame(() => resultCard.classList.add('show'));
 
-    window.addEventListener('mousedown', handleInput);
-    window.addEventListener('touchstart', handleInput, {passive: false});
-    window.addEventListener('keydown', (e) => { if(e.code === 'Space') inputAction(); });
+        document.getElementById('final-score').innerText = score;
+        document.getElementById('best-score').innerText = highScore;
+        coinRewardEl.innerText = earned.toLocaleString();
+    }, 600);
+}
 
-    loop();
+// === RESET ===
+window.resetGame = function () {
+    resultCard.classList.remove('show');
+
+    setTimeout(() => {
+        gameState = 'START';
+        capy.y = gameHeight / 2;
+        capy.velocity = 0;
+        capy.rotation = 0;
+
+        score = 0;
+        frames = 0;
+
+        pipes.reset();
+
+        scoreEl.innerText = "0";
+        resultScreen.style.display = 'none';
+        titleEl.style.display = 'block';
+        instructionText.style.display = 'block';
+    }, 300);
+};
+
+// === EVENT LISTENERS ===
+const handleInput = (e) => {
+    if (e.target.closest('.btn') || e.target.closest('.back-link')) return;
+    if (e.type === 'touchstart') e.preventDefault();
+    inputAction();
+};
+
+window.addEventListener('mousedown', handleInput);
+window.addEventListener('touchstart', handleInput, { passive: false });
+window.addEventListener('keydown', (e) => {
+    if (e.code === 'Space') inputAction();
+});
+
+// START LOOP
+
+// --- MUTE BUTTON ---
+document.getElementById("mute-btn").addEventListener("click", () => {
+    isMuted = !isMuted;
+    localStorage.setItem('capy_muted', isMuted);
+    applyMuteState();
+});
+
+loop();
 </script>
+
 </body>
 </html>
