@@ -906,6 +906,7 @@ body {
                     <g id="cosmetic-chain" class="cosmetic-layer"><path d="M60 160 Q100 210 140 160" stroke="#FFD700" stroke-width="6" fill="none"/><circle cx="100" cy="185" r="8" fill="#FFD700" stroke="#B8860B" stroke-width="2"/></g>
                     <g id="cosmetic-glasses" class="cosmetic-layer"><line x1="50" y1="110" x2="150" y2="110" stroke="#000" stroke-width="4"/><rect x="55" y="100" width="35" height="20" fill="#000" rx="5"/><rect x="110" y="100" width="35" height="20" fill="#000" rx="5"/></g>
 <g id="cosmetic-heart-glasses" class="cosmetic-layer"><path d="M70 128 C55 105 50 90 70 98 C90 90 85 105 70 128 Z" fill="#ff9ff3" stroke="#ff4757" stroke-width="3"/><path d="M130 128 C115 105 110 90 130 98 C150 90 145 105 130 128 Z" fill="#ff9ff3" stroke="#ff4757" stroke-width="3"/><path d="M85 105 Q100 95 115 105" fill="none" stroke="#ff4757" stroke-width="3"/><circle cx="65" cy="105" r="3" fill="white" opacity="0.6"/><circle cx="125" cy="105" r="3" fill="white" opacity="0.6"/></g>
+<g id="cosmetic-music" class="cosmetic-layer"></g>
 
 
                     <g id="cosmetic-tophat" class="cosmetic-layer"><rect x="60" y="20" width="80" height="60" fill="#2d3436" stroke="#000"/><rect x="40" y="75" width="120" height="15" fill="#2d3436" stroke="#000"/></g>
@@ -1130,6 +1131,7 @@ const UPGRADES = [
     { id: 'c5', name: 'Magisk Tommel', icon: '👍', cost: 30000, power: 75, type: 'click' }, // Halveres til 75.
 
     /* --- TIER 3: Mid Game (50.000 - 1 Million) --- */
+    { id: 'cos_music', name: 'Musikk', icon: '🎵', cost: 50000, type: 'cosmetic', target: 'cosmetic-music' },
     { id: 'cos3', name: 'Gullkjede', icon: '🪙', cost: 60000, type: 'cosmetic', target: 'cosmetic-chain' },
     { id: 'a5', name: 'Pelikan-hær', icon: '🐦', cost: 120000, power: 200, type: 'auto' }, // Halveres til 200.
     { id: 'c6', name: 'Guddommelig Klapp', icon: '⚡', cost: 350000, power: 500, type: 'click' }, // Halveres til 500.
@@ -1354,7 +1356,18 @@ function buy(id) {
 
 function toggleCosmetic(u) {
     if (!game.inventory[u.id]) return;
+
     game.cosmetics[u.target] = !game.cosmetics[u.target];
+
+    // Musikk cosmetic
+    if (u.target === "cosmetic-music") {
+        if (game.cosmetics[u.target]) {
+            musicAudio.play();
+        } else {
+            musicAudio.pause();
+        }
+    }
+
     save();
     updateGameUI();
 }
@@ -1376,6 +1389,11 @@ function resetGame() {
 
 // Legg til en lyd når flodsvinet blir klikket
 const clickSound = new Audio('click.mp3'); // Sett riktig sti til filen, f.eks. 'sounds/click.mp3'
+// Musikklyd (du kan bytte filnavn)
+const musicAudio = new Audio('8bit.mp3');
+musicAudio.loop = true;
+musicAudio.volume = 0.5;
+
 
 const capyEl = document.getElementById("main-capy");
 if (capyEl) {
