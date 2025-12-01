@@ -7,20 +7,7 @@
     <title>Flodsvin.no | Capy Clicker</title>
     <meta name="description" content="Spill Capy Clicker! Flodsvin.no er et morsomt og enkelt klikkespill med capybaras.">
 
-    <!-- Open Graph -->
-    <meta property="og:type" content="website">
-    <meta property="og:url" content="https://flodsvin.no/">
-    <meta property="og:title" content="Flodsvin.no | Capy Clicker">
-    <meta property="og:description" content="Spill Capy Clicker! Klikk, oppgrader og bli rik på capybaras.">
-    <meta property="og:image" content="https://flodsvin.no/meta.png">
-
-    <!-- Twitter Card -->
-    <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="Flodsvin.no | Capy Clicker">
-    <meta name="twitter:description" content="Spill Capy Clicker! Klikk, oppgrader og bli rik på capybaras.">
-    <meta name="twitter:image" content="https://flodsvin.no/meta.png">
-
-    <!-- Google Fonts -->
+    <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600;700&display=swap" rel="stylesheet">
@@ -28,13 +15,10 @@
     <!-- Favicons -->
     <link rel="icon" type="image/png" href="/favicon.png">
     <link rel="apple-touch-icon" href="/apple-touch-icon.png">
-    <link rel="shortcut icon" href="/favicon.png">
 
 <style>
     :root {
         --primary: #00b894;
-        --accent: #fdcb6e;
-        --danger: #ff7675;
         --dark: #2d3436;
         --radius-box: 24px;
         --radius-btn: 50px;
@@ -44,7 +28,7 @@
 
     body {
         font-family: 'Fredoka', sans-serif;
-        background: linear-gradient(135deg, #f0932b, #ffbe76); 
+        background: #f0932b; 
         height: 100dvh; 
         width: 100%;
         overflow: hidden;
@@ -56,13 +40,13 @@
         -webkit-tap-highlight-color: transparent;
     }
 
-    /* --- GAME CONTAINER --- */
     #game-container {
         position: relative;
         width: 100%;
         height: 100%;
         max-width: 480px; 
-        background: #81ecec;
+        /* Flyttet himmelen hit for ytelse */
+        background: linear-gradient(to bottom, #48dbfb, #c7ecee);
         overflow: hidden;
         box-shadow: 0 10px 40px rgba(0,0,0,0.15);
     }
@@ -79,27 +63,19 @@
         display: block;
         width: 100%;
         height: 100%;
-        /* Hjelper ytelse på noen enheter */
-        image-rendering: optimizeSpeed; 
+        /* Viktig for ytelse på mobil */
         image-rendering: pixelated; 
+        transform: translateZ(0); /* Tvinger GPU akselerasjon */
     }
 
     /* --- UI TEXT --- */
     h1 {
-        position: absolute;
-        top: 15%;
-        width: 100%;
-        text-align: center;
-        color: #fff;
-        font-size: 3.5rem;
-        font-weight: 900;
-        text-transform: uppercase;
-        letter-spacing: 2px;
+        position: absolute; top: 15%; width: 100%; text-align: center;
+        color: #fff; font-size: 3.5rem; font-weight: 900;
+        text-transform: uppercase; letter-spacing: 2px;
         -webkit-text-stroke: 6px var(--dark);
         paint-order: stroke fill;
-        text-shadow: 4px 4px 0px rgba(0,0,0,0.1);
-        z-index: 10;
-        pointer-events: none;
+        z-index: 10; pointer-events: none;
         transform: rotate(-3deg);
         animation: floatTitle 3s ease-in-out infinite;
     }
@@ -114,17 +90,11 @@
     }
 
     #instruction-text {
-        position: absolute;
-        top: 60%; left: 50%;
+        position: absolute; top: 60%; left: 50%;
         transform: translate(-50%, -50%);
-        text-align: center;
-        color: white;
-        font-weight: 900;
-        font-size: 1.8rem;
-        -webkit-text-stroke: 3px var(--dark);
-        paint-order: stroke fill;
-        z-index: 15;
-        pointer-events: none;
+        text-align: center; color: white; font-weight: 900;
+        font-size: 1.8rem; -webkit-text-stroke: 3px var(--dark);
+        paint-order: stroke fill; z-index: 15; pointer-events: none;
         animation: pulse 1s infinite alternate;
     }
     @keyframes pulse { from{transform:translate(-50%,-50%) scale(1);} to{transform:translate(-50%,-50%) scale(1.1);} }
@@ -136,41 +106,25 @@
         backdrop-filter: blur(5px);
         display: none;
         flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        z-index: 30;
+        align-items: center; justify-content: center; z-index: 30;
     }
 
     .card {
-        background: #fff;
-        padding: 30px;
-        border-radius: var(--radius-box);
-        border: 4px solid var(--dark);
-        box-shadow: 8px 8px 0 var(--dark);
-        text-align: center;
-        width: 85%;
-        max-width: 320px;
-        transform: scale(0.8);
-        opacity: 0;
-        transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        background: #fff; padding: 30px; border-radius: var(--radius-box);
+        border: 4px solid var(--dark); box-shadow: 8px 8px 0 var(--dark);
+        text-align: center; width: 85%; max-width: 320px;
+        transform: scale(0.8); opacity: 0;
+        transition: all 0.2s;
     }
     .card.show { transform: scale(1); opacity: 1; }
 
     .card h2 {
-        font-size: 2.2rem;
-        color: var(--danger);
-        margin-bottom: 20px;
-        font-weight: 900;
-        -webkit-text-stroke: 2px var(--dark);
-        paint-order: stroke fill;
+        font-size: 2.2rem; color: #ff7675; margin-bottom: 20px; font-weight: 900;
+        -webkit-text-stroke: 2px var(--dark); paint-order: stroke fill;
     }
 
-    .stats-grid {
-        display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 20px;
-    }
-    .stat-box {
-        background: #dfe6e9; border: 3px solid var(--dark); border-radius: 15px; padding: 10px;
-    }
+    .stats-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 20px; }
+    .stat-box { background: #dfe6e9; border: 3px solid var(--dark); border-radius: 15px; padding: 10px; }
     .stat-label { font-size: 0.8rem; font-weight: 800; color: #636e72; text-transform: uppercase; }
     .stat-value { font-size: 1.8rem; font-weight: 900; color: var(--dark); }
 
@@ -180,15 +134,12 @@
         font-size: 1.4rem; font-weight: 900;
         display: flex; align-items: center; justify-content: center; gap: 10px;
     }
-    .coin-icon { animation: spin 3s linear infinite; display:inline-block; }
-    @keyframes spin { 0% { transform: rotateY(0deg); } 100% { transform: rotateY(360deg); } }
 
     .btn {
         background: var(--primary); color: white; font-size: 1.3rem; padding: 15px 0;
         width: 100%; border-radius: var(--radius-btn); border: 3px solid var(--dark);
         font-weight: 900; cursor: pointer; text-transform: uppercase;
         box-shadow: 0 6px 0 #008c70; margin-top: 10px;
-        transition: transform 0.1s;
     }
     .btn:active { transform: translateY(6px); box-shadow: none; }
 
@@ -213,36 +164,20 @@
     }
 
     #mute-btn {
-        position: absolute;
-        top: 15px;
-        right: 15px;
-        background: rgba(0,0,0,0.3);
-        color: white;
-        font-size: 1.8rem;
-        padding: 8px 12px;
-        border-radius: 12px;
-        border: 3px solid #2d3436;
-        cursor: pointer;
-        z-index: 999;
-        transition: background 0.2s, transform 0.1s;
-        /* Viktig: Sørg for at den kan trykkes på mobil uten delay */
+        position: absolute; top: 15px; right: 15px;
+        background: rgba(0,0,0,0.3); color: white;
+        font-size: 1.8rem; padding: 8px 12px;
+        border-radius: 12px; border: 3px solid #2d3436;
+        cursor: pointer; z-index: 999;
         touch-action: manipulation;
     }
-
-    #mute-btn:active {
-        transform: scale(0.85);
-    }
-
-    #mute-btn.muted {
-        background: rgba(0,0,0,0.6);
-    }
+    #mute-btn.muted { background: rgba(0,0,0,0.6); }
 
 </style>
 </head>
 <body>
 
     <div id="game-container">
-        <!-- Flyttet mute-btn litt ned for sikkerhetsmargin på iPhone notch/top bar -->
         <div id="mute-btn">🔊</div>
         <h1>Flappy Capy</h1>
         <div id="game-score">0</div>
@@ -258,7 +193,6 @@
         <div id="result-screen">
             <div class="card" id="result-card">
                 <h2>GAME OVER</h2>
-                
                 <div class="stats-grid">
                     <div class="stat-box">
                         <div class="stat-label">Score</div>
@@ -268,12 +202,10 @@
                         <div class="stat-label">Best</div>
                         <div class="stat-value" id="best-score">0</div>
                     </div>
-                    <!-- Coin reward display -->
                     <div class="coin-box">
                         <span class="coin-icon">💰</span> +<span id="coin-reward">0</span>
                     </div>
                 </div>
-
                 <button class="btn" onclick="resetGame()">Spill igjen</button>
                 <div class="back-link" onclick="window.location.href='https://flodsvin.no'">← Tilbake til meny</div>
             </div>
@@ -283,63 +215,49 @@
 <script>
 
 const container = document.getElementById('game-container');
-
-// === CANVAS ===
 const canvas = document.getElementById('gameCanvas');
-const ctx = canvas.getContext('2d', { alpha: false }); // alpha: false kan gi liten boost
+const ctx = canvas.getContext('2d', { alpha: true }); // Må være true pga CSS bakgrunn
 
 // === LYD ===
 const sfxPoint = new Audio("point.mp3");
 const sfxDie   = new Audio("die.mp3");
 const bgMusic = new Audio("music.mp3");
-sfxPoint.volume = 0.7;
-sfxDie.volume   = 0.9;
-bgMusic.loop = true; // Sørg for at musikken looper
+bgMusic.loop = true;
 
-// --- MUTE SYSTEM ---
+// Mute
 let isMuted = localStorage.getItem('capy_muted') === 'true';
-
 function applyMuteState() {
     const muteBtn = document.getElementById("mute-btn");
     muteBtn.classList.toggle("muted", isMuted);
     muteBtn.innerText = isMuted ? "🔇" : "🔊";
-
     sfxPoint.muted = isMuted;
     sfxDie.muted = isMuted;
     bgMusic.muted = isMuted;
-    
-    // Hvis vi er i spillet og unmuter, start musikk. Hvis vi muter, pause?
-    // Enklere: la den spille, bare muted.
 }
 
-// === GAME SIZE & YTELSESFIKS ===
+// === RESIZE (YTELSE OPTIMALISERING) ===
 let gameWidth = 320;
 let gameHeight = 580;
 
 function resize() {
-    // VIKTIG FIKS: Begrens Pixel Ratio til maks 2.
-    // Mange mobiler har 3 eller 4, som gjør canvas ekstremt tungt å tegne.
-    // 1.5 eller 2 er mer enn nok for dette spillet.
-    const dpr = Math.min(window.devicePixelRatio || 1, 2);
+    // TVING 1x OPPLØSNING FOR MAKS YTELSE
+    // Hvis dette fortsatt er tregt, finnes det ingen håp.
+    const dpr = 1; 
     
     const rect = container.getBoundingClientRect();
-
-    // Oppdater gameWidth og gameHeight basert på containerens størrelse
     gameWidth = rect.width;
     gameHeight = rect.height;
 
-    // Sett intern canvas-oppløsning (pixelbuffer)
     canvas.width = rect.width * dpr;
     canvas.height = rect.height * dpr;
 
-    // Unngå å bruke gammel skalering – nullstill så sett ny
     ctx.setTransform(1, 0, 0, 1, 0, 0);
     ctx.scale(dpr, dpr);
 }
 window.addEventListener('resize', resize);
 resize();
 
-// === ELEMENTER ===
+// === UI ELEMENTS ===
 const scoreEl = document.getElementById('game-score');
 const resultScreen = document.getElementById('result-screen');
 const resultCard = document.getElementById('result-card');
@@ -348,18 +266,16 @@ const titleEl = document.querySelector('h1');
 const flashEl = document.getElementById('flash');
 const coinRewardEl = document.getElementById('coin-reward');
 
-// === LOGIKK ===
+// === VARIABLES ===
 let frames = 0;
 let score = 0;
 let highScore = localStorage.getItem('flappyCapyHighScore') || 0;
 let gameState = 'START';
 
-// === FYSIKK ===
 const GRAVITY = 0.14;
 const JUMP_STRENGTH = 4.2;
 const GAME_SPEED = 2.0;
 
-// === COIN TRANSFER (skal ikke røres) ===
 function sendCoinsToMainGame(amount) {
     let pending = parseInt(localStorage.getItem('capy_pending_coins') || '0');
     let ppc = parseInt(localStorage.getItem('capy_ppc') || '1');
@@ -368,11 +284,11 @@ function sendCoinsToMainGame(amount) {
     return reward;
 }
 
-// === FLODSVIN GRAFIKK ===
+// === FORENKLET SVG (FOR YTELSE) ===
+// Fjernet <filter> helt for å spare CPU
 const capySvgString = `
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200">
-    <filter id="inset"><feFlood flood-color="rgba(0,0,0,0.1)"/><feComposite operator="out" in2="SourceGraphic"/><feGaussianBlur stdDeviation="3"/><feComposite operator="atop" in2="SourceGraphic"/></filter>
-    <g id="chibi-capy" filter="url(#inset)">
+    <g id="chibi-capy">
         <ellipse cx="60" cy="140" rx="40" ry="30" fill="#bf9687" stroke="#2d3436" stroke-width="8"/>
         <rect x="40" y="40" width="130" height="100" rx="40" fill="#bf9687" stroke="#2d3436" stroke-width="8"/>
         <rect x="80" y="90" width="80" height="50" rx="20" fill="#6d4c41"/>
@@ -404,7 +320,7 @@ const clouds = {
         }
     },
     draw() {
-        ctx.fillStyle = "rgba(255, 255, 255, 0.5)";
+        ctx.fillStyle = "rgba(255, 255, 255, 0.4)";
         for (let c of this.items) {
             ctx.beginPath();
             ctx.arc(c.x, c.y, c.r, 0, Math.PI * 2);
@@ -425,15 +341,9 @@ const clouds = {
 };
 clouds.init();
 
-// === FLODSVIN ===
+// === PLAYER ===
 const capy = {
-    x: 50,
-    y: 150,
-    w: 55,
-    h: 55,
-    velocity: 0,
-    rotation: 0,
-
+    x: 50, y: 150, w: 55, h: 55, velocity: 0, rotation: 0,
     draw() {
         ctx.save();
         ctx.translate(this.x + this.w / 2, this.y + this.h / 2);
@@ -443,60 +353,42 @@ const capy = {
         else if (this.velocity > 0) targetRot = Math.min(this.velocity * 0.1, 1.2);
 
         if (gameState === 'PLAYING' || gameState === 'DEAD') {
-            this.rotation += (targetRot - this.rotation) * 0.15;
+            this.rotation += (targetRot - this.rotation) * 0.2; // Raskere rotasjon
         } else {
             this.rotation = 0;
         }
 
         ctx.rotate(this.rotation);
-
-        if (gameState !== 'DEAD') {
-            ctx.shadowColor = "rgba(0,0,0,0.2)";
-            ctx.shadowBlur = 15;
-            ctx.shadowOffsetY = 10;
-        }
-
+        
+        // FJERNET SHADOWBLUR HERFRA - DET DREPER MOBIL YTELSE
         ctx.drawImage(capyImage, -this.w / 2, -this.h / 2, this.w, this.h);
         ctx.restore();
     },
-
     update() {
         if (gameState === 'START') {
             this.y = (gameHeight / 2) - 40 + Math.sin(frames * 0.08) * 12;
             return;
         }
-
         if (gameState === 'PLAYING') {
             this.velocity += GRAVITY;
             this.y += this.velocity;
-
             if (this.y + this.h >= gameHeight - fg.h + 10) {
                 this.y = gameHeight - fg.h + 10 - this.h;
                 die();
             }
-
-            if (this.y < -this.h) {
-                this.velocity = 0;
-                this.y = -this.h;
-            }
+            if (this.y < -this.h) { this.velocity = 0; this.y = -this.h; }
         }
     },
-
-    jump() {
-        this.velocity = -JUMP_STRENGTH;
-    }
+    jump() { this.velocity = -JUMP_STRENGTH; }
 };
 
 // === BAKKEN ===
 const fg = {
-    h: 90,
-    x: 0,
-    dx: GAME_SPEED,
-
+    h: 90, x: 0, dx: GAME_SPEED,
     draw() {
         ctx.fillStyle = '#55efc4';
         ctx.fillRect(0, gameHeight - this.h, gameWidth, this.h);
-
+        
         ctx.beginPath();
         ctx.moveTo(0, gameHeight - this.h);
         ctx.lineTo(gameWidth, gameHeight - this.h);
@@ -512,124 +404,66 @@ const fg = {
             ctx.fill();
         }
     },
-
-    update() {
-        if (gameState !== 'DEAD') this.x += this.dx;
-    }
+    update() { if (gameState !== 'DEAD') this.x += this.dx; }
 };
 
 // === PIPER ===
 const pipes = {
-    items: [],
-    w: 70,
-    gap: 170,
-    dx: GAME_SPEED,
-
+    items: [], w: 70, gap: 170, dx: GAME_SPEED,
     draw() {
+        ctx.lineWidth = 4;
+        ctx.strokeStyle = '#2d3436';
+        
         for (let p of this.items) {
             let bottomY = p.y + p.h + this.gap;
-
-            const colorMain = '#7bed9f';
-            const colorDark = '#2ed573';
-
-            ctx.lineWidth = 4;
-            ctx.strokeStyle = '#2d3436';
-
-            // TOP PIPE
-            ctx.fillStyle = colorMain;
+            
+            // Optimalisert: Tegner enklere rektangler
+            ctx.fillStyle = '#7bed9f';
+            
+            // Topp
             ctx.fillRect(p.x, p.y, this.w, p.h);
             ctx.strokeRect(p.x, p.y, this.w, p.h);
-
-            ctx.fillStyle = colorDark;
-            ctx.fillRect(p.x + this.w - 15, p.y, 10, p.h);
-
-            ctx.fillStyle = colorMain;
-            ctx.fillRect(p.x - 5, p.y + p.h - 35, this.w + 10, 35);
-            ctx.strokeRect(p.x - 5, p.y + p.h - 35, this.w + 10, 35);
-
-            // BOTTOM PIPE
+            
+            // Bunn
             let bH = gameHeight - bottomY - fg.h;
-
-            ctx.fillStyle = colorMain;
             ctx.fillRect(p.x, bottomY, this.w, bH);
             ctx.strokeRect(p.x, bottomY, this.w, bH);
-
-            ctx.fillStyle = colorDark;
-            ctx.fillRect(p.x + this.w - 15, bottomY, 10, bH);
-
-            ctx.fillStyle = colorMain;
-            ctx.fillRect(p.x - 5, bottomY, this.w + 10, 35);
-            ctx.strokeRect(p.x - 5, bottomY, this.w + 10, 35);
         }
     },
-
     update() {
-        // Lag ny pipe
         if (frames % 140 === 0) {
             let h = Math.random() * (gameHeight - fg.h - this.gap - 120) + 60;
-            this.items.push({
-                x: gameWidth,
-                y: h - 500,
-                h: 500,
-                passed: false
-            });
+            this.items.push({ x: gameWidth, y: h - gameHeight, h: gameHeight, passed: false });
         }
-
-        // Oppdater eksisterende
         for (let i = 0; i < this.items.length; i++) {
             let p = this.items[i];
             p.x -= this.dx;
 
-            const hitMargin = 10;
-            const cX = capy.x + hitMargin;
-            const cY = capy.y + hitMargin;
-            const cW = capy.w - hitMargin * 2;
-            const cH = capy.h - hitMargin * 2;
-
-            const pipeTopBottom = p.y + p.h;
-            const pipeGapBottom = pipeTopBottom + this.gap;
-
+            const m = 10; 
             // Kollisjon
-            if (cX + cW > p.x && cX < p.x + this.w) {
-                if (cY < pipeTopBottom || cY + cH > pipeGapBottom) {
+            if (capy.x + m + (capy.w - m*2) > p.x && capy.x + m < p.x + this.w) {
+                if (capy.y + m < p.y + p.h || capy.y + m + (capy.h - m*2) > p.y + p.h + this.gap) {
                     die();
                 }
             }
 
-            // Poeng
+            // Score
             if (p.x + this.w < capy.x && !p.passed) {
-                score++;
-                scoreEl.innerText = score;
-                p.passed = true;
-
+                score++; scoreEl.innerText = score; p.passed = true;
                 scoreEl.style.transform = "scale(1.4)";
                 setTimeout(() => scoreEl.style.transform = "scale(1)", 150);
-
-                // LYD
-                sfxPoint.currentTime = 0;
-                sfxPoint.play().catch(e=>{});
+                sfxPoint.currentTime = 0; sfxPoint.play().catch(()=>{});
             }
-
-            // Fjern pipe
-            if (p.x + this.w < -60) {
-                this.items.splice(i, 1);
-                i--;
-            }
+            if (p.x + this.w < -60) { this.items.splice(i, 1); i--; }
         }
     },
-
-    reset() {
-        this.items = [];
-    }
+    reset() { this.items = []; }
 };
 
 // === GAME LOOP ===
 function loop() {
-    let skyGrad = ctx.createLinearGradient(0, 0, 0, gameHeight);
-    skyGrad.addColorStop(0, '#48dbfb');
-    skyGrad.addColorStop(1, '#c7ecee');
-    ctx.fillStyle = skyGrad;
-    ctx.fillRect(0, 0, gameWidth, gameHeight);
+    // VIKTIG YTELSE: Bruk clearRect istedenfor å tegne gradient på nytt
+    ctx.clearRect(0, 0, gameWidth, gameHeight);
 
     clouds.draw();
     pipes.draw();
@@ -645,20 +479,10 @@ function loop() {
     requestAnimationFrame(loop);
 }
 
-// === INPUT (FIX FOR MUTE & MOBIL) ===
+// === INPUT ===
 const handleInput = (e) => {
-    // 1. Sjekk om vi trykker på UI elementer som IKKE skal trigge hopp
-    if (e.target.closest('.btn') || 
-        e.target.closest('.back-link') || 
-        e.target.closest('#mute-btn')) { // <--- Her er fiksen for mute-knappen
-        return; 
-    }
-
-    // 2. Hindre dobbel-tap zoom eller scrolling på mobil når man spiller
-    if (e.type === 'touchstart') {
-        e.preventDefault(); 
-    }
-    
+    if (e.target.closest('.btn') || e.target.closest('.back-link') || e.target.closest('#mute-btn')) return;
+    if (e.type === 'touchstart') e.preventDefault();
     inputAction();
 };
 
@@ -669,67 +493,43 @@ function inputAction() {
         titleEl.style.display = 'none';
         instructionText.style.display = 'none';
         capy.jump();
-
-        // Start musikk fra starten
-        bgMusic.currentTime = 0;
-        bgMusic.play().catch(err => console.log("Audio autoplay prevented"));
-
+        bgMusic.currentTime = 0; bgMusic.play().catch(()=>{});
         return;
     }
-
-    if (gameState === 'PLAYING') {
-        capy.jump();
-    }
+    if (gameState === 'PLAYING') capy.jump();
 }
 
 function die() {
     if (gameState === 'DEAD') return;
     gameState = 'DEAD';
-
     bgMusic.pause();
-
-    sfxDie.currentTime = 0;
-    sfxDie.play().catch(e=>{});
-
+    sfxDie.currentTime = 0; sfxDie.play().catch(()=>{});
+    
     flashEl.style.opacity = 0.6;
-    setTimeout(() => (flashEl.style.opacity = 0), 100);
-
+    setTimeout(() => flashEl.style.opacity = 0, 100);
     container.classList.add('shake');
     setTimeout(() => container.classList.remove('shake'), 500);
 
-    if (score > highScore) {
-        highScore = score;
-        localStorage.setItem('flappyCapyHighScore', highScore);
-    }
-
+    if (score > highScore) { highScore = score; localStorage.setItem('flappyCapyHighScore', highScore); }
     let earned = sendCoinsToMainGame(score);
 
     setTimeout(() => {
         scoreEl.style.display = 'none';
         resultScreen.style.display = 'flex';
         requestAnimationFrame(() => resultCard.classList.add('show'));
-
         document.getElementById('final-score').innerText = score;
         document.getElementById('best-score').innerText = highScore;
         coinRewardEl.innerText = earned.toLocaleString();
     }, 600);
 }
 
-// === RESET ===
 window.resetGame = function () {
     resultCard.classList.remove('show');
-
     setTimeout(() => {
         gameState = 'START';
-        capy.y = gameHeight / 2;
-        capy.velocity = 0;
-        capy.rotation = 0;
-
-        score = 0;
-        frames = 0;
-
+        capy.y = gameHeight / 2; capy.velocity = 0; capy.rotation = 0;
+        score = 0; frames = 0;
         pipes.reset();
-
         scoreEl.innerText = "0";
         resultScreen.style.display = 'none';
         titleEl.style.display = 'block';
@@ -737,23 +537,15 @@ window.resetGame = function () {
     }, 300);
 };
 
-// === EVENT LISTENERS ===
 window.addEventListener('mousedown', handleInput);
 window.addEventListener('touchstart', handleInput, { passive: false });
-window.addEventListener('keydown', (e) => {
-    if (e.code === 'Space') inputAction();
-});
-
-// --- MUTE BUTTON LOGIC ---
+window.addEventListener('keydown', (e) => { if (e.code === 'Space') inputAction(); });
 document.getElementById("mute-btn").addEventListener("click", (e) => {
-    // Stopp propagation slik at den ikke trigger noe annet ved et uhell
-    e.stopPropagation();
-    isMuted = !isMuted;
+    e.stopPropagation(); isMuted = !isMuted;
     localStorage.setItem('capy_muted', isMuted);
     applyMuteState();
 });
 
-// Init
 applyMuteState();
 loop();
 </script>
