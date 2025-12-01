@@ -2,12 +2,12 @@
 <html lang="no">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
     <title>Flodsvin.no | Capy Clicker</title>
     <meta name="description" content="Spill Capy Clicker! Flodsvin.no er et morsomt og enkelt klikkespill med capybaras.">
 
-    <!-- Open Graph (Discord, Snapchat, Facebook, Instagram osv.) -->
+    <!-- Open Graph -->
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://flodsvin.no/">
     <meta property="og:title" content="Flodsvin.no | Capy Clicker">
@@ -25,14 +25,10 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600;700&display=swap" rel="stylesheet">
 
-<!-- Standard favicon for alle nettlesere -->
-<link rel="icon" type="image/png" href="/favicon.png">
-
-<!-- Apple iPhone/iPad Home Screen Icon -->
-<link rel="apple-touch-icon" href="/apple-touch-icon.png">
-
-<!-- Fallback -->
-<link rel="shortcut icon" href="/favicon.png">
+    <!-- Favicons -->
+    <link rel="icon" type="image/png" href="/favicon.png">
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+    <link rel="shortcut icon" href="/favicon.png">
 
 <style>
     :root {
@@ -48,7 +44,6 @@
 
     body {
         font-family: 'Fredoka', sans-serif;
-        /* Optimistisk Oransje Bakgrunn */
         background: linear-gradient(135deg, #f0932b, #ffbe76); 
         height: 100dvh; 
         width: 100%;
@@ -67,7 +62,7 @@
         width: 100%;
         height: 100%;
         max-width: 480px; 
-        background: #81ecec; /* Default sky color */
+        background: #81ecec;
         overflow: hidden;
         box-shadow: 0 10px 40px rgba(0,0,0,0.15);
     }
@@ -80,12 +75,14 @@
         }
     }
 
-canvas {
-    display: block;
-    width: 100%;
-    height: 100%;
-    image-rendering: pixelated;
-}
+    canvas {
+        display: block;
+        width: 100%;
+        height: 100%;
+        /* Hjelper ytelse på noen enheter */
+        image-rendering: optimizeSpeed; 
+        image-rendering: pixelated; 
+    }
 
     /* --- UI TEXT --- */
     h1 {
@@ -135,7 +132,7 @@ canvas {
     /* --- RESULT SCREEN --- */
     #result-screen {
         position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-        background: rgba(255, 159, 67, 0.8); /* Oransje tint */
+        background: rgba(255, 159, 67, 0.8);
         backdrop-filter: blur(5px);
         display: none;
         flex-direction: column;
@@ -216,34 +213,37 @@ canvas {
     }
 
     #mute-btn {
-    position: absolute;
-    top: 15px;
-    right: 15px;
-    background: rgba(0,0,0,0.3);
-    color: white;
-    font-size: 1.8rem;
-    padding: 8px 12px;
-    border-radius: 12px;
-    border: 3px solid #2d3436;
-    cursor: pointer;
-    z-index: 999;
-    transition: background 0.2s, transform 0.1s;
-}
+        position: absolute;
+        top: 15px;
+        right: 15px;
+        background: rgba(0,0,0,0.3);
+        color: white;
+        font-size: 1.8rem;
+        padding: 8px 12px;
+        border-radius: 12px;
+        border: 3px solid #2d3436;
+        cursor: pointer;
+        z-index: 999;
+        transition: background 0.2s, transform 0.1s;
+        /* Viktig: Sørg for at den kan trykkes på mobil uten delay */
+        touch-action: manipulation;
+    }
 
-#mute-btn:active {
-    transform: scale(0.85);
-}
+    #mute-btn:active {
+        transform: scale(0.85);
+    }
 
-#mute-btn.muted {
-    background: rgba(0,0,0,0.6);
-}
+    #mute-btn.muted {
+        background: rgba(0,0,0,0.6);
+    }
 
 </style>
 </head>
 <body>
 
     <div id="game-container">
-    <div id="mute-btn">🔊</div>
+        <!-- Flyttet mute-btn litt ned for sikkerhetsmargin på iPhone notch/top bar -->
+        <div id="mute-btn">🔊</div>
         <h1>Flappy Capy</h1>
         <div id="game-score">0</div>
         
@@ -286,7 +286,7 @@ const container = document.getElementById('game-container');
 
 // === CANVAS ===
 const canvas = document.getElementById('gameCanvas');
-const ctx = canvas.getContext('2d');
+const ctx = canvas.getContext('2d', { alpha: false }); // alpha: false kan gi liten boost
 
 // === LYD ===
 const sfxPoint = new Audio("point.mp3");
@@ -294,6 +294,7 @@ const sfxDie   = new Audio("die.mp3");
 const bgMusic = new Audio("music.mp3");
 sfxPoint.volume = 0.7;
 sfxDie.volume   = 0.9;
+bgMusic.loop = true; // Sørg for at musikken looper
 
 // --- MUTE SYSTEM ---
 let isMuted = localStorage.getItem('capy_muted') === 'true';
@@ -305,14 +306,22 @@ function applyMuteState() {
 
     sfxPoint.muted = isMuted;
     sfxDie.muted = isMuted;
+    bgMusic.muted = isMuted;
+    
+    // Hvis vi er i spillet og unmuter, start musikk. Hvis vi muter, pause?
+    // Enklere: la den spille, bare muted.
 }
 
-// === GAME SIZE ===
+// === GAME SIZE & YTELSESFIKS ===
 let gameWidth = 320;
 let gameHeight = 580;
 
 function resize() {
-    const dpr = window.devicePixelRatio || 1;
+    // VIKTIG FIKS: Begrens Pixel Ratio til maks 2.
+    // Mange mobiler har 3 eller 4, som gjør canvas ekstremt tungt å tegne.
+    // 1.5 eller 2 er mer enn nok for dette spillet.
+    const dpr = Math.min(window.devicePixelRatio || 1, 2);
+    
     const rect = container.getBoundingClientRect();
 
     // Oppdater gameWidth og gameHeight basert på containerens størrelse
@@ -598,7 +607,7 @@ const pipes = {
 
                 // LYD
                 sfxPoint.currentTime = 0;
-                sfxPoint.play();
+                sfxPoint.play().catch(e=>{});
             }
 
             // Fjern pipe
@@ -636,21 +645,34 @@ function loop() {
     requestAnimationFrame(loop);
 }
 
-// === INPUT ===
+// === INPUT (FIX FOR MUTE & MOBIL) ===
+const handleInput = (e) => {
+    // 1. Sjekk om vi trykker på UI elementer som IKKE skal trigge hopp
+    if (e.target.closest('.btn') || 
+        e.target.closest('.back-link') || 
+        e.target.closest('#mute-btn')) { // <--- Her er fiksen for mute-knappen
+        return; 
+    }
+
+    // 2. Hindre dobbel-tap zoom eller scrolling på mobil når man spiller
+    if (e.type === 'touchstart') {
+        e.preventDefault(); 
+    }
+    
+    inputAction();
+};
+
 function inputAction() {
     if (gameState === 'START') {
-
         gameState = 'PLAYING';
         scoreEl.style.display = 'block';
         titleEl.style.display = 'none';
         instructionText.style.display = 'none';
         capy.jump();
 
-        // Start musikk fra starten – og respekter mute
-        bgMusic.pause();
+        // Start musikk fra starten
         bgMusic.currentTime = 0;
-        bgMusic.muted = isMuted;
-        bgMusic.play().catch(() => {});
+        bgMusic.play().catch(err => console.log("Audio autoplay prevented"));
 
         return;
     }
@@ -664,14 +686,10 @@ function die() {
     if (gameState === 'DEAD') return;
     gameState = 'DEAD';
 
-    // stopp bakgrunnsmusikken
     bgMusic.pause();
 
     sfxDie.currentTime = 0;
-    sfxDie.play();
-
-    sfxDie.currentTime = 0;
-    sfxDie.play();
+    sfxDie.play().catch(e=>{});
 
     flashEl.style.opacity = 0.6;
     setTimeout(() => (flashEl.style.opacity = 0), 100);
@@ -720,27 +738,23 @@ window.resetGame = function () {
 };
 
 // === EVENT LISTENERS ===
-const handleInput = (e) => {
-    if (e.target.closest('.btn') || e.target.closest('.back-link')) return;
-    if (e.type === 'touchstart') e.preventDefault();
-    inputAction();
-};
-
 window.addEventListener('mousedown', handleInput);
 window.addEventListener('touchstart', handleInput, { passive: false });
 window.addEventListener('keydown', (e) => {
     if (e.code === 'Space') inputAction();
 });
 
-// START LOOP
-
-// --- MUTE BUTTON ---
-document.getElementById("mute-btn").addEventListener("click", () => {
+// --- MUTE BUTTON LOGIC ---
+document.getElementById("mute-btn").addEventListener("click", (e) => {
+    // Stopp propagation slik at den ikke trigger noe annet ved et uhell
+    e.stopPropagation();
     isMuted = !isMuted;
     localStorage.setItem('capy_muted', isMuted);
     applyMuteState();
 });
 
+// Init
+applyMuteState();
 loop();
 </script>
 
