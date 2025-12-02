@@ -1131,7 +1131,6 @@ const UPGRADES = [
     { id: 'c5', name: 'Magisk Tommel', icon: '👍', cost: 30000, power: 75, type: 'click' }, // Halveres til 75.
 
     /* --- TIER 3: Mid Game (50.000 - 1 Million) --- */
-    { id: 'cos_music', name: 'Musikk', icon: '🎵', cost: 50000, type: 'cosmetic', target: 'cosmetic-music' },
     { id: 'cos3', name: 'Gullkjede', icon: '🪙', cost: 60000, type: 'cosmetic', target: 'cosmetic-chain' },
     { id: 'a5', name: 'Pelikan-hær', icon: '🐦', cost: 120000, power: 200, type: 'auto' }, // Halveres til 200.
     { id: 'c6', name: 'Guddommelig Klapp', icon: '⚡', cost: 350000, power: 500, type: 'click' }, // Halveres til 500.
@@ -1358,15 +1357,6 @@ function toggleCosmetic(u) {
     if (!game.inventory[u.id]) return;
 
     game.cosmetics[u.target] = !game.cosmetics[u.target];
-
-    // Musikk cosmetic
-    if (u.target === "cosmetic-music") {
-        if (game.cosmetics[u.target]) {
-            musicAudio.play();
-        } else {
-            musicAudio.pause();
-        }
-    }
 
     save();
     updateGameUI();
