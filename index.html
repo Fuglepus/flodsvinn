@@ -43,8 +43,8 @@
             --secondary: #ffeaa7;
             --text-dark: #2d3436;
             --border-color: #2d3436;
-            --border-thick: 3px solid var(--border-color);
-            --shadow-hard: 5px 5px 0px var(--border-color);
+            --border-thick: 4px solid var(--border-color);
+            --shadow-hard: 6px 6px 0px var(--border-color);
             --radius: 24px;
         }
 
@@ -52,7 +52,13 @@
 
         body {
             font-family: 'Fredoka', sans-serif;
-            background: var(--bg-warm);
+            background:
+                radial-gradient(circle, rgba(255,255,255,0.12) 1px, transparent 1px),
+                radial-gradient(circle, rgba(255,255,255,0.08) 1.5px, transparent 1.5px),
+                var(--bg-warm);
+            background-size: 30px 30px, 50px 50px, 100% 100%;
+            background-position: 0 0, 15px 15px, 0 0;
+            background-attachment: fixed;
             color: var(--text-dark);
             min-height: 100vh;
             padding-bottom: 50px;
@@ -234,6 +240,29 @@
         }
         .upgrade-card.purchased .cost-badge { background: #7ed6df; color: #fff; }
 
+        .shop-tabs {
+            display: flex;
+            border-bottom: var(--border-thick);
+        }
+        .shop-tab {
+            flex: 1;
+            padding: 10px 5px;
+            font-family: 'Fredoka', sans-serif;
+            font-weight: 700;
+            font-size: 0.85rem;
+            border: none;
+            background: #e0e0e0;
+            cursor: pointer;
+            transition: 0.1s;
+            color: var(--text-dark);
+        }
+        .shop-tab:not(:last-child) { border-right: var(--border-thick); }
+        .shop-tab:hover { background: #d0d0d0; }
+        .shop-tab.active { background: #ffeaa7; }
+        .shop-tab[data-tab="auto"].active { background: #81ecec; }
+        .shop-tab[data-tab="cosmetic"].active { background: #fab1a0; }
+        .shop-tab[data-tab="skin"].active { background: #c8d6e5; }
+
         .icon-sq {
             width: 50px; height: 50px;
             background: var(--secondary);
@@ -347,66 +376,6 @@
         .section-title::before { left: calc(50% + 120px); }
         .section-title::after { right: calc(50% + 120px); }
 
-        /* --- QUIZ --- */
-        .quiz-container {
-            background: #fff;
-            border: var(--border-thick);
-            box-shadow: var(--shadow-hard);
-            position: relative;
-            overflow: hidden;
-        }
-        .quiz-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 20px;
-            font-size: 1.2rem;
-            font-weight: 700;
-            color: #888;
-        }
-        .quiz-progress { width: 100%; height: 15px; background: #eee; border-radius: 10px; border: 2px solid var(--border-color); margin-bottom: 30px; overflow: hidden; }
-        .progress-bar { height: 100%; background: var(--primary); width: 0%; transition: width 0.3s ease; }
-        .quiz-options-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
-
-        .quiz-btn {
-            background: white;
-            border: 2px solid var(--border-color);
-            padding: 20px;
-            border-radius: 15px;
-            font-size: 1rem;
-            font-weight: 600;
-            cursor: pointer;
-            box-shadow: 0 4px 0 #eee;
-            transition: all 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            position: relative;
-            overflow: hidden;
-            font-family: 'Fredoka', sans-serif;
-        }
-        .quiz-btn:hover { background: var(--bg-color); transform: translateY(-2px); box-shadow: 0 6px 0 #ccc; }
-        .quiz-btn:active { transform: scale(0.95); }
-
-        @keyframes popGreen {
-            0% { transform: scale(1); background: #6ab04c; }
-            50% { transform: scale(1.1); }
-            100% { transform: scale(1); }
-        }
-        .quiz-btn.correct {
-            animation: popGreen 0.4s ease forwards;
-            border-color: #2e7d32;
-            color: white;
-        }
-
-        @keyframes shakeRed {
-            0%, 100% { transform: translateX(0); background: #eb4d4b; }
-            25% { transform: translateX(-5px); }
-            75% { transform: translateX(5px); }
-        }
-        .quiz-btn.wrong {
-            animation: shakeRed 0.4s ease forwards;
-            opacity: 0.6;
-            color: white;
-        }
-
         .result-screen { text-align: center; display: none; }
 
         .reward-box {
@@ -434,33 +403,6 @@
 
         #map-container { padding: 0; height: 400px; }
         #map { width: 100%; height: 100%; }
-        #quiz-cooldown { margin-top: 20px; }
-
-        /* --- FLAPPY STYLES --- */
-        @keyframes floatBox {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-12px); }
-        }
-
-        .flappy-locked {
-            background: #fff;
-            border: var(--border-thick);
-            box-shadow: var(--shadow-hard);
-            border-radius: var(--radius);
-            padding: 30px;
-            text-align: center;
-            color: #888;
-            position: relative;
-            opacity: 0.9;
-        }
-        .flappy-locked h2 {
-            font-size: 2rem;
-            color: #555;
-            -webkit-text-stroke: 0;
-            text-shadow: none;
-            margin-bottom: 10px;
-        }
-
         .bar-container {
             background: #eee;
             height: 25px;
@@ -476,61 +418,6 @@
             background: var(--accent);
             width: 0%;
             transition: width 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-        }
-
-        .flappy-unlocked {
-            background: linear-gradient(135deg, #81ecec 0%, #74b9ff 100%);
-            position: relative;
-            overflow: hidden;
-            text-align: center;
-            border: var(--border-thick);
-            box-shadow: var(--shadow-hard);
-            border-radius: var(--radius);
-            color: var(--text-dark);
-            cursor: pointer;
-            padding: 20px;
-            animation: floatBox 3s ease-in-out infinite;
-            transition: filter 0.2s;
-            display: none;
-        }
-        .flappy-unlocked:hover { filter: brightness(1.05); }
-
-        .cloud-bg {
-            position: absolute;
-            background: rgba(255, 255, 255, 0.4);
-            border-radius: 50%;
-            z-index: 0;
-            pointer-events: none;
-        }
-        .c1 { width: 100px; height: 100px; top: -40px; left: -20px; }
-        .c2 { width: 150px; height: 150px; bottom: -50px; right: -30px; }
-        .c3 { width: 80px; height: 80px; top: 40px; right: 10%; opacity: 0.3; }
-
-        .flappy-content { position: relative; z-index: 2; padding: 10px 0; }
-
-        .rate-badge {
-            background: #fff;
-            border: 3px solid var(--text-dark);
-            padding: 10px 20px;
-            border-radius: 15px;
-            font-weight: 800;
-            font-size: 1.1rem;
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            box-shadow: 4px 4px 0 rgba(0,0,0,0.1);
-            margin: 20px 0;
-        }
-        .btn-flappy { background: #fab1a0; border-color: var(--text-dark); }
-        .btn-flappy:hover { background: #ff7675; }
-
-        .flappy-icon {
-            font-size: 3.5rem;
-            filter: drop-shadow(4px 4px 0 rgba(0,0,0,0.1));
-            animation: float 3s ease-in-out infinite;
-            display: inline-block;
-            transform: rotate(-10deg);
-            margin-bottom: 10px;
         }
 
         /* --- CONFIRMATION MODAL --- */
@@ -583,7 +470,483 @@
         .cancel-btn { background-color: #95a5a6; color: white; }
         .cancel-btn:hover { background-color: #7f8c8d; }
 
-        /* --- MOBILE FLAPPY MESSAGE --- */
+        /* --- THEME ENVIRONMENTS --- */
+        .click-area.theme-eng {
+            background: #a8e6cf;
+            background-image: radial-gradient(#8bd3ba 15%, transparent 16%);
+            background-size: 20px 20px;
+        }
+        .click-area.theme-skog {
+            background: linear-gradient(180deg, #1a472a 0%, #2d6a4f 40%, #40916c 100%);
+            background-image:
+                linear-gradient(180deg, #1a472a 0%, #2d6a4f 40%, #40916c 100%),
+                url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='80' height='80'%3E%3Cpath d='M40 10 L30 40 L50 40Z' fill='%23145a32' opacity='0.3'/%3E%3Cpath d='M20 30 L10 60 L30 60Z' fill='%23145a32' opacity='0.2'/%3E%3Cpath d='M60 25 L50 55 L70 55Z' fill='%23145a32' opacity='0.25'/%3E%3C/svg%3E");
+        }
+        .click-area.theme-skog #score-display,
+        .click-area.theme-skog .stat-label { color: #d4efdf; }
+
+        .click-area.theme-strand {
+            background: linear-gradient(180deg, #87CEEB 0%, #87CEEB 35%, #74b9ff 45%, #f4d03f 55%, #e2c027 100%);
+            position: relative;
+        }
+        .click-area.theme-strand::before {
+            content: "";
+            position: absolute;
+            bottom: 40%;
+            left: 0; right: 0;
+            height: 30px;
+            background: repeating-linear-gradient(90deg, transparent, transparent 30px, rgba(255,255,255,0.15) 30px, rgba(255,255,255,0.15) 60px);
+            animation: waveSlide 4s linear infinite;
+        }
+        @keyframes waveSlide { to { background-position: 60px 0; } }
+
+        .click-area.theme-rom {
+            background: radial-gradient(ellipse at 50% 50%, #1a1a3e 0%, #0d0d2b 100%);
+            background-image:
+                radial-gradient(2px 2px at 20% 30%, #fff, transparent),
+                radial-gradient(2px 2px at 40% 70%, #fff, transparent),
+                radial-gradient(1px 1px at 60% 20%, #ffd700, transparent),
+                radial-gradient(2px 2px at 80% 50%, #fff, transparent),
+                radial-gradient(1px 1px at 10% 80%, #87ceeb, transparent),
+                radial-gradient(2px 2px at 70% 90%, #fff, transparent),
+                radial-gradient(1px 1px at 90% 10%, #fff, transparent),
+                radial-gradient(2px 2px at 50% 50%, #ffd700, transparent),
+                radial-gradient(1px 1px at 30% 60%, #fff, transparent),
+                radial-gradient(ellipse at 50% 50%, #1a1a3e 0%, #0d0d2b 100%);
+        }
+        .click-area.theme-rom #score-display { color: #ffd700; text-shadow: 0 0 20px rgba(255,215,0,0.5), 3px 3px 0px var(--border-color); }
+
+        .click-area.theme-gull {
+            background: linear-gradient(135deg, #f7dc6f 0%, #f0b27a 30%, #f9e547 50%, #f0b27a 70%, #f7dc6f 100%);
+            background-size: 200% 200%;
+            animation: goldShimmer 3s ease infinite;
+        }
+        @keyframes goldShimmer {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+        .click-area.theme-gull #score-display { color: #fff; text-shadow: 0 0 15px rgba(255,215,0,0.8), 3px 3px 0px #8B6914; }
+
+        /* --- SKIN THEMES --- */
+        .click-area.theme-rat {
+            background: linear-gradient(180deg, #2c2c3a 0%, #3d3d50 30%, #4a4a5e 60%, #555568 100%);
+            background-image:
+                linear-gradient(90deg, rgba(0,0,0,0.08) 1px, transparent 1px),
+                linear-gradient(180deg, rgba(0,0,0,0.08) 1px, transparent 1px),
+                linear-gradient(180deg, #2c2c3a 0%, #3d3d50 30%, #4a4a5e 60%, #555568 100%);
+            background-size: 40px 40px, 40px 40px, 100% 100%;
+        }
+        .click-area.theme-rat::after {
+            content: "🏙️";
+            position: absolute;
+            bottom: 8px;
+            right: 12px;
+            font-size: 2rem;
+            opacity: 0.3;
+        }
+        .click-area.theme-rat #score-display { color: #ccc; text-shadow: 0 0 8px rgba(0,0,0,0.6), 3px 3px 0px #000; }
+        .click-area.theme-rat .stat-label { color: #aaa; }
+
+        .click-area.theme-lion {
+            background: linear-gradient(180deg, #ff9f43 0%, #ffc048 15%, #55a630 40%, #2d6a4f 70%, #1b4332 100%);
+            position: relative;
+        }
+        .click-area.theme-lion::before {
+            content: "";
+            position: absolute;
+            top: 8px; right: 15px;
+            width: 40px; height: 40px;
+            border-radius: 50%;
+            background: radial-gradient(circle, #fff6a0 30%, #ffd700 60%, transparent 70%);
+            box-shadow: 0 0 20px 8px rgba(255,215,0,0.4);
+        }
+        .click-area.theme-lion::after {
+            content: "";
+            position: absolute;
+            bottom: 0; left: 0; right: 0;
+            height: 60px;
+            background:
+                url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='60' height='60'%3E%3Cpath d='M10 60 L10 25 Q15 15 20 25 L20 60' fill='%23145a32' opacity='0.7'/%3E%3Cpath d='M25 60 L25 30 Q30 20 35 30 L35 60' fill='%231b6b3a' opacity='0.6'/%3E%3Cpath d='M45 60 L45 20 Q50 10 55 20 L55 60' fill='%23145a32' opacity='0.5'/%3E%3C/svg%3E") repeat-x bottom;
+        }
+        .click-area.theme-lion #score-display { color: #fff; text-shadow: 0 0 10px rgba(255,165,0,0.6), 3px 3px 0px #5D4037; }
+        .click-area.theme-lion .stat-label { color: #d4efdf; }
+
+        /* --- INACTIVITY ANIMATIONS --- */
+        .idle-layer { display: none; }
+        .capy-eating .idle-layer.eating-layer { display: block; }
+        .capy-bathing .idle-layer.bathing-layer { display: block; }
+        .capy-sleeping .idle-layer.sleeping-layer { display: block; }
+
+        @keyframes munch {
+            0%, 100% { transform: rotate(0deg); }
+            25% { transform: rotate(-8deg); }
+            75% { transform: rotate(8deg); }
+        }
+        .capy-eating #base-body { animation: munch 0.6s ease-in-out infinite; transform-origin: center; }
+
+        @keyframes splash {
+            0%, 100% { opacity: 0.3; transform: translateY(0); }
+            50% { opacity: 0.8; transform: translateY(-5px); }
+        }
+        .capy-bathing .bathing-layer { animation: splash 1.5s ease-in-out infinite; }
+
+        @keyframes zzzFloat {
+            0% { opacity: 0; transform: translate(0, 0) scale(0.5); }
+            30% { opacity: 1; }
+            100% { opacity: 0; transform: translate(15px, -40px) scale(1.2); }
+        }
+        .capy-sleeping .sleeping-layer .zzz { animation: zzzFloat 2s ease-in-out infinite; }
+        .capy-sleeping .sleeping-layer .zzz:nth-child(2) { animation-delay: 0.7s; }
+        .capy-sleeping .sleeping-layer .zzz:nth-child(3) { animation-delay: 1.4s; }
+
+        .idle-status {
+            background: rgba(255,255,255,0.8);
+            padding: 4px 12px;
+            border-radius: 12px;
+            font-size: 0.8rem;
+            font-weight: 700;
+            margin-top: 8px;
+            display: none;
+        }
+        .capy-eating .idle-status.eating-status,
+        .capy-bathing .idle-status.bathing-status,
+        .capy-sleeping .idle-status.sleeping-status { display: inline-block; }
+
+        /* --- WHACK-A-CAPY --- */
+        .whack-locked {
+            background: #fff;
+            border: var(--border-thick);
+            box-shadow: var(--shadow-hard);
+            border-radius: var(--radius);
+            padding: 30px;
+            text-align: center;
+            color: #888;
+            opacity: 0.9;
+        }
+        .whack-locked h2 { font-size: 2rem; color: #555; -webkit-text-stroke: 0; text-shadow: none; margin-bottom: 10px; }
+
+        .whack-unlocked {
+            background: linear-gradient(135deg, #a8e6cf 0%, #88d8b0 100%);
+            border: var(--border-thick);
+            box-shadow: var(--shadow-hard);
+            border-radius: var(--radius);
+            padding: 30px;
+            text-align: center;
+            display: none;
+        }
+
+        .whack-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 12px;
+            max-width: 350px;
+            margin: 20px auto;
+        }
+        .whack-hole {
+            width: 100%;
+            aspect-ratio: 1;
+            background: #5D4037;
+            border-radius: 50%;
+            border: 3px solid #3E2723;
+            position: relative;
+            overflow: hidden;
+            cursor: pointer;
+            box-shadow: inset 0 8px 15px rgba(0,0,0,0.4);
+        }
+        .whack-capy {
+            position: absolute;
+            bottom: -100%;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 70%;
+            height: 70%;
+            background: #8D6E63;
+            border-radius: 50% 50% 0 0;
+            transition: bottom 0.15s ease-out;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+        }
+        .whack-capy.visible { bottom: 10%; }
+        .whack-capy.golden { background: #f9ca24; }
+        .whack-capy.hit {
+            background: #e17055;
+            transform: translateX(-50%) scale(0.8);
+        }
+        .whack-capy::before {
+            content: "";
+            width: 8px; height: 8px;
+            background: #3E2723;
+            border-radius: 50%;
+            position: absolute;
+            top: 30%; left: 30%;
+            box-shadow: 20px 0 0 #3E2723;
+        }
+        .whack-timer {
+            font-size: 2.5rem;
+            font-weight: 900;
+            font-family: monospace;
+            color: var(--text-dark);
+            margin: 10px 0;
+        }
+        .whack-score {
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: var(--primary);
+        }
+
+        /* --- CAPY FISHING --- */
+        .fish-locked {
+            background: #fff;
+            border: var(--border-thick);
+            box-shadow: var(--shadow-hard);
+            border-radius: var(--radius);
+            padding: 30px;
+            text-align: center;
+            color: #888;
+            opacity: 0.9;
+        }
+        .fish-locked h2 { font-size: 2rem; color: #555; -webkit-text-stroke: 0; text-shadow: none; margin-bottom: 10px; }
+
+        .fish-unlocked {
+            background: linear-gradient(180deg, #87CEEB 0%, #74b9ff 40%, #0984e3 100%);
+            border: var(--border-thick);
+            box-shadow: var(--shadow-hard);
+            border-radius: var(--radius);
+            padding: 30px;
+            text-align: center;
+            display: none;
+            position: relative;
+            overflow: hidden;
+            min-height: 300px;
+        }
+        .fish-water {
+            position: absolute;
+            bottom: 0; left: 0; right: 0;
+            height: 60%;
+            background: linear-gradient(180deg, rgba(9,132,227,0.3) 0%, rgba(9,132,227,0.7) 100%);
+        }
+        .fish-water::before {
+            content: "";
+            position: absolute;
+            top: -8px; left: 0;
+            width: 200%;
+            height: 20px;
+            background: repeating-linear-gradient(90deg, transparent, transparent 40px, rgba(255,255,255,0.3) 40px, rgba(255,255,255,0.3) 80px);
+            animation: waveSlide 3s linear infinite;
+        }
+        .fish-content { position: relative; z-index: 2; }
+        .fish-line {
+            width: 3px;
+            background: #555;
+            margin: 0 auto;
+            height: 0;
+            transition: height 0.8s ease;
+            position: relative;
+        }
+        .fish-line.cast { height: 120px; }
+        .fish-hook {
+            width: 12px; height: 12px;
+            border: 3px solid #888;
+            border-radius: 0 0 50% 50%;
+            border-top: none;
+            position: absolute;
+            bottom: -12px;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+        .fish-bite-indicator {
+            display: none;
+            font-size: 2rem;
+            font-weight: 900;
+            color: #e74c3c;
+            animation: bitePulse 0.3s ease infinite;
+        }
+        @keyframes bitePulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.3); }
+        }
+        .fish-bite-indicator.active { display: block; }
+        .fish-catch-result {
+            font-size: 1.5rem;
+            font-weight: 800;
+            margin: 10px 0;
+            min-height: 40px;
+        }
+        .fish-casts {
+            display: flex;
+            justify-content: center;
+            gap: 8px;
+            margin: 10px 0;
+        }
+        .fish-cast-dot {
+            width: 16px; height: 16px;
+            background: rgba(255,255,255,0.4);
+            border-radius: 50%;
+            border: 2px solid rgba(255,255,255,0.6);
+        }
+        .fish-cast-dot.used { background: var(--accent); border-color: #c0392b; }
+        .fish-cast-dot.caught { background: var(--primary); border-color: #27ae60; }
+
+        /* --- MINI-GAME COOLDOWN SHARED --- */
+        .mg-cooldown {
+            margin-top: 15px;
+        }
+        .mg-cooldown .timer-display {
+            font-size: 1.8rem;
+        }
+
+        /* --- LION ROAR --- */
+        @keyframes lion-roar-shake {
+            0%, 100% { transform: scale(1); }
+            15% { transform: scale(1.08) rotate(-2deg); }
+            30% { transform: scale(1.05) rotate(2deg); }
+            45% { transform: scale(1.08) rotate(-1deg); }
+            60% { transform: scale(1.05) rotate(1deg); }
+            80% { transform: scale(1.02); }
+        }
+        #cosmetic-lion.roaring {
+            animation: lion-roar-shake 0.6s ease-in-out infinite;
+        }
+
+        /* --- RAT GNAW --- */
+        @keyframes rat-gnaw {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            25% { transform: translateY(-2px) rotate(-3deg); }
+            50% { transform: translateY(1px) rotate(2deg); }
+            75% { transform: translateY(-1px) rotate(-1deg); }
+        }
+        #cosmetic-rat.gnawing {
+            animation: rat-gnaw 0.3s ease-in-out infinite;
+        }
+
+        /* --- DISCO MODE --- */
+        .disco-overlay {
+            display: none;
+            position: fixed;
+            inset: 0;
+            z-index: 9999;
+            pointer-events: none;
+            overflow: hidden;
+        }
+        .disco-overlay.active { display: block; }
+
+        .disco-overlay.active ~ *, body.disco-active {
+            animation: disco-bg 3s linear infinite;
+        }
+        body.disco-active { animation: disco-bg 3s linear infinite; }
+        body.disco-active .shop-area { opacity: 0; pointer-events: none; transition: opacity 0.5s; }
+        body.disco-active .click-area { flex: 1; max-width: 100%; transition: max-width 0.5s; }
+
+        @keyframes disco-bg {
+            0%   { filter: hue-rotate(0deg) brightness(1.1); }
+            25%  { filter: hue-rotate(90deg) brightness(1.2); }
+            50%  { filter: hue-rotate(180deg) brightness(1.1); }
+            75%  { filter: hue-rotate(270deg) brightness(1.2); }
+            100% { filter: hue-rotate(360deg) brightness(1.1); }
+        }
+
+        .disco-ball {
+            position: absolute;
+            top: -20px;
+            left: 50%;
+            transform: translateX(-50%);
+            animation: disco-drop 0.6s ease-out forwards;
+        }
+        @keyframes disco-drop {
+            from { top: -200px; }
+            to { top: 30px; }
+        }
+
+        .disco-ball-string {
+            width: 2px;
+            height: 40px;
+            background: #666;
+            margin: 0 auto;
+        }
+
+        .disco-ball-sphere {
+            width: 90px;
+            height: 90px;
+            border-radius: 50%;
+            background: radial-gradient(circle at 35% 35%, #fff 0%, #ccc 30%, #999 60%, #666 100%);
+            border: 3px solid var(--border-color);
+            position: relative;
+            margin: 0 auto;
+            animation: disco-spin 1s linear infinite;
+            overflow: hidden;
+        }
+        .disco-ball-sphere::before {
+            content: '';
+            position: absolute;
+            inset: 4px;
+            border-radius: 50%;
+            background:
+                repeating-conic-gradient(from 0deg, rgba(255,255,255,0.6) 0deg 10deg, transparent 10deg 20deg);
+            animation: disco-spin-reverse 2s linear infinite;
+        }
+        @keyframes disco-spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+        @keyframes disco-spin-reverse { from { transform: rotate(360deg); } to { transform: rotate(0deg); } }
+
+        .disco-ray {
+            position: absolute;
+            width: 4px;
+            background: linear-gradient(to bottom, rgba(255,255,255,0.9), transparent);
+            top: 170px;
+            left: 50%;
+            transform-origin: top center;
+            border-radius: 2px;
+            animation: disco-ray-sweep 0.8s ease-in-out infinite alternate;
+        }
+        .disco-ray:nth-child(2) { height: 400px; animation-delay: 0.1s; transform: rotate(-40deg); background: linear-gradient(to bottom, rgba(255,50,50,0.7), transparent); }
+        .disco-ray:nth-child(3) { height: 500px; animation-delay: 0.2s; transform: rotate(-20deg); background: linear-gradient(to bottom, rgba(50,255,50,0.7), transparent); }
+        .disco-ray:nth-child(4) { height: 450px; animation-delay: 0.3s; transform: rotate(0deg);   background: linear-gradient(to bottom, rgba(50,50,255,0.7), transparent); }
+        .disco-ray:nth-child(5) { height: 500px; animation-delay: 0.4s; transform: rotate(20deg);  background: linear-gradient(to bottom, rgba(255,255,50,0.7), transparent); }
+        .disco-ray:nth-child(6) { height: 400px; animation-delay: 0.5s; transform: rotate(40deg);  background: linear-gradient(to bottom, rgba(255,50,255,0.7), transparent); }
+
+        @keyframes disco-ray-sweep {
+            from { opacity: 0.3; transform: rotate(var(--r, 0deg)) scaleX(1); }
+            to   { opacity: 1;   transform: rotate(calc(var(--r, 0deg) + 15deg)) scaleX(1.5); }
+        }
+
+        .disco-text {
+            position: absolute;
+            top: 175px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 2.5rem;
+            font-weight: 900;
+            color: #fff;
+            -webkit-text-stroke: 2px var(--border-color);
+            text-shadow: 4px 4px 0px var(--border-color);
+            text-transform: uppercase;
+            animation: disco-text-pulse 0.3s ease-in-out infinite alternate;
+            white-space: nowrap;
+        }
+        @keyframes disco-text-pulse {
+            from { transform: translateX(-50%) scale(1); }
+            to   { transform: translateX(-50%) scale(1.1); }
+        }
+
+        .disco-multiplier {
+            position: absolute;
+            top: 220px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 3.5rem;
+            font-weight: 900;
+            color: #ffeaa7;
+            -webkit-text-stroke: 3px var(--border-color);
+            text-shadow: 5px 5px 0px var(--border-color);
+            animation: disco-mult-bounce 0.5s ease-in-out infinite alternate;
+        }
+        @keyframes disco-mult-bounce {
+            from { transform: translateX(-50%) scale(1) rotate(-3deg); }
+            to   { transform: translateX(-50%) scale(1.15) rotate(3deg); }
+        }
+
+        /* --- MOBILE-ONLY MESSAGE --- */
         .mobile-only-msg {
             display: none;
             text-align: center;
@@ -596,14 +959,29 @@
             font-weight: 600;
         }
 
+        /* --- MINI-GAMES ROW --- */
+        .games-row {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 0 20px 60px;
+        }
+        .games-row > section {
+            padding: 0;
+            margin: 0;
+        }
+
         /* --- RESPONSIVE --- */
         @media (max-width: 800px) {
             #game-layout { grid-template-columns: 1fr; }
             .shop-area { height: 450px; }
             h1 { font-size: 2.5rem; }
-            .quiz-options-grid { grid-template-columns: 1fr; }
-            #flappy-locked-view,
-            #flappy-unlocked-view {
+            #whack-locked-view,
+            #whack-unlocked-view,
+            #fish-locked-view,
+            #fish-unlocked-view {
                 display: none !important;
             }
             .mobile-only-msg { display: block; }
@@ -645,18 +1023,148 @@
                         <circle cx="70" cy="110" r="5"/> <circle cx="130" cy="110" r="5"/>
                         <circle cx="72" cy="108" r="1.5" fill="#fff"/> <circle cx="132" cy="108" r="1.5" fill="#fff"/>
                     </g>
+                    <!-- RAT SKIN (hidden by default) -->
+                    <g id="cosmetic-rat" style="display:none;">
+                        <!-- Kropp -->
+                        <ellipse cx="100" cy="130" rx="45" ry="35" fill="#a0a0a0" stroke="#555" stroke-width="4"/>
+                        <!-- Hode -->
+                        <ellipse cx="100" cy="95" rx="35" ry="32" fill="#b0b0b0" stroke="#555" stroke-width="4"/>
+                        <!-- Ører (store, rosa inni) -->
+                        <ellipse cx="65" cy="72" rx="18" ry="22" fill="#b0b0b0" stroke="#555" stroke-width="3"/>
+                        <ellipse cx="65" cy="72" rx="12" ry="15" fill="#f0a0a0"/>
+                        <ellipse cx="135" cy="72" rx="18" ry="22" fill="#b0b0b0" stroke="#555" stroke-width="3"/>
+                        <ellipse cx="135" cy="72" rx="12" ry="15" fill="#f0a0a0"/>
+                        <!-- Øyne (små, runde) -->
+                        <circle cx="85" cy="92" r="5" fill="#111"/>
+                        <circle cx="87" cy="90" r="2" fill="#fff"/>
+                        <circle cx="115" cy="92" r="5" fill="#111"/>
+                        <circle cx="117" cy="90" r="2" fill="#fff"/>
+                        <!-- Nese (rosa) -->
+                        <ellipse cx="100" cy="108" rx="6" ry="5" fill="#e88" stroke="#c55" stroke-width="2"/>
+                        <!-- Whiskers -->
+                        <line x1="55" y1="105" x2="80" y2="107" stroke="#777" stroke-width="1.5"/>
+                        <line x1="53" y1="112" x2="80" y2="111" stroke="#777" stroke-width="1.5"/>
+                        <line x1="50" y1="119" x2="78" y2="115" stroke="#777" stroke-width="1.5"/>
+                        <line x1="120" y1="107" x2="145" y2="105" stroke="#777" stroke-width="1.5"/>
+                        <line x1="120" y1="111" x2="147" y2="112" stroke="#777" stroke-width="1.5"/>
+                        <line x1="122" y1="115" x2="150" y2="119" stroke="#777" stroke-width="1.5"/>
+                        <!-- Tenner -->
+                        <rect x="94" y="114" width="5" height="8" rx="1" fill="#fff" stroke="#ccc" stroke-width="1"/>
+                        <rect x="101" y="114" width="5" height="8" rx="1" fill="#fff" stroke="#ccc" stroke-width="1"/>
+                        <!-- Poter -->
+                        <ellipse cx="72" cy="165" rx="12" ry="8" fill="#c0a0a0" stroke="#555" stroke-width="2"/>
+                        <ellipse cx="128" cy="165" rx="12" ry="8" fill="#c0a0a0" stroke="#555" stroke-width="2"/>
+                        <!-- Hale (lang, tynn, rosa) -->
+                        <path d="M145 140 Q170 135 175 155 Q178 175 160 190 Q150 198 155 205" fill="none" stroke="#d99" stroke-width="4" stroke-linecap="round"/>
+                        <!-- Brødskive (skjult, vises av JS) -->
+                        <g id="rat-bread" style="display:none;">
+                            <rect x="70" y="128" width="28" height="24" rx="4" fill="#e8c56d" stroke="#b8942e" stroke-width="2"/>
+                            <rect x="73" y="131" width="22" height="18" rx="3" fill="#f5dfa0"/>
+                            <circle cx="80" cy="138" r="2" fill="#d4b05c" opacity="0.6"/>
+                            <circle cx="88" cy="143" r="1.5" fill="#d4b05c" opacity="0.5"/>
+                            <circle cx="84" cy="135" r="1" fill="#d4b05c" opacity="0.4"/>
+                        </g>
+                    </g>
+                    <!-- LION SKIN (hidden by default) -->
+                    <g id="cosmetic-lion" style="display:none;">
+                        <!-- Manke -->
+                        <ellipse cx="100" cy="100" rx="75" ry="68" fill="#c97d1c" stroke="#8B5E10" stroke-width="3"/>
+                        <ellipse cx="55" cy="70" rx="18" ry="22" fill="#e8a020" stroke="#8B5E10" stroke-width="2"/>
+                        <ellipse cx="145" cy="70" rx="18" ry="22" fill="#e8a020" stroke="#8B5E10" stroke-width="2"/>
+                        <ellipse cx="40" cy="100" rx="15" ry="20" fill="#c97d1c" stroke="#8B5E10" stroke-width="2"/>
+                        <ellipse cx="160" cy="100" rx="15" ry="20" fill="#c97d1c" stroke="#8B5E10" stroke-width="2"/>
+                        <ellipse cx="60" cy="135" rx="14" ry="16" fill="#e8a020" stroke="#8B5E10" stroke-width="2"/>
+                        <ellipse cx="140" cy="135" rx="14" ry="16" fill="#e8a020" stroke="#8B5E10" stroke-width="2"/>
+                        <!-- Hode -->
+                        <ellipse cx="100" cy="105" rx="50" ry="48" fill="#f0b840" stroke="#8B5E10" stroke-width="4"/>
+                        <!-- Ører -->
+                        <ellipse cx="58" cy="72" rx="12" ry="10" fill="#f0b840" stroke="#8B5E10" stroke-width="3"/>
+                        <ellipse cx="58" cy="72" rx="7" ry="6" fill="#d4883a"/>
+                        <ellipse cx="142" cy="72" rx="12" ry="10" fill="#f0b840" stroke="#8B5E10" stroke-width="3"/>
+                        <ellipse cx="142" cy="72" rx="7" ry="6" fill="#d4883a"/>
+                        <!-- Øyne -->
+                        <ellipse cx="78" cy="100" rx="8" ry="9" fill="#fff" stroke="#8B5E10" stroke-width="2"/>
+                        <circle cx="80" cy="100" r="5" fill="#5D4037"/>
+                        <circle cx="82" cy="98" r="2" fill="#fff"/>
+                        <ellipse cx="122" cy="100" rx="8" ry="9" fill="#fff" stroke="#8B5E10" stroke-width="2"/>
+                        <circle cx="120" cy="100" r="5" fill="#5D4037"/>
+                        <circle cx="122" cy="98" r="2" fill="#fff"/>
+                        <!-- Snute -->
+                        <ellipse cx="100" cy="120" rx="20" ry="14" fill="#f5d076" stroke="#8B5E10" stroke-width="2"/>
+                        <ellipse cx="100" cy="116" rx="8" ry="5" fill="#5D4037"/>
+                        <!-- Munn -->
+                        <path d="M92 124 Q100 132 108 124" fill="none" stroke="#5D4037" stroke-width="2.5" stroke-linecap="round"/>
+                        <!-- Whiskers -->
+                        <line x1="60" y1="115" x2="78" y2="118" stroke="#8B5E10" stroke-width="1.5"/>
+                        <line x1="58" y1="122" x2="78" y2="122" stroke="#8B5E10" stroke-width="1.5"/>
+                        <line x1="122" y1="118" x2="140" y2="115" stroke="#8B5E10" stroke-width="1.5"/>
+                        <line x1="122" y1="122" x2="142" y2="122" stroke="#8B5E10" stroke-width="1.5"/>
+                        <!-- Kropp/poter -->
+                        <rect x="60" y="148" width="25" height="30" rx="10" fill="#f0b840" stroke="#8B5E10" stroke-width="3"/>
+                        <rect x="115" y="148" width="25" height="30" rx="10" fill="#f0b840" stroke="#8B5E10" stroke-width="3"/>
+                        <!-- Hale -->
+                        <path d="M155 140 Q175 130 170 155 Q168 165 172 170" fill="none" stroke="#f0b840" stroke-width="6" stroke-linecap="round"/>
+                        <circle cx="172" cy="172" r="5" fill="#c97d1c" stroke="#8B5E10" stroke-width="2"/>
+                        <!-- Roar (skjult, vises av JS) -->
+                        <g id="lion-roar" style="display:none;">
+                            <path d="M92 124 Q100 145 108 124" fill="#8B0000" stroke="#5D4037" stroke-width="2" stroke-linecap="round"/>
+                            <text x="160" y="80" font-size="18" font-weight="900" fill="#e17055" font-family="Fredoka, sans-serif" opacity="0.9">ROAR!</text>
+                            <path d="M30 90 L15 85" stroke="#e17055" stroke-width="3" stroke-linecap="round" opacity="0.7"/>
+                            <path d="M28 105 L12 108" stroke="#e17055" stroke-width="3" stroke-linecap="round" opacity="0.6"/>
+                            <path d="M170 90 L185 85" stroke="#e17055" stroke-width="3" stroke-linecap="round" opacity="0.7"/>
+                            <path d="M172 105 L188 108" stroke="#e17055" stroke-width="3" stroke-linecap="round" opacity="0.6"/>
+                        </g>
+                    </g>
                     <!-- COSMETICS -->
                     <g id="cosmetic-monocle" class="cosmetic-layer"><circle cx="130" cy="110" r="10" stroke="#FFD700" stroke-width="2" fill="rgba(255,255,255,0.4)"/><path d="M140 110 Q160 150 140 180" stroke="#FFD700"/></g>
                     <g id="cosmetic-chain" class="cosmetic-layer"><path d="M60 160 Q100 210 140 160" stroke="#FFD700" stroke-width="6" fill="none"/><circle cx="100" cy="185" r="8" fill="#FFD700" stroke="#B8860B" stroke-width="2"/></g>
                     <g id="cosmetic-glasses" class="cosmetic-layer"><line x1="50" y1="110" x2="150" y2="110" stroke="#000" stroke-width="4"/><rect x="55" y="100" width="35" height="20" fill="#000" rx="5"/><rect x="110" y="100" width="35" height="20" fill="#000" rx="5"/></g>
                     <g id="cosmetic-heart-glasses" class="cosmetic-layer"><path d="M70 128 C55 105 50 90 70 98 C90 90 85 105 70 128 Z" fill="#ff9ff3" stroke="#ff4757" stroke-width="3"/><path d="M130 128 C115 105 110 90 130 98 C150 90 145 105 130 128 Z" fill="#ff9ff3" stroke="#ff4757" stroke-width="3"/><path d="M85 105 Q100 95 115 105" fill="none" stroke="#ff4757" stroke-width="3"/><circle cx="65" cy="105" r="3" fill="white" opacity="0.6"/><circle cx="125" cy="105" r="3" fill="white" opacity="0.6"/></g>
+                    <g id="cosmetic-67" class="cosmetic-layer"><!-- Caps-brem --><ellipse cx="100" cy="88" rx="55" ry="10" fill="#d63384" stroke="#2d3436" stroke-width="2.5"/><!-- Caps-kropp --><path d="M48 88 C48 55 70 42 100 42 C130 42 152 55 152 88" fill="#ff69b4" stroke="#2d3436" stroke-width="2.5"/><!-- Søm på toppen --><line x1="100" y1="42" x2="100" y2="88" stroke="#d63384" stroke-width="1.5" opacity="0.5"/><!-- Panel-felt for tekst --><rect x="68" y="55" width="64" height="26" rx="5" fill="#d63384" stroke="none"/><!-- 67-tekst --><text x="100" y="76" text-anchor="middle" font-size="22" font-weight="900" fill="#fff" font-family="Fredoka, sans-serif" stroke="#2d3436" stroke-width="1">67</text><!-- Knapp på toppen --><circle cx="100" cy="42" r="4" fill="#d63384" stroke="#2d3436" stroke-width="1.5"/></g>
                     <g id="cosmetic-music" class="cosmetic-layer"></g>
                     <g id="cosmetic-tophat" class="cosmetic-layer"><rect x="60" y="20" width="80" height="60" fill="#2d3436" stroke="#000"/><rect x="40" y="75" width="120" height="15" fill="#2d3436" stroke="#000"/></g>
                     <g id="cosmetic-crown" class="cosmetic-layer"><path d="M60 70 L60 30 L80 50 L100 20 L120 50 L140 30 L140 70 Z" fill="#FFD700" stroke="#B8860B" stroke-width="3"/></g>
                     <g id="cosmetic-space" class="cosmetic-layer"><circle cx="100" cy="110" r="75" fill="rgba(200,230,255,0.2)" stroke="#aaa" stroke-width="3"/><rect x="60" y="180" width="80" height="20" fill="#aaa" rx="5"/></g>
                     <g id="cosmetic-dog" class="cosmetic-layer"><path d="M125 55 Q135 40 125 35 Q115 40 120 55" fill="#eccc68" stroke="#cca145" stroke-width="2"/><ellipse cx="100" cy="70" rx="28" ry="18" fill="#f7f1e3" stroke="#dcdde1" stroke-width="2"/><circle cx="85" cy="82" r="6" fill="#f7f1e3" stroke="#dcdde1" stroke-width="2"/><circle cx="115" cy="82" r="6" fill="#f7f1e3" stroke="#dcdde1" stroke-width="2"/><circle cx="100" cy="55" r="16" fill="#f7f1e3" stroke="#dcdde1" stroke-width="2"/><path d="M85 45 Q75 55 80 65 L84 60 Z" fill="#eccc68" stroke="#cca145" stroke-width="2"/><path d="M115 45 Q125 55 120 65 L116 60 Z" fill="#eccc68" stroke="#cca145" stroke-width="2"/><circle cx="94" cy="52" r="2.5" fill="#2d3436"/><circle cx="106" cy="52" r="2.5" fill="#2d3436"/><ellipse cx="100" cy="58" rx="5" ry="3" fill="#2d3436" opacity="0.2"/><ellipse cx="100" cy="57" rx="3" ry="2" fill="#000"/><path d="M90 68 Q100 75 110 68" fill="none" stroke="#f7f1e3" stroke-width="4"/></g>
+                    <!-- DISCO HAT -->
+                    <g id="disco-hat" class="cosmetic-layer" style="display:none;">
+                        <ellipse cx="100" cy="55" rx="45" ry="38" fill="#e056a0" stroke="#2d3436" stroke-width="3"/>
+                        <ellipse cx="100" cy="55" rx="45" ry="38" fill="url(#disco-sparkle)" opacity="0.5"/>
+                        <ellipse cx="80" cy="45" rx="8" ry="8" fill="#ffd32a" opacity="0.8"/>
+                        <ellipse cx="120" cy="40" rx="6" ry="6" fill="#0abde3" opacity="0.8"/>
+                        <ellipse cx="100" cy="30" rx="7" ry="7" fill="#ff6b6b" opacity="0.8"/>
+                        <ellipse cx="110" cy="55" rx="5" ry="5" fill="#1dd1a1" opacity="0.8"/>
+                        <ellipse cx="75" cy="60" rx="5" ry="5" fill="#f368e0" opacity="0.8"/>
+                        <ellipse cx="130" cy="55" rx="4" ry="4" fill="#ffd32a" opacity="0.8"/>
+                    </g>
+                    <!-- IDLE ANIMATIONS -->
+                    <g class="idle-layer eating-layer">
+                        <line x1="105" y1="155" x2="115" y2="175" stroke="#4a7c2e" stroke-width="3" stroke-linecap="round"/>
+                        <circle cx="115" cy="178" r="4" fill="#2ecc71"/>
+                        <circle cx="110" cy="173" r="3" fill="#27ae60"/>
+                        <line x1="95" y1="155" x2="85" y2="172" stroke="#4a7c2e" stroke-width="2" stroke-linecap="round"/>
+                        <circle cx="85" cy="175" r="3" fill="#2ecc71"/>
+                    </g>
+                    <g class="idle-layer bathing-layer">
+                        <ellipse cx="100" cy="185" rx="65" ry="15" fill="rgba(116,185,255,0.4)" stroke="rgba(9,132,227,0.4)" stroke-width="2"/>
+                        <circle cx="60" cy="170" r="4" fill="rgba(116,185,255,0.6)"/>
+                        <circle cx="140" cy="168" r="3" fill="rgba(116,185,255,0.5)"/>
+                        <circle cx="75" cy="165" r="2.5" fill="rgba(116,185,255,0.4)"/>
+                        <circle cx="125" cy="172" r="3.5" fill="rgba(116,185,255,0.5)"/>
+                    </g>
+                    <g class="idle-layer sleeping-layer">
+                        <text class="zzz" x="145" y="85" font-size="16" font-weight="900" fill="#6c5ce7">Z</text>
+                        <text class="zzz" x="155" y="70" font-size="12" font-weight="900" fill="#a29bfe">z</text>
+                        <text class="zzz" x="160" y="55" font-size="9" font-weight="900" fill="#a29bfe">z</text>
+                        <line x1="65" y1="109" x2="76" y2="109" stroke="#3E2723" stroke-width="2.5" stroke-linecap="round"/>
+                        <line x1="125" y1="109" x2="136" y2="109" stroke="#3E2723" stroke-width="2.5" stroke-linecap="round"/>
+                    </g>
                 </svg>
             </div>
+
+            <div class="idle-status eating-status">Spiser gress...</div>
+            <div class="idle-status bathing-status">Bader...</div>
+            <div class="idle-status sleeping-status">Sover... zzz</div>
 
             <div id="stat-box">
                 <div class="stat-badge stat-sec">
@@ -675,124 +1183,165 @@
             <div class="shop-header">
                 BUTIKK
             </div>
+            <div class="shop-tabs">
+                <button class="shop-tab active" data-tab="click">⚡ Klikk</button>
+                <button class="shop-tab" data-tab="auto">⏳ Per sek</button>
+                <button class="shop-tab" data-tab="cosmetic">👕 Kosmetikk</button>
+                <button class="shop-tab" data-tab="skin">🐾 Dyremodus</button>
+            </div>
             <div class="shop-items" id="shop-list"></div>
         </div>
     </div>
 </section>
 
+<div class="games-row">
+
 <!-- =====================
-     QUIZ SECTION
+     WHACK-A-CAPY SECTION
 ====================== -->
-<section aria-label="Quiz">
-    <!-- LOCKED VIEW -->
-    <div id="quiz-locked-view" class="card-box" style="text-align:center; padding:40px 20px; opacity:0.8;">
-        <div style="font-size:4rem; margin-bottom:10px;" aria-hidden="true">&#x1f512;</div>
-        <h2 style="margin-bottom:10px;">Capy Academy</h2>
-        <p style="margin-bottom:20px; font-weight:bold; color:var(--text-dark);">
-            Krever 100 mynter / sek
-        </p>
-        <div style="background:#ddd; height:20px; border-radius:10px; border:2px solid var(--border-color); overflow:hidden; max-width:300px; margin:0 auto;" role="progressbar" aria-valuemin="0" aria-valuemax="100">
-            <div id="unlock-bar" style="height:100%; background:var(--accent); width:0%; transition:width 0.3s;"></div>
+<section aria-label="Whack-a-Capy">
+    <!-- LOCKED -->
+    <div id="whack-locked-view" class="whack-locked">
+        <div style="font-size: 3rem; margin-bottom: 5px;" aria-hidden="true">&#x1f512;</div>
+        <h2>Whack-a-Capy</h2>
+        <p style="font-weight:bold;">Krever 25 mynter / klikk</p>
+        <div class="bar-container" role="progressbar">
+            <div id="whack-progress" class="bar-fill"></div>
         </div>
-        <div style="margin-top:5px; font-size:0.9rem;">
-            <span id="current-pps-display">0</span> / 100
+        <div style="font-size: 0.9rem; font-weight:bold;">
+            <span id="whack-cp-display">0</span> / 25
         </div>
     </div>
 
-    <!-- UNLOCKED VIEW -->
-    <div id="quiz-unlocked-view" class="card-box quiz-container" style="display:none; position:relative;">
-        <h2 style="text-align:center; margin-bottom:10px;">Flodsvin quiz</h2>
+    <!-- UNLOCKED -->
+    <div id="whack-unlocked-view" class="whack-unlocked">
+        <h2 style="color: var(--text-dark); margin-bottom: 5px;">Whack-a-Capy</h2>
+        <p style="opacity:0.8; font-weight:600; margin-bottom:10px;">Klikk på flodsvinene!</p>
 
         <!-- HUB -->
-        <div id="quiz-hub" style="text-align:center; padding:20px;">
-            <p style="margin-bottom:20px; opacity:0.8;">
-                Ny quiz hver 15. minutt.
-            </p>
-            <button id="btn-start-quiz" class="btn" onclick="tryStartQuiz()">Start Quiz</button>
-            <div id="quiz-cooldown" style="display:none;">
-                <div style="font-size:0.9rem; margin-bottom:5px;">Neste quiz om:</div>
-                <div class="timer-display" id="timer-text" aria-live="polite">--:--</div>
+        <div id="whack-hub">
+            <button id="btn-start-whack" class="btn" onclick="tryStartWhack()">Spill!</button>
+            <div id="whack-cooldown" class="mg-cooldown" style="display:none;">
+                <div style="font-size:0.9rem; margin-bottom:5px;">Neste runde om:</div>
+                <div class="timer-display" id="whack-timer-text">--:--</div>
             </div>
         </div>
 
         <!-- GAME -->
-        <div id="quiz-game" style="display:none;">
-            <div class="quiz-header">
-                <span id="q-counter">Spørsmål 1/5</span>
-                <span>&#x1f3c6; <span id="current-correct">0</span> Riktige</span>
+        <div id="whack-game" style="display:none;">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
+                <div class="whack-score">Treff: <span id="whack-hits">0</span></div>
+                <div class="whack-timer" id="whack-time">30</div>
             </div>
-            <div class="quiz-progress"><div class="progress-bar" id="q-bar"></div></div>
-            <h3 id="q-text" style="text-align:center; min-height:60px; display:flex; align-items:center; justify-content:center; margin:20px 0;">Laster...</h3>
-            <div id="q-opts" class="quiz-options-grid"></div>
+            <div class="whack-grid" id="whack-grid">
+                <div class="whack-hole" data-idx="0"><div class="whack-capy"></div></div>
+                <div class="whack-hole" data-idx="1"><div class="whack-capy"></div></div>
+                <div class="whack-hole" data-idx="2"><div class="whack-capy"></div></div>
+                <div class="whack-hole" data-idx="3"><div class="whack-capy"></div></div>
+                <div class="whack-hole" data-idx="4"><div class="whack-capy"></div></div>
+                <div class="whack-hole" data-idx="5"><div class="whack-capy"></div></div>
+                <div class="whack-hole" data-idx="6"><div class="whack-capy"></div></div>
+                <div class="whack-hole" data-idx="7"><div class="whack-capy"></div></div>
+                <div class="whack-hole" data-idx="8"><div class="whack-capy"></div></div>
+            </div>
         </div>
 
         <!-- RESULT -->
-        <div id="quiz-result" class="result-screen" style="display:none;">
-            <h2 id="result-title">Quiz Ferdig!</h2>
+        <div id="whack-result" style="display:none;">
+            <h3 id="whack-result-title" style="margin-bottom:10px;">Runde ferdig!</h3>
             <div class="reward-box">
                 <div style="font-size:1.2rem;">Du vant:</div>
                 <div style="font-size:2.5rem; font-weight:900; color:#fff; text-shadow:2px 2px 0 #000;">
-                    <span class="coin-icon" aria-hidden="true">&#x1f4b0;</span> <span id="reward-amount">0</span>
+                    <span class="coin-icon" aria-hidden="true">&#x1f4b0;</span> <span id="whack-reward">0</span>
                 </div>
             </div>
-            <p id="result-msg" style="margin-bottom:20px; font-weight:bold;"></p>
-            <button class="btn" onclick="backToHub()">Tilbake til meny</button>
+            <button class="btn" onclick="whackBackToHub()">Tilbake</button>
         </div>
+    </div>
+
+    <div class="mobile-only-msg" style="margin-top:15px;">
+        Whack-a-Capy er kun tilgjengelig på PC.
     </div>
 </section>
 
 <!-- =====================
-     FLAPPY PROMO SECTION
+     CAPY FISHING SECTION
 ====================== -->
-<section style="padding-top: 0;" aria-label="Flappy Capy">
-
-    <!-- LOCKED VIEW -->
-    <div id="flappy-locked-view" class="flappy-locked">
+<section aria-label="Capy Fishing">
+    <!-- LOCKED -->
+    <div id="fish-locked-view" class="fish-locked">
         <div style="font-size: 3rem; margin-bottom: 5px;" aria-hidden="true">&#x1f512;</div>
-        <h2>Flappy Capy</h2>
-        <p style="font-weight:bold;">Krever 500 mynter / klikk</p>
-        <div class="bar-container" role="progressbar" aria-valuemin="0" aria-valuemax="100">
-            <div id="flappy-progress" class="bar-fill"></div>
+        <h2>Capy Fishing</h2>
+        <p style="font-weight:bold;">Krever 500 mynter / sek</p>
+        <div class="bar-container" role="progressbar">
+            <div id="fish-progress" class="bar-fill"></div>
         </div>
         <div style="font-size: 0.9rem; font-weight:bold;">
-            <span id="current-cp-display">0</span> / 500
+            <span id="fish-pps-display">0</span> / 500
         </div>
     </div>
 
-    <!-- UNLOCKED VIEW -->
-    <div id="flappy-unlocked-view" class="flappy-unlocked" onclick="window.location.href='/flappy/'" role="link" tabindex="0" aria-label="Spill Flappy Capy">
-        <div class="cloud-bg c1"></div>
-        <div class="cloud-bg c2"></div>
-        <div class="cloud-bg c3"></div>
-        <div class="flappy-content">
-            <h2 style="font-size: 2.8rem; margin-bottom: 5px; color: #fff; -webkit-text-stroke: 2px var(--text-dark);">
-                Flappy Capy
-            </h2>
-            <p style="opacity: 0.9; font-weight: 700; font-size: 1.1rem;">
-                Fly for å tjene cash!
-            </p>
-            <div class="rate-badge">
-                <span style="font-size: 1.4rem;" aria-hidden="true">&#x1f4b0;</span>
-                <span>
-                    Belønning: <span id="flappy-reward-val" style="color:#0984e3; font-size:1.3rem;">0</span> / poeng
-                </span>
+    <!-- UNLOCKED -->
+    <div id="fish-unlocked-view" class="fish-unlocked">
+        <div class="fish-water"></div>
+        <div class="fish-content">
+            <h2 style="color: #fff; -webkit-text-stroke: 2px var(--text-dark); margin-bottom: 5px;">Capy Fishing</h2>
+
+            <!-- HUB -->
+            <div id="fish-hub">
+                <p style="opacity:0.9; font-weight:600; color:#fff; margin-bottom:15px;">Fisk for å tjene mynter!</p>
+                <button id="btn-start-fish" class="btn" onclick="tryStartFish()">Kast ut!</button>
+                <div id="fish-cooldown" class="mg-cooldown" style="display:none;">
+                    <div style="font-size:0.9rem; margin-bottom:5px; color:#fff;">Neste runde om:</div>
+                    <div class="timer-display" id="fish-timer-text">--:--</div>
+                </div>
             </div>
-            <br>
-            <span class="btn btn-flappy">SPILL NÅ</span>
+
+            <!-- GAME -->
+            <div id="fish-game" style="display:none;">
+                <div class="fish-casts" id="fish-cast-dots"></div>
+                <div class="fish-catch-result" id="fish-catch-text"></div>
+
+                <div class="fish-line" id="fish-line">
+                    <div class="fish-hook"></div>
+                </div>
+
+                <div class="fish-bite-indicator" id="fish-bite">BITT! Klikk nå!</div>
+
+                <div style="margin-top:15px;">
+                    <button id="btn-fish-action" class="btn" onclick="fishAction()" style="font-size:1.2rem;">Kast snøret!</button>
+                </div>
+            </div>
+
+            <!-- RESULT -->
+            <div id="fish-result" style="display:none;">
+                <h3 style="color:#fff; margin-bottom:10px;">Fisketuren er over!</h3>
+                <div class="reward-box">
+                    <div style="font-size:1.2rem;">Du fisket opp:</div>
+                    <div style="font-size:2.5rem; font-weight:900; color:#fff; text-shadow:2px 2px 0 #000;">
+                        <span class="coin-icon" aria-hidden="true">&#x1f4b0;</span> <span id="fish-reward">0</span>
+                    </div>
+                </div>
+                <div id="fish-summary" style="color:#fff; font-weight:600; margin-bottom:15px;"></div>
+                <button class="btn" onclick="fishBackToHub()">Tilbake</button>
+            </div>
         </div>
     </div>
 
-    <!-- Mobile message -->
-    <div class="mobile-only-msg">
-        Flappy Capy er kun tilgjengelig på PC.
+    <div class="mobile-only-msg" style="margin-top:15px;">
+        Capy Fishing er kun tilgjengelig på PC.
     </div>
+</section>
+</div><!-- /games-row -->
 
-    <!-- Restart button -->
+<!-- =====================
+     RESTART & MODAL
+====================== -->
+<section style="padding-top: 0;">
     <div style="text-align: center; margin-top: 20px;">
         <button id="restart-button" class="btn" style="font-size: 1rem; padding: 8px 16px; background: red; color: #fff; border: none; border-radius: 20px; opacity: 0.8; transition: opacity 0.3s;">Restart</button>
     </div>
 
-    <!-- Confirmation Modal -->
     <div id="confirmation-modal" class="confirmation-modal" style="display: none;" role="dialog" aria-modal="true" aria-labelledby="modal-title">
         <div class="modal-content">
             <h3 id="modal-title">Er du sikker på at du vil starte på nytt?</h3>
@@ -803,10 +1352,25 @@
             </div>
         </div>
     </div>
-
 </section>
 
 </main>
+
+<!-- DISCO OVERLAY -->
+<div class="disco-overlay" id="disco-overlay">
+    <div class="disco-ball">
+        <div class="disco-ball-string"></div>
+        <div class="disco-ball-sphere"></div>
+    </div>
+    <div class="disco-ray"></div>
+    <div class="disco-ray"></div>
+    <div class="disco-ray"></div>
+    <div class="disco-ray"></div>
+    <div class="disco-ray"></div>
+    <div class="disco-ray"></div>
+    <div class="disco-text">DISCO CAPY</div>
+    <div class="disco-multiplier">30x per klikk!</div>
+</div>
 
 <footer style="text-align:center; padding:20px; opacity:0.6;">
     flodsvin.no
@@ -824,8 +1388,8 @@ let game = {
     score: 0,
     inventory: {},
     cosmetics: {},
-    lastQuizTime: 0,
-    quizCategoryIndex: 0,
+    lastWhackTime: 0,
+    lastFishTime: 0,
 };
 
 // Last inn lagret spill med validering
@@ -854,30 +1418,39 @@ const UPGRADES = [
 
     /* --- TIER 2: Early Game (1.000 - 50.000 mynter) --- */
     { id: 'a3', name: 'Vannmelon', icon: '🍉', cost: 1200, power: 7.5, type: 'auto' },
+    { id: 'cos67', name: '67-caps', icon: '🧢', cost: 1500, type: 'cosmetic', target: 'cosmetic-67' },
     { id: 'cos1', name: 'Solbriller', icon: '😎', cost: 2500, type: 'cosmetic', target: 'cosmetic-glasses' },
     { id: 'c4', name: 'Yoga-instruktør', icon: '🧘', cost: 4000, power: 20, type: 'click' },
     { id: 'a4', name: 'Yuzu Bad', icon: '🍊', cost: 8500, power: 25, type: 'auto' },
     { id: 'cos2', name: 'Flosshatt', icon: '🎩', cost: 15000, type: 'cosmetic', target: 'cosmetic-tophat' },
+    { id: 'cos_rat', name: 'Rottemodus', icon: '🐀', cost: 25000, type: 'skin', target: 'cosmetic-rat' },
     { id: 'c5', name: 'Magisk Tommel', icon: '👍', cost: 30000, power: 75, type: 'click' },
 
     /* --- TIER 3: Mid Game (50.000 - 1 Million) --- */
     { id: 'cos3', name: 'Gullkjede', icon: '🪙', cost: 60000, type: 'cosmetic', target: 'cosmetic-chain' },
     { id: 'a5', name: 'Pelikan-hær', icon: '🐦', cost: 120000, power: 200, type: 'auto' },
     { id: 'c6', name: 'Guddommelig Klapp', icon: '⚡', cost: 350000, power: 500, type: 'click' },
+    { id: 'a16', name: 'Bambusfarm', icon: '🎋', cost: 500000, power: 400, type: 'auto' },
     { id: 'cos5', name: 'Monokkel', icon: '🧐', cost: 750000, type: 'cosmetic', target: 'cosmetic-monocle' },
 
     /* --- TIER 4: The Grind (1 Million - 100 Millioner) --- */
     { id: 'a6', name: 'Capy Spa Resort', icon: '🧖', cost: 1200000, power: 1500, type: 'auto' },
+    { id: 'c12', name: 'Trylleformel', icon: '🪄', cost: 2000000, power: 2500, type: 'click' },
     { id: 'cos_heart', name: 'Hjertebriller', icon: '😍', cost: 2500000, type: 'cosmetic', target: 'cosmetic-heart-glasses' },
     { id: 'c7', name: 'Universets Hersker', icon: '🌌', cost: 5000000, power: 4000, type: 'click' },
     { id: 'cos_dog', name: 'Hund på hodet', icon: '🐶', cost: 10000000, type: 'cosmetic', target: 'cosmetic-dog' },
+    { id: 'a17', name: 'Vulkan-gryte', icon: '🌋', cost: 15000000, power: 10000, type: 'auto' },
     { id: 'a7', name: 'Månebase Alpha', icon: '🌑', cost: 25000000, power: 17500, type: 'auto' },
+    { id: 'c13', name: 'Dragonklapp', icon: '🐉', cost: 50000000, power: 25000, type: 'click' },
     { id: 'cos4', name: 'Kongekrone', icon: '👑', cost: 75000000, type: 'cosmetic', target: 'cosmetic-crown' },
 
     /* --- TIER 5: Late Game (100 Millioner - Milliarder) --- */
     { id: 'a8', name: 'Tidsmaskin', icon: '⏳', cost: 150000000, power: 75000, type: 'auto' },
+    { id: 'c14', name: 'Supernova-poke', icon: '💥', cost: 300000000, power: 150000, type: 'click' },
     { id: 'c8', name: 'Galaktisk Kosehånd', icon: '🖐️', cost: 500000000, power: 250000, type: 'click' },
+    { id: 'a18', name: 'Drømmefabrikk', icon: '💭', cost: 750000000, power: 350000, type: 'auto' },
     { id: 'cos6', name: 'Romhjelm', icon: '🧑‍🚀', cost: 1000000000, type: 'cosmetic', target: 'cosmetic-space' },
+    { id: 'cos_lion', name: 'Løvemodus', icon: '🦁', cost: 5000000000, type: 'skin', target: 'cosmetic-lion' },
     { id: 'a9', name: 'Multivers Portal', icon: '🌀', cost: 3500000000, power: 600000, type: 'auto' },
 
     /* --- TIER 6: Endgame --- */
@@ -902,7 +1475,7 @@ function getPowers() {
     let cp = 1;
     let ap = 0;
     UPGRADES.forEach(u => {
-        if (u.type === "cosmetic") return;
+        if (u.type === "cosmetic" || u.type === "skin") return;
         const n = game.inventory[u.id] || 0;
         if (u.type === "click") cp += n * u.power;
         if (u.type === "auto") ap += n * u.power;
@@ -911,13 +1484,33 @@ function getPowers() {
 }
 
 function getCost(u) {
-    if (u.type === "cosmetic") return u.cost;
+    if (u.type === "cosmetic" || u.type === "skin") return u.cost;
     const n = game.inventory[u.id] || 0;
     return Math.floor(u.cost * Math.pow(1.15, n));
 }
 
+const SKIN_IDS = ['cosmetic-lion', 'cosmetic-rat'];
+
 function updateCosmetics() {
+    const baseBody = document.getElementById("base-body");
+    let skinActive = false;
+
+    SKIN_IDS.forEach(skinId => {
+        const el = document.getElementById(skinId);
+        if (!el) return;
+        const u = UPGRADES.find(u => u.target === skinId);
+        if (u && game.inventory[u.id] && game.cosmetics[skinId]) {
+            el.style.display = "block";
+            skinActive = true;
+        } else {
+            el.style.display = "none";
+        }
+    });
+
+    if (baseBody) baseBody.style.display = skinActive ? "none" : "block";
+
     UPGRADES.filter(u => u.type === "cosmetic").forEach(u => {
+        if (SKIN_IDS.includes(u.target)) return;
         const el = document.getElementById(u.target);
         if (!el) return;
         const owned = game.inventory[u.id];
@@ -926,8 +1519,6 @@ function updateCosmetics() {
         else el.classList.remove("equipped");
     });
 }
-
-const FLAPPY_REQ = 500;
 
 function updateGameUI() {
     const { cp, ap } = getPowers();
@@ -945,47 +1536,48 @@ function updateGameUI() {
     ppsEl.innerText   = ap.toLocaleString();
     if (ppcEl) ppcEl.innerText = cp.toLocaleString();
 
-    // RANK
+    // RANK + THEME
     let rank = "Nybegynner";
-    if (game.score > 1_000)          rank = "Lærling";
-    if (game.score > 100_000)        rank = "Millionær";
-    if (game.score > 100_000_000)    rank = "Milliardær";
-    if (game.score > 10_000_000_000) rank = "Capy God";
+    let theme = "theme-eng";
+    if (game.score > 1_000)          { rank = "Lærling";    theme = "theme-skog"; }
+    if (game.score > 100_000)        { rank = "Millionær";  theme = "theme-strand"; }
+    if (game.score > 100_000_000)    { rank = "Milliardær"; theme = "theme-rom"; }
+    if (game.score > 10_000_000_000) { rank = "Capy God";   theme = "theme-gull"; }
     rankEl.innerText = rank;
 
-    /* --- QUIZ LOCK/UNLOCK --- */
-    const lockedView        = document.getElementById("quiz-locked-view");
-    const unlockedView      = document.getElementById("quiz-unlocked-view");
-    const unlockBar         = document.getElementById("unlock-bar");
-    const currentPpsDisplay = document.getElementById("current-pps-display");
-
-    if (unlockBar && currentPpsDisplay) {
-        let progress = Math.min(100, (ap / 100) * 100);
-        unlockBar.style.width = progress + "%";
-        currentPpsDisplay.innerText = ap;
-    }
-
-    if (ap >= 100) {
-        if (lockedView)   lockedView.style.display   = "none";
-        if (unlockedView) unlockedView.style.display = "block";
-    } else {
-        if (lockedView)   lockedView.style.display   = "block";
-        if (unlockedView) unlockedView.style.display = "none";
+    // Apply theme to click area (skins override rank theme)
+    const clickArea = document.querySelector(".click-area");
+    if (clickArea) {
+        clickArea.classList.remove("theme-eng", "theme-skog", "theme-strand", "theme-rom", "theme-gull", "theme-rat", "theme-lion");
+        const ratOn = game.inventory['cos_rat'] && game.cosmetics['cosmetic-rat'];
+        const lionOn = game.inventory['cos_lion'] && game.cosmetics['cosmetic-lion'];
+        if (ratOn) clickArea.classList.add("theme-rat");
+        else if (lionOn) clickArea.classList.add("theme-lion");
+        else clickArea.classList.add(theme);
     }
 
     updateCosmetics();
 
-    // SHOP
+    // SHOP — filtered by active tab
+    const activeTab = document.querySelector(".shop-tab.active");
+    const activeType = activeTab ? activeTab.dataset.tab : "click";
     list.innerHTML = "";
-    UPGRADES.forEach(u => {
+    const skinOn = isSkinActive();
+    UPGRADES.filter(u => {
+        if (u.type !== activeType) return false;
+        // Hide cosmetics when a skin is active (only show skins in skin tab)
+        if (skinOn && u.type === "cosmetic") return false;
+        return true;
+    }).forEach(u => {
         const owned = game.inventory[u.id] || 0;
         const cost = getCost(u);
         const afford = game.score >= cost;
         const div = document.createElement("div");
         let className = "upgrade-card";
         let costText = cost.toLocaleString();
+        const isToggleable = u.type === "cosmetic" || u.type === "skin";
 
-        if (u.type === "cosmetic") {
+        if (isToggleable) {
             const equipped = game.cosmetics[u.target];
             if (!owned) {
                 if (!afford) className += " locked";
@@ -1000,49 +1592,65 @@ function updateGameUI() {
             div.onclick = afford ? () => buy(u.id) : null;
         }
 
+        const badgeIcon = u.type === "click" ? "⚡" : u.type === "auto" ? "⏳" : u.type === "skin" ? "🐾" : "👕";
+        const descText = isToggleable ? (u.type === "skin" ? "Dyremodus" : "Kosmetisk") : `+${u.power} ${u.type === "click" ? "/klikk" : "/sek"}`;
+
         div.className = className;
         div.innerHTML = `
             <div class="icon-sq">
                 ${u.icon}
-                <div class="type-badge">${u.type === "click" ? "⚡" : u.type === "auto" ? "⏳" : "👕"}</div>
+                <div class="type-badge">${badgeIcon}</div>
             </div>
             <div style="flex:1;">
                 <div style="font-weight:bold;">${u.name}</div>
                 <div style="opacity:0.7; font-size:0.8rem;">
-                    ${u.type === "cosmetic" ? "Kosmetisk" : `+${u.power} ${u.type === "click" ? "/klikk" : "/sek"}`}
+                    ${descText}
                 </div>
             </div>
             <div style="text-align:right;">
                 <div class="cost-badge">${costText}</div>
-                ${u.type !== "cosmetic" && owned > 0 ? `<div style="font-size:0.7rem;">Lvl ${owned}</div>` : ""}
+                ${!isToggleable && owned > 0 ? `<div style="font-size:0.7rem;">Lvl ${owned}</div>` : ""}
             </div>
         `;
         list.appendChild(div);
     });
 
-    /* --- FLAPPY LOCK/UNLOCK (utenfor forEach) --- */
-    const flappyLocked   = document.getElementById("flappy-locked-view");
-    const flappyUnlocked = document.getElementById("flappy-unlocked-view");
-    const flappyBar      = document.getElementById("flappy-progress");
-    const currentCpDisp  = document.getElementById("current-cp-display");
-    const flappyRewVal   = document.getElementById("flappy-reward-val");
+    /* --- WHACK-A-CAPY LOCK/UNLOCK --- */
+    const WHACK_REQ = 25;
+    const whackLocked   = document.getElementById("whack-locked-view");
+    const whackUnlocked = document.getElementById("whack-unlocked-view");
+    const whackBar      = document.getElementById("whack-progress");
+    const whackCpDisp   = document.getElementById("whack-cp-display");
 
-    if (flappyBar && currentCpDisp) {
-        let percent = Math.min(100, (cp / FLAPPY_REQ) * 100);
-        flappyBar.style.width = percent + "%";
-        currentCpDisp.innerText = cp.toLocaleString();
+    if (whackBar && whackCpDisp) {
+        whackBar.style.width = Math.min(100, (cp / WHACK_REQ) * 100) + "%";
+        whackCpDisp.innerText = cp.toLocaleString();
     }
-
-    if (flappyRewVal) {
-        flappyRewVal.innerText = (cp * 5).toLocaleString();
-    }
-
-    if (cp >= FLAPPY_REQ) {
-        if (flappyLocked) flappyLocked.style.display = "none";
-        if (flappyUnlocked) flappyUnlocked.style.display = "block";
+    if (cp >= WHACK_REQ) {
+        if (whackLocked) whackLocked.style.display = "none";
+        if (whackUnlocked) whackUnlocked.style.display = "block";
     } else {
-        if (flappyLocked) flappyLocked.style.display = "block";
-        if (flappyUnlocked) flappyUnlocked.style.display = "none";
+        if (whackLocked) whackLocked.style.display = "block";
+        if (whackUnlocked) whackUnlocked.style.display = "none";
+    }
+
+    /* --- CAPY FISHING LOCK/UNLOCK --- */
+    const FISH_REQ = 500;
+    const fishLocked   = document.getElementById("fish-locked-view");
+    const fishUnlocked = document.getElementById("fish-unlocked-view");
+    const fishBar      = document.getElementById("fish-progress");
+    const fishPpsDisp  = document.getElementById("fish-pps-display");
+
+    if (fishBar && fishPpsDisp) {
+        fishBar.style.width = Math.min(100, (ap / FISH_REQ) * 100) + "%";
+        fishPpsDisp.innerText = ap.toLocaleString();
+    }
+    if (ap >= FISH_REQ) {
+        if (fishLocked) fishLocked.style.display = "none";
+        if (fishUnlocked) fishUnlocked.style.display = "block";
+    } else {
+        if (fishLocked) fishLocked.style.display = "block";
+        if (fishUnlocked) fishUnlocked.style.display = "none";
     }
 }
 
@@ -1051,8 +1659,13 @@ function buy(id) {
     const cost = getCost(u);
     if (game.score < cost) return;
     game.score -= cost;
-    if (u.type === "cosmetic") {
+    if (u.type === "cosmetic" || u.type === "skin") {
         game.inventory[id] = 1;
+        if (u.type === "skin") {
+            // Turn off other skins + all cosmetics
+            UPGRADES.filter(x => x.type === "skin" && x.id !== id).forEach(x => { game.cosmetics[x.target] = false; });
+            UPGRADES.filter(x => x.type === "cosmetic").forEach(x => { game.cosmetics[x.target] = false; });
+        }
         game.cosmetics[u.target] = true;
     } else {
         game.inventory[id] = (game.inventory[id] || 0) + 1;
@@ -1063,15 +1676,25 @@ function buy(id) {
 
 function toggleCosmetic(u) {
     if (!game.inventory[u.id]) return;
-    game.cosmetics[u.target] = !game.cosmetics[u.target];
+    const turning_on = !game.cosmetics[u.target];
+    if (u.type === "skin" && turning_on) {
+        // Turn off other skins + all cosmetics
+        UPGRADES.filter(x => x.type === "skin" && x.id !== u.id).forEach(x => { game.cosmetics[x.target] = false; });
+        UPGRADES.filter(x => x.type === "cosmetic").forEach(x => { game.cosmetics[x.target] = false; });
+    }
+    game.cosmetics[u.target] = turning_on;
     save();
     updateGameUI();
 }
 
+function isSkinActive() {
+    return UPGRADES.filter(u => u.type === "skin").some(u => {
+        return game.inventory[u.id] && game.cosmetics[u.target];
+    });
+}
+
 function save() {
     localStorage.setItem("capyRichEdition", JSON.stringify(game));
-    const { cp } = getPowers();
-    localStorage.setItem("capy_ppc", cp);
 }
 
 /* =====================================================
@@ -1082,10 +1705,11 @@ const clickSound = new Audio('click.mp3');
 const capyEl = document.getElementById("main-capy");
 if (capyEl) {
     function handleCapyClick(e) {
+        resetIdleState();
         clickSound.play().catch(() => {});
 
         const { cp } = getPowers();
-        game.score += cp;
+        game.score += cp * (discoActive ? 30 : 1);
 
         capyEl.classList.remove("pop");
         void capyEl.offsetWidth;
@@ -1094,7 +1718,8 @@ if (capyEl) {
 
         const f = document.createElement("div");
         f.className = "floater";
-        f.innerText = `+${cp}`;
+        const clickGain = cp * (discoActive ? 30 : 1);
+        f.innerText = `+${clickGain}`;
 
         const rect = capyEl.getBoundingClientRect();
         const clientX = e.clientX || (e.touches && e.touches[0] && e.touches[0].clientX) || rect.left + rect.width / 2;
@@ -1124,29 +1749,46 @@ if (capyEl) {
 }
 
 /* =====================================================
-   AUTO LOOP & SYNC WITH FLAPPY
+   INACTIVITY ANIMATIONS
 ===================================================== */
+let lastInteractionTime = Date.now();
+
+function resetIdleState() {
+    lastInteractionTime = Date.now();
+    const capy = document.getElementById("main-capy");
+    if (capy) {
+        capy.classList.remove("capy-eating", "capy-bathing", "capy-sleeping");
+    }
+}
+
+setInterval(() => {
+    const elapsed = (Date.now() - lastInteractionTime) / 1000;
+    const capy = document.getElementById("main-capy");
+    if (!capy) return;
+
+    capy.classList.remove("capy-eating", "capy-bathing", "capy-sleeping");
+
+    // Only show idle animations for the base capybara (no skin active)
+    if (!isSkinActive()) {
+        if (elapsed >= 90) {
+            capy.classList.add("capy-sleeping");
+        } else if (elapsed >= 45) {
+            capy.classList.add("capy-bathing");
+        } else if (elapsed >= 15) {
+            capy.classList.add("capy-eating");
+        }
+    }
+}, 1000);
+
+/* =====================================================
+   AUTO LOOP
+===================================================== */
+let discoActive = false;
+
 setInterval(() => {
     const { ap } = getPowers();
     if (ap > 0) {
         game.score += ap;
-    }
-
-    const pendingCoins = parseInt(localStorage.getItem('capy_pending_coins') || '0');
-    if (pendingCoins > 0) {
-        game.score += pendingCoins;
-        localStorage.setItem('capy_pending_coins', '0');
-
-        const f = document.createElement("div");
-        f.className = "floater";
-        f.innerText = `+${pendingCoins} fra Flappy!`;
-        f.style.left = "50%";
-        f.style.top = "50%";
-        f.style.color = "#FFD700";
-        f.style.fontSize = "2rem";
-        f.style.zIndex = "9999";
-        document.body.appendChild(f);
-        setTimeout(() => f.remove(), 1500);
     }
 
     updateGameUI();
@@ -1154,394 +1796,413 @@ setInterval(() => {
 }, 1000);
 
 /* =====================================================
-   QUIZ LOGIC
+   WHACK-A-CAPY GAME
 ===================================================== */
-const COOLDOWN_MINUTES = 15;
-const COOLDOWN_MS = COOLDOWN_MINUTES * 60 * 1000;
-const QUESTIONS_PER_ROUND = 5;
+const WHACK_COOLDOWN_MS = 10 * 60 * 1000;
+let whackInterval = null;
+let whackTimerInterval = null;
+let whackHits = 0;
+let whackTimeLeft = 30;
+let whackActive = false;
 
-const QUIZ_CATEGORIES = [
-    {
-        id: 'capy', title: 'Capybara',
-        questions: [
-            { q: "Hva er flodsvinets latinske navn?", a: ["Hydrochoerus hydrochaeris", "Cavia porcellus", "Sus scrofa"], c: 0 },
-            { q: "Hvor lenge kan de holde pusten under vann?", a: ["Ca. 5 minutter", "Ca. 1 minutt", "Ca. 30 minutter"], c: 0 },
-            { q: "Hvilket kontinent lever flodsvinet vilt på?", a: ["Sør-Amerika", "Afrika", "Australia"], c: 0 },
-            { q: "Hva er flodsvinets nærmeste slektning?", a: ["Marsvin", "Bever", "Gris"], c: 0 },
-            { q: "Hva består dietten deres hovedsakelig av?", a: ["Gress og vannplanter", "Fisk og insekter", "Frukt og nøtter"], c: 0 },
-            { q: "Er flodsvinet verdens største gnager?", a: ["Ja", "Nei, beveren er større", "Nei, det er en myte"], c: 0 },
-            { q: "Hvorfor bader flodsvin?", a: ["For å kjøle seg ned og unngå rovdyr", "For å vaske pelsen", "For å jakte på fisk"], c: 0 },
-            { q: "Hva kalles en gruppe flodsvin?", a: ["En flokk", "En stim", "En koloni"], c: 0 },
-            { q: "Hvor mange tær har de på bakføttene?", a: ["3", "4", "5"], c: 0 },
-            { q: "Hvor tunge kan de bli?", a: ["35 til 65 kg", "10 til 20 kg", "80 til 100 kg"], c: 0 }
-        ]
-    },
-    {
-        id: 'fotball', title: 'Fotball',
-        questions: [
-            { q: "Hvem vant VM i fotball for herrer i 2022?", a: ["Argentina", "Frankrike", "Brasil"], c: 0 },
-            { q: "Hvilken norsk spiss spiller for Manchester City?", a: ["Erling Braut Haaland", "Martin Ødegaard", "Alexander Sørloth"], c: 0 },
-            { q: "Hva er kallenavnet til Liverpool FC?", a: ["The Reds", "The Blues", "The Gunners"], c: 0 },
-            { q: "Hvor mange minutter varer en vanlig fotballkamp?", a: ["90 minutter", "60 minutter", "100 minutter"], c: 0 },
-            { q: "Hvilken form har en fotball?", a: ["Kule", "Kube", "Pyramide"], c: 0 },
-            { q: "Hva får man hvis dommeren viser rødt kort?", a: ["Man blir utvist", "Man får en advarsel", "Man får straffespark"], c: 0 },
-            { q: "Hvilket land kommer Lionel Messi fra?", a: ["Argentina", "Spania", "Portugal"], c: 0 },
-            { q: "Hvor mange spillere har hvert lag på banen?", a: ["11", "9", "15"], c: 0 }
-        ]
-    },
-    {
-        id: 'geo', title: 'Geografi',
-        questions: [
-            { q: "Hva er hovedstaden i Norge?", a: ["Oslo", "Bergen", "Trondheim"], c: 0 },
-            { q: "Hvilket land er verdens største i areal?", a: ["Russland", "USA", "Kina"], c: 0 },
-            { q: "I hvilket land ligger pyramidene?", a: ["Egypt", "Mexico", "Peru"], c: 0 },
-            { q: "Hva heter verdens dypeste hav?", a: ["Stillehavet", "Atlanterhavet", "Det indiske hav"], c: 0 },
-            { q: "Hvilket kontinent ligger Kenya i?", a: ["Afrika", "Asia", "Sør-Amerika"], c: 0 },
-            { q: "Hva er hovedstaden i Sverige?", a: ["Stockholm", "København", "Helsinki"], c: 0 },
-            { q: "Hvilket fjell er Norges høyeste?", a: ["Galdhøpiggen", "Snøhetta", "Glittertind"], c: 0 },
-            { q: "Hva heter den lengste elven i verden?", a: ["Nilen (eller Amazonas)", "Glomma", "Themsen"], c: 0 }
-        ]
-    },
-    {
-        id: 'historie', title: 'Historie',
-        questions: [
-            { q: "Når sluttet andre verdenskrig?", a: ["1945", "1918", "1990"], c: 0 },
-            { q: "Hvilket år landet det første mennesket på månen?", a: ["1969", "1955", "1975"], c: 0 },
-            { q: "Hvem var vikingene?", a: ["Sjøfarere fra Skandinavia", "Soldater fra Roma", "Bønder fra Kina"], c: 0 },
-            { q: "Hvilket år ble Norges grunnlov skrevet?", a: ["1814", "1905", "1349"], c: 0 },
-            { q: "Hva het skipet til Titanic?", a: ["RMS Titanic", "Santa Maria", "Mayflower"], c: 0 },
-            { q: "Hvem malte Mona Lisa?", a: ["Leonardo da Vinci", "Picasso", "Munch"], c: 0 }
-        ]
-    },
-    {
-        id: 'natur', title: 'Naturfag',
-        questions: [
-            { q: "Hvilken planet er nærmest solen?", a: ["Merkur", "Venus", "Mars"], c: 0 },
-            { q: "Hva trenger planter for å vokse?", a: ["Sollys og vann", "Pizza og brus", "Mørke og stillhet"], c: 0 },
-            { q: "Hva er H2O?", a: ["Vann", "Luft", "Gull"], c: 0 },
-            { q: "Hvilket dyr er verdens raskeste på land?", a: ["Gepard", "Løve", "Hest"], c: 0 },
-            { q: "Hvor mange bein har en edderkopp?", a: ["8", "6", "10"], c: 0 },
-            { q: "Hva puster mennesker inn?", a: ["Oksygen", "Helium", "Karbondioksid"], c: 0 }
-        ]
-    },
-    {
-        id: 'gaming', title: 'Spill & Gaming',
-        questions: [
-            { q: "Hva heter broren til Mario?", a: ["Luigi", "Wario", "Toad"], c: 0 },
-            { q: "Hvilket spill handler om å bygge med blokker?", a: ["Minecraft", "Fortnite", "Roblox"], c: 0 },
-            { q: "Hva slags dyr er Pikachu?", a: ["En mus", "En katt", "En kanin"], c: 0 },
-            { q: "Hva er målet i 'Among Us'?", a: ["Finne bedrageren", "Bygge et hus", "Løpe fortest"], c: 0 },
-            { q: "Hvilken farge er Pac-Man?", a: ["Gul", "Rød", "Blå"], c: 0 },
-            { q: "Hvilket selskap lagde PlayStation?", a: ["Sony", "Microsoft", "Nintendo"], c: 0 }
-        ]
-    },
-    {
-        id: 'film', title: 'Film & Serier',
-        questions: [
-            { q: "Hvilken skole går Harry Potter på?", a: ["Galtvort", "Durmstrang", "Beauxbatons"], c: 0 },
-            { q: "Hva heter snømannen i Frost?", a: ["Olaf", "Sven", "Kristoff"], c: 0 },
-            { q: "Hvem er faren til Luke Skywalker?", a: ["Darth Vader", "Yoda", "Obi-Wan"], c: 0 },
-            { q: "Hvilken farge er Shrek?", a: ["Grønn", "Blå", "Brun"], c: 0 },
-            { q: "Hva heter løven i Løvenes Konge?", a: ["Simba", "Nala", "Mufasa"], c: 0 },
-            { q: "Hvilken by bor Batman i?", a: ["Gotham", "Metropolis", "New York"], c: 0 }
-        ]
-    },
-    {
-        id: 'mat', title: 'Mat & Drikke',
-        questions: [
-            { q: "Hvilket land kommer pizza fra?", a: ["Italia", "USA", "Frankrike"], c: 0 },
-            { q: "Hva er hovedingrediensen i guacamole?", a: ["Avokado", "Tomat", "Potet"], c: 0 },
-            { q: "Hvilken farge har brunost?", a: ["Brun", "Gul", "Hvit"], c: 0 },
-            { q: "Hva er sushi vanligvis laget av?", a: ["Ris og rå fisk", "Pasta og kjøtt", "Potet og saus"], c: 0 },
-            { q: "Hva er det engelske ordet for 'eple'?", a: ["Apple", "Banana", "Pear"], c: 0 },
-            { q: "Hva drikker man vanligvis til frokost?", a: ["Juice eller melk", "Brus", "Suppe"], c: 0 }
-        ]
-    },
-    {
-        id: 'musikk', title: 'Musikk',
-        questions: [
-            { q: "Hvor mange strenger har en vanlig gitar?", a: ["6", "4", "8"], c: 0 },
-            { q: "Hvilket instrument har svarte og hvite tangenter?", a: ["Piano", "Trompet", "Fiolin"], c: 0 },
-            { q: "Hvem er kjent som 'Kongen av Pop'?", a: ["Michael Jackson", "Elvis Presley", "Justin Bieber"], c: 0 },
-            { q: "Hvilket land kommer DJ-en Kygo fra?", a: ["Norge", "Sverige", "USA"], c: 0 },
-            { q: "Hva bruker man for å slå på trommer?", a: ["Trommestikker", "Pil og bue", "Slegge"], c: 0 },
-            { q: "Fullfør teksten: 'Ja, vi elsker dette...'", a: ["Landet", "Vannet", "Fjellet"], c: 0 }
-        ]
-    },
-    {
-        id: 'dyr', title: 'Dyr i Naturen',
-        questions: [
-            { q: "Hva kalles verdens største kattdyr?", a: ["Tiger", "Løve", "Gepard"], c: 0 },
-            { q: "Hva er en pingvin?", a: ["En fugl", "En fisk", "Et krypdyr"], c: 0 },
-            { q: "Hvor bor isbjørner?", a: ["Arktis", "Antarktis", "Sibir"], c: 0 },
-            { q: "Hva spiser koalaer mest?", a: ["Eukalyptus", "Bananer", "Bark"], c: 0 },
-            { q: "Hvor mange tentakler har en blekksprut?", a: ["8", "10", "6"], c: 0 },
-            { q: "Hva slags dyr er en stinkdyr?", a: ["Et pattedyr", "En slange", "En fugl"], c: 0 }
-        ]
-    },
-    {
-        id: 'tech', title: 'Teknologi',
-        questions: [
-            { q: "Hva står 'AI' for?", a: ["Kunstig intelligens", "Automatisk internett", "Arealindeks"], c: 0 },
-            { q: "Hva bruker man for å koble til trådløst internett?", a: ["Wi-Fi", "HDMI", "USB"], c: 0 },
-            { q: "Hva heter verdens største videoplattform?", a: ["YouTube", "Vimeo", "Netflix"], c: 0 },
-            { q: "Hva er en smarttelefon?", a: ["En mobiltelefon med datakraft", "En liten PC", "En digital klokke"], c: 0 },
-            { q: "Hva er en pixel?", a: ["Et lyspunkt på en skjerm", "En type sensor", "En lagringsenhet"], c: 0 },
-            { q: "Hva er en app?", a: ["Et program", "En lydfil", "En nettside"], c: 0 }
-        ]
-    },
-    {
-        id: 'reise', title: 'Reise & Verdensbyer',
-        questions: [
-            { q: "Hvor ligger Eiffeltårnet?", a: ["Paris", "London", "Roma"], c: 0 },
-            { q: "Hva heter verdens største øy?", a: ["Grønland", "Australia", "Madagaskar"], c: 0 },
-            { q: "Hvilket land er kjent for pyramider?", a: ["Egypt", "Jordan", "Iran"], c: 0 },
-            { q: "Hvilken by kalles 'The Big Apple'?", a: ["New York", "Chicago", "Boston"], c: 0 },
-            { q: "Hvilket land er kjent for sushi?", a: ["Japan", "Kina", "Thailand"], c: 0 },
-            { q: "Hva heter flyplassen i Oslo?", a: ["Gardermoen", "Rygge", "Sola"], c: 0 }
-        ]
-    },
-    {
-        id: 'science', title: 'Enkel Vitenskap',
-        questions: [
-            { q: "Hva bruker mennesker for å puste?", a: ["Lunger", "Gjeller", "Vinger"], c: 0 },
-            { q: "Hva er sentrum av solsystemet?", a: ["Solen", "Jorden", "Mars"], c: 0 },
-            { q: "Hva er elektrisitet?", a: ["Energi", "Vann", "Lyd"], c: 0 },
-            { q: "Hva kalles fargen man får av blå + gul?", a: ["Grønn", "Lilla", "Orange"], c: 0 },
-            { q: "Hva er det som gjør at vi faller nedover?", a: ["Tyngdekraften", "Magnetisme", "Lufttrykk"], c: 0 },
-            { q: "Hva er vann i gassform?", a: ["Damp", "Is", "Regn"], c: 0 }
-        ]
-    },
-    {
-        id: 'norsk', title: 'Norsk & Språk',
-        questions: [
-            { q: "Hva er et verb?", a: ["Et ord som beskriver en handling", "Et navn på ting", "Et beskrivelserord"], c: 0 },
-            { q: "Hva betyr 'motsatt'?", a: ["Det omvendte", "Det samme", "Det litt like"], c: 0 },
-            { q: "Hva er flertall av 'bok'?", a: ["Bøker", "Boker", "Boks"], c: 0 },
-            { q: "Hvilken bokstav kommer etter M?", a: ["N", "L", "O"], c: 0 },
-            { q: "Hvilket ord er et adjektiv?", a: ["Rask", "Løper", "Sko"], c: 0 },
-            { q: "Hva heter språket vi snakker i Norge?", a: ["Norsk", "Dansk", "Islandsk"], c: 0 }
-        ]
-    }
-];
-
-let currentQuiz = [];
-let qIdx = 0;
-let correctCount = 0;
-let activeCategoryName = "";
-
-function getNextCategory() {
-    const idx = (game.quizCategoryIndex || 0) % QUIZ_CATEGORIES.length;
-    return QUIZ_CATEGORIES[idx];
-}
-
-function checkCooldown() {
+function checkWhackCooldown() {
     const now = Date.now();
-    const diff = now - game.lastQuizTime;
-
-    const btn       = document.getElementById("btn-start-quiz");
-    const cdDiv     = document.getElementById("quiz-cooldown");
-    const timerTxt  = document.getElementById("timer-text");
-    const quizBox   = document.getElementById("quiz-unlocked-view");
-    const hubMsg    = document.querySelector("#quiz-hub p");
-
-    const nextCat = getNextCategory();
-
-    if (hubMsg) {
-        hubMsg.innerHTML = `
-            Neste tema: <strong>${nextCat.title}</strong><br>
-            ${
-                game.quizDouble
-                ? `<div class="quiz-bonus-alert"><strong>Normal rewards!</strong></div>`
-                : `<div style="opacity:0.6;">Normal reward</div>`
-            }
-        `;
-    }
-
-    if (quizBox) {
-        if (game.quizDouble) {
-            quizBox.classList.add("quiz-bonus-active");
-        } else {
-            quizBox.classList.remove("quiz-bonus-active");
-        }
-    }
-
+    const diff = now - (game.lastWhackTime || 0);
+    const btn = document.getElementById("btn-start-whack");
+    const cdDiv = document.getElementById("whack-cooldown");
+    const timerTxt = document.getElementById("whack-timer-text");
     if (!btn || !cdDiv) return;
 
-    if (diff >= COOLDOWN_MS) {
+    if (diff >= WHACK_COOLDOWN_MS) {
         btn.style.display = "inline-block";
         cdDiv.style.display = "none";
     } else {
         btn.style.display = "none";
         cdDiv.style.display = "block";
-
-        const remaining = COOLDOWN_MS - diff;
+        const remaining = WHACK_COOLDOWN_MS - diff;
         const m = Math.floor(remaining / 60000);
         const s = Math.floor((remaining % 60000) / 1000);
-
-        timerTxt.innerText =
-            `${m.toString().padStart(2, '0')}:${s.toString().padStart(2, '0')}`;
+        timerTxt.innerText = `${m.toString().padStart(2,'0')}:${s.toString().padStart(2,'0')}`;
     }
 }
 
-setInterval(checkCooldown, 1000);
-
-function tryStartQuiz() {
+function tryStartWhack() {
     const now = Date.now();
-    if (now - game.lastQuizTime >= COOLDOWN_MS) {
-        startQuiz();
+    if (now - (game.lastWhackTime || 0) >= WHACK_COOLDOWN_MS) {
+        startWhack();
     } else {
         alert("Du må vente litt til!");
     }
 }
 
-function shuffleArray(array) {
-    for (let i = array.length - 1; i > 0; i--) {
-        const j = Math.floor(Math.random() * (i + 1));
-        [array[i], array[j]] = [array[j], array[i]];
-    }
-    return array;
-}
+function startWhack() {
+    whackHits = 0;
+    whackTimeLeft = 10;
+    whackActive = true;
 
-function startQuiz() {
-    qIdx = 0;
-    correctCount = 0;
+    document.getElementById("whack-hub").style.display = "none";
+    document.getElementById("whack-game").style.display = "block";
+    document.getElementById("whack-result").style.display = "none";
+    document.getElementById("whack-hits").innerText = "0";
+    document.getElementById("whack-time").innerText = "30";
 
-    const categoryData = getNextCategory();
-    activeCategoryName = categoryData.title;
-
-    const pool = [...categoryData.questions];
-    const shuffledPool = shuffleArray(pool);
-
-    const count = Math.min(QUESTIONS_PER_ROUND, shuffledPool.length);
-    currentQuiz = shuffledPool.slice(0, count);
-
-    document.getElementById("quiz-hub").style.display = "none";
-    document.getElementById("quiz-game").style.display = "block";
-    document.getElementById("quiz-result").style.display = "none";
-    updateHeader();
-    renderQ();
-}
-
-function updateHeader() {
-    document.getElementById("q-counter").innerText = `${activeCategoryName}: ${qIdx + 1}/${currentQuiz.length}`;
-    document.getElementById("current-correct").innerText = correctCount;
-    document.getElementById("q-bar").style.width = ((qIdx) / currentQuiz.length) * 100 + "%";
-}
-
-function renderQ() {
-    const qData = currentQuiz[qIdx];
-    document.getElementById("q-text").innerText = qData.q;
-    const optsDiv = document.getElementById("q-opts");
-    optsDiv.innerHTML = "";
-
-    let answerObjects = qData.a.map((text, index) => {
-        return {
-            text: text,
-            isCorrect: (index === qData.c)
-        };
+    // Reset all capys
+    document.querySelectorAll(".whack-capy").forEach(c => {
+        c.classList.remove("visible", "golden", "hit");
     });
 
-    answerObjects = shuffleArray(answerObjects);
+    // Spawn loop
+    whackInterval = setInterval(spawnWhackCapy, 900);
 
-    answerObjects.forEach((ansObj) => {
-        const btn = document.createElement("button");
-        btn.className = "quiz-btn";
-        btn.innerText = ansObj.text;
-        btn.onclick = () => handleAnswer(btn, ansObj.isCorrect);
-        optsDiv.appendChild(btn);
-    });
+    // Timer
+    whackTimerInterval = setInterval(() => {
+        whackTimeLeft--;
+        document.getElementById("whack-time").innerText = whackTimeLeft;
+        if (whackTimeLeft <= 0) {
+            endWhack();
+        }
+    }, 1000);
 }
 
-function handleAnswer(clickedBtn, isCorrect) {
-    const allBtns = document.querySelectorAll(".quiz-btn");
-    allBtns.forEach(b => b.disabled = true);
+function spawnWhackCapy() {
+    if (!whackActive) return;
+    const holes = document.querySelectorAll(".whack-capy");
+    // Pick random hole that isn't already visible
+    const available = [...holes].filter(h => !h.classList.contains("visible"));
+    if (available.length === 0) return;
 
-    if (isCorrect) {
-        clickedBtn.classList.add("correct");
-        correctCount++;
-    } else {
-        clickedBtn.classList.add("wrong");
+    const capy = available[Math.floor(Math.random() * available.length)];
+    capy.classList.remove("hit", "golden");
+
+    // 15% chance of golden
+    if (Math.random() < 0.15) {
+        capy.classList.add("golden");
     }
+
+    capy.classList.add("visible");
+
+    // Hide after random time
+    const showTime = 800 + Math.random() * 1000;
+    setTimeout(() => {
+        if (!capy.classList.contains("hit")) {
+            capy.classList.remove("visible", "golden");
+        }
+    }, showTime);
+}
+
+function handleWhackClick(e) {
+    if (!whackActive) return;
+    const capy = e.target.closest(".whack-capy");
+    if (!capy || !capy.classList.contains("visible") || capy.classList.contains("hit")) return;
+
+    capy.classList.add("hit");
+    const isGolden = capy.classList.contains("golden");
+    whackHits += isGolden ? 3 : 1;
+    document.getElementById("whack-hits").innerText = whackHits;
 
     setTimeout(() => {
-        qIdx++;
-        if (qIdx < currentQuiz.length) {
-            updateHeader();
-            renderQ();
-        } else {
-            finishQuiz();
-        }
-    }, 1200);
+        capy.classList.remove("visible", "golden", "hit");
+    }, 300);
 }
 
-function finishQuiz() {
-    document.getElementById("quiz-game").style.display = "none";
-    document.getElementById("quiz-result").style.display = "block";
+function endWhack() {
+    whackActive = false;
+    clearInterval(whackInterval);
+    clearInterval(whackTimerInterval);
 
-    game.lastQuizTime = Date.now();
-    game.quizCategoryIndex = (game.quizCategoryIndex || 0) + 1;
-
-    const oldBonus = game.quizDouble;
-    game.quizDouble = false;
-
-    if (Math.random() < 0.01) {
-        game.quizDouble = true;
-    }
-
+    game.lastWhackTime = Date.now();
     save();
 
-    const { ap } = getPowers();
-    const baseProduction = ap > 0 ? ap : 10;
-    const multiplier = [0, 10, 30, 60, 90, 120];
-
-    const scoreIdx = Math.min(correctCount, multiplier.length - 1);
-    const timeBonus = multiplier[scoreIdx];
-
-    let reward = baseProduction * timeBonus;
-
-    if (oldBonus) {
-        reward *= 2;
-    }
-
-    if (reward === 0 && correctCount > 0) {
-        reward = correctCount * 50;
-    }
-
+    const { cp } = getPowers();
+    const reward = whackHits * cp * 3;
     game.score += reward;
     save();
     updateGameUI();
 
-    document.getElementById("reward-amount").innerText =
-        Math.floor(reward).toLocaleString();
+    document.getElementById("whack-game").style.display = "none";
+    document.getElementById("whack-result").style.display = "block";
+    document.getElementById("whack-result-title").innerText = `${whackHits} treff!`;
+    document.getElementById("whack-reward").innerText = Math.floor(reward).toLocaleString();
+}
 
-    document.getElementById("result-title").innerText =
-        `${correctCount} av ${currentQuiz.length} Riktige`;
+function whackBackToHub() {
+    document.getElementById("whack-result").style.display = "none";
+    document.getElementById("whack-hub").style.display = "block";
+    checkWhackCooldown();
+}
 
-    if (oldBonus) {
-        document.getElementById("result-title").innerHTML +=
-            `<br><span style="color:#d4a100; font-size:1.4rem;"> 2x Coins </span>`;
+// Attach click handlers to whack grid
+document.getElementById("whack-grid")?.addEventListener("click", handleWhackClick);
+setInterval(checkWhackCooldown, 1000);
+
+/* =====================================================
+   CAPY FISHING GAME
+===================================================== */
+const FISH_COOLDOWN_MS = 10 * 60 * 1000;
+const FISH_MAX_CASTS = 3;
+let fishCastNum = 0;
+let fishTotalReward = 0;
+let fishState = "idle"; // idle, casting, waiting, bite, reeling, done
+let fishBiteTimeout = null;
+let fishMissTimeout = null;
+let fishCatches = [];
+
+const FISH_TYPES = [
+    { name: "Småfisk",  emoji: "🐟", chance: 0.60, mult: 10 },
+    { name: "Stor fisk", emoji: "🐠", chance: 0.30, mult: 30 },
+    { name: "Gullflask", emoji: "🏆", chance: 0.08, mult: 100 },
+    { name: "Sjøhest",  emoji: "🦑", chance: 0.02, mult: 500 },
+];
+
+function checkFishCooldown() {
+    const now = Date.now();
+    const diff = now - (game.lastFishTime || 0);
+    const btn = document.getElementById("btn-start-fish");
+    const cdDiv = document.getElementById("fish-cooldown");
+    const timerTxt = document.getElementById("fish-timer-text");
+    if (!btn || !cdDiv) return;
+
+    if (diff >= FISH_COOLDOWN_MS) {
+        btn.style.display = "inline-block";
+        cdDiv.style.display = "none";
+    } else {
+        btn.style.display = "none";
+        cdDiv.style.display = "block";
+        const remaining = FISH_COOLDOWN_MS - diff;
+        const m = Math.floor(remaining / 60000);
+        const s = Math.floor((remaining % 60000) / 1000);
+        timerTxt.innerText = `${m.toString().padStart(2,'0')}:${s.toString().padStart(2,'0')}`;
     }
-
-    let msg = "";
-    if (correctCount === currentQuiz.length) msg = "ALT RIKTIG! Genialt!";
-    else if (correctCount >= 3) msg = "Bra jobba! Godt med lommepenger.";
-    else if (correctCount >= 1) msg = "Litt å lære, men god innsats!";
-    else msg = "Oisann! Bedre lykke neste gang.";
-
-    document.getElementById("result-msg").innerText = msg;
 }
 
-function backToHub() {
-    document.getElementById("quiz-result").style.display = "none";
-    document.getElementById("quiz-hub").style.display = "block";
-    checkCooldown();
+function tryStartFish() {
+    const now = Date.now();
+    if (now - (game.lastFishTime || 0) >= FISH_COOLDOWN_MS) {
+        startFish();
+    } else {
+        alert("Du må vente litt til!");
+    }
 }
+
+function startFish() {
+    fishCastNum = 0;
+    fishTotalReward = 0;
+    fishCatches = [];
+    fishState = "idle";
+
+    document.getElementById("fish-hub").style.display = "none";
+    document.getElementById("fish-game").style.display = "block";
+    document.getElementById("fish-result").style.display = "none";
+
+    updateFishUI();
+    document.getElementById("btn-fish-action").innerText = "Kast snøret!";
+    document.getElementById("fish-catch-text").innerText = "";
+    document.getElementById("fish-line").classList.remove("cast");
+    document.getElementById("fish-bite").classList.remove("active");
+}
+
+function updateFishUI() {
+    const dotsDiv = document.getElementById("fish-cast-dots");
+    dotsDiv.innerHTML = "";
+    for (let i = 0; i < FISH_MAX_CASTS; i++) {
+        const dot = document.createElement("div");
+        dot.className = "fish-cast-dot";
+        if (i < fishCastNum) {
+            dot.classList.add(fishCatches[i] ? "caught" : "used");
+        }
+        dotsDiv.appendChild(dot);
+    }
+}
+
+function fishAction() {
+    const btn = document.getElementById("btn-fish-action");
+    const line = document.getElementById("fish-line");
+    const bite = document.getElementById("fish-bite");
+    const catchText = document.getElementById("fish-catch-text");
+
+    if (fishState === "idle") {
+        // Cast the line
+        fishState = "casting";
+        btn.style.display = "none";
+        catchText.innerText = "Venter på bitt...";
+        line.classList.add("cast");
+
+        // Wait for bite
+        const waitTime = 2000 + Math.random() * 3000;
+        fishBiteTimeout = setTimeout(() => {
+            fishState = "bite";
+            bite.classList.add("active");
+            catchText.innerText = "";
+            btn.innerText = "Dra opp!";
+            btn.style.display = "inline-block";
+
+            // Miss window
+            fishMissTimeout = setTimeout(() => {
+                if (fishState === "bite") {
+                    fishMiss("For sent!");
+                }
+            }, 1200);
+        }, waitTime);
+
+    } else if (fishState === "bite") {
+        // Caught!
+        clearTimeout(fishMissTimeout);
+        fishState = "idle";
+        bite.classList.remove("active");
+        line.classList.remove("cast");
+
+        // Determine fish type
+        const roll = Math.random();
+        let cumulative = 0;
+        let caught = FISH_TYPES[0];
+        for (const ft of FISH_TYPES) {
+            cumulative += ft.chance;
+            if (roll < cumulative) {
+                caught = ft;
+                break;
+            }
+        }
+
+        const { ap } = getPowers();
+        const baseAp = ap > 0 ? ap : 10;
+        const reward = baseAp * caught.mult;
+        fishTotalReward += reward;
+        fishCatches.push(true);
+        fishCastNum++;
+
+        catchText.innerHTML = `${caught.emoji} ${caught.name}! <strong>+${Math.floor(reward).toLocaleString()}</strong>`;
+
+        updateFishUI();
+        nextFishCast();
+
+    } else if (fishState === "casting") {
+        // Clicked too early
+        clearTimeout(fishBiteTimeout);
+        fishMiss("For tidlig!");
+    }
+}
+
+function fishMiss(reason) {
+    fishState = "idle";
+    const bite = document.getElementById("fish-bite");
+    const line = document.getElementById("fish-line");
+    const catchText = document.getElementById("fish-catch-text");
+
+    bite.classList.remove("active");
+    line.classList.remove("cast");
+
+    fishCatches.push(false);
+    fishCastNum++;
+
+    catchText.innerText = `${reason} Ingen fangst.`;
+    updateFishUI();
+    nextFishCast();
+}
+
+function nextFishCast() {
+    const btn = document.getElementById("btn-fish-action");
+    if (fishCastNum >= FISH_MAX_CASTS) {
+        setTimeout(endFish, 1500);
+        btn.style.display = "none";
+    } else {
+        btn.innerText = "Kast snøret!";
+        btn.style.display = "inline-block";
+    }
+}
+
+function endFish() {
+    game.lastFishTime = Date.now();
+    game.score += fishTotalReward;
+    save();
+    updateGameUI();
+
+    document.getElementById("fish-game").style.display = "none";
+    document.getElementById("fish-result").style.display = "block";
+    document.getElementById("fish-reward").innerText = Math.floor(fishTotalReward).toLocaleString();
+
+    const numCaught = fishCatches.filter(Boolean).length;
+    document.getElementById("fish-summary").innerText = `Du fanget ${numCaught} av ${FISH_MAX_CASTS} fisk!`;
+}
+
+function fishBackToHub() {
+    document.getElementById("fish-result").style.display = "none";
+    document.getElementById("fish-hub").style.display = "block";
+    checkFishCooldown();
+}
+
+setInterval(checkFishCooldown, 1000);
+
+/* =====================================================
+   RAT BREAD GNAW
+===================================================== */
+setInterval(() => {
+    const ratEl = document.getElementById("cosmetic-rat");
+    const bread = document.getElementById("rat-bread");
+    if (!ratEl || !bread) return;
+    if (ratEl.style.display === "none") return;
+
+    bread.style.display = "block";
+    ratEl.classList.add("gnawing");
+
+    setTimeout(() => {
+        bread.style.display = "none";
+        ratEl.classList.remove("gnawing");
+    }, 4000);
+}, 20000);
+
+/* =====================================================
+   LION ROAR
+===================================================== */
+setInterval(() => {
+    const lionEl = document.getElementById("cosmetic-lion");
+    const roar = document.getElementById("lion-roar");
+    if (!lionEl || !roar) return;
+    if (lionEl.style.display === "none") return;
+
+    roar.style.display = "block";
+    lionEl.classList.add("roaring");
+
+    setTimeout(() => {
+        roar.style.display = "none";
+        lionEl.classList.remove("roaring");
+    }, 3000);
+}, 20000);
+
+/* =====================================================
+   DISCO MODE
+===================================================== */
+function triggerDisco() {
+    const overlay = document.getElementById("disco-overlay");
+    if (!overlay) return;
+    overlay.classList.add("active");
+    document.body.classList.add("disco-active");
+    discoActive = true;
+    const hat = document.getElementById("disco-hat");
+    if (hat) hat.style.display = "block";
+
+    setTimeout(() => {
+        overlay.classList.remove("active");
+        document.body.classList.remove("disco-active");
+        discoActive = false;
+        if (hat) hat.style.display = "none";
+    }, 10000);
+}
+// First disco after 5 min, then every 5 min
+setInterval(triggerDisco, 5 * 60 * 1000);
 
 /* =====================================================
    INIT
 ===================================================== */
 document.addEventListener("DOMContentLoaded", function() {
+    // Shop tabs
+    document.querySelectorAll(".shop-tab").forEach(tab => {
+        tab.addEventListener("click", () => {
+            document.querySelectorAll(".shop-tab").forEach(t => t.classList.remove("active"));
+            tab.classList.add("active");
+            updateGameUI();
+        });
+    });
+
     const nameInput = document.getElementById("capy-name-input");
 
     if (game.capyName) {
@@ -1560,7 +2221,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
     document.getElementById("confirm-restart").addEventListener("click", function() {
         localStorage.removeItem("capyRichEdition");
-        localStorage.removeItem("capy_ppc");
+
         location.reload();
     });
 
@@ -1575,18 +2236,8 @@ document.addEventListener("DOMContentLoaded", function() {
         }
     });
 
-    // Flappy tastaturstøtte
-    const flappyUnlocked = document.getElementById("flappy-unlocked-view");
-    if (flappyUnlocked) {
-        flappyUnlocked.addEventListener("keydown", function(e) {
-            if (e.key === "Enter" || e.key === " ") {
-                e.preventDefault();
-                window.location.href = '/flappy/';
-            }
-        });
-    }
-
-    checkCooldown();
+    checkWhackCooldown();
+    checkFishCooldown();
     updateGameUI();
 });
 </script>
