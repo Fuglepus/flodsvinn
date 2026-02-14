@@ -36,7 +36,7 @@
     <style>
         :root {
             --bg-color: #FFF8E1;
-            --bg-warm: linear-gradient(180deg, #4fc3f7 0%, #81d4fa 40%, #b3e5fc 100%);
+            --bg-warm: linear-gradient(135deg, #ffb75e 0%, #ff9a44 100%);
             --primary: #00b894;
             --primary-dark: #009174;
             --accent: #e17055;
@@ -50,60 +50,19 @@
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
 
-        @keyframes driftCloud1 { 0% { left: -200px; } 100% { left: 110vw; } }
-        @keyframes driftCloud2 { 0% { left: -250px; } 100% { left: 110vw; } }
-        @keyframes driftCloud3 { 0% { left: -180px; } 100% { left: 110vw; } }
-
-        .bg-cloud {
-            position: fixed;
-            pointer-events: none;
-            z-index: 0;
-        }
-        .bg-cloud svg {
-            filter: drop-shadow(2px 3px 0px rgba(0,0,0,0.08));
-        }
-        .bg-cloud-1 { top: 6%; animation: driftCloud1 25s linear infinite; }
-        .bg-cloud-2 { top: 18%; animation: driftCloud2 35s linear infinite; animation-delay: -12s; }
-        .bg-cloud-3 { top: 30%; animation: driftCloud3 30s linear infinite; animation-delay: -5s; }
-
         body {
             font-family: 'Fredoka', sans-serif;
-            background: var(--bg-warm);
+            background:
+                radial-gradient(circle, rgba(255,255,255,0.12) 1px, transparent 1px),
+                radial-gradient(circle, rgba(255,255,255,0.08) 1.5px, transparent 1.5px),
+                var(--bg-warm);
+            background-size: 30px 30px, 50px 50px, 100% 100%;
+            background-position: 0 0, 15px 15px, 0 0;
             background-attachment: fixed;
             color: var(--text-dark);
             min-height: 100vh;
             padding-bottom: 50px;
             user-select: none;
-        }
-
-        @keyframes sunPulse {
-            0%, 100% { box-shadow: 0 0 40px 15px rgba(255,235,59,0.5), 0 0 80px 30px rgba(255,193,7,0.2); }
-            50% { box-shadow: 0 0 50px 20px rgba(255,235,59,0.6), 0 0 100px 40px rgba(255,193,7,0.3); }
-        }
-
-        body::before {
-            content: '';
-            position: fixed;
-            top: 40px;
-            right: 60px;
-            width: 80px;
-            height: 80px;
-            background: radial-gradient(circle, #fff176 0%, #ffee58 40%, #fdd835 70%, #f9a825 100%);
-            border-radius: 50%;
-            border: 4px solid #f57f17;
-            animation: sunPulse 3s ease-in-out infinite;
-            pointer-events: none;
-            z-index: 0;
-        }
-
-        .bg-grass {
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            width: 100%;
-            height: 220px;
-            pointer-events: none;
-            z-index: 0;
         }
 
         h1, h2, h3 { color: var(--text-dark); }
@@ -1031,25 +990,6 @@
 </head>
 
 <body>
-
-<div class="bg-grass"><svg width="100%" height="220" viewBox="0 0 1440 220" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
-    <path d="M0,120 C120,80 240,140 360,100 C480,60 600,130 720,90 C840,50 960,120 1080,80 C1200,40 1320,110 1440,70 L1440,220 L0,220 Z" fill="#5a9e2f" stroke="#3d7a1c" stroke-width="3"/>
-    <path d="M0,150 C100,120 220,170 360,130 C500,90 620,160 760,120 C900,80 1020,150 1160,110 C1300,70 1380,140 1440,100 L1440,220 L0,220 Z" fill="#6db33f"/>
-    <path d="M0,175 C150,150 280,190 420,160 C560,130 680,185 820,155 C960,125 1100,180 1240,150 C1350,130 1400,170 1440,145 L1440,220 L0,220 Z" fill="#7ec850"/>
-    <circle cx="180" cy="170" r="4" fill="#f7dc6f"/><circle cx="182" cy="162" r="3" fill="#f7dc6f"/><circle cx="176" cy="165" r="3" fill="#f7dc6f"/>
-    <circle cx="600" cy="155" r="5" fill="#e74c3c"/><circle cx="596" cy="148" r="3" fill="#e74c3c"/><circle cx="604" cy="148" r="3" fill="#e74c3c"/>
-    <circle cx="1000" cy="165" r="4" fill="#fff"/><circle cx="997" cy="158" r="3" fill="#fff"/><circle cx="1003" cy="158" r="3" fill="#fff"/>
-    <circle cx="350" cy="180" r="4" fill="#af7ac5"/><circle cx="347" cy="173" r="3" fill="#af7ac5"/><circle cx="353" cy="173" r="3" fill="#af7ac5"/>
-    <circle cx="820" cy="160" r="4" fill="#f7dc6f"/><circle cx="817" cy="153" r="3" fill="#f7dc6f"/><circle cx="823" cy="153" r="3" fill="#f7dc6f"/>
-    <line x1="100" y1="185" x2="100" y2="165" stroke="#4a8c25" stroke-width="2"/><line x1="96" y1="172" x2="88" y2="166" stroke="#4a8c25" stroke-width="1.5"/><line x1="104" y1="175" x2="112" y2="169" stroke="#4a8c25" stroke-width="1.5"/>
-    <line x1="500" y1="170" x2="500" y2="148" stroke="#4a8c25" stroke-width="2"/><line x1="496" y1="156" x2="488" y2="150" stroke="#4a8c25" stroke-width="1.5"/><line x1="504" y1="159" x2="512" y2="153" stroke="#4a8c25" stroke-width="1.5"/>
-    <line x1="900" y1="175" x2="900" y2="155" stroke="#4a8c25" stroke-width="2"/><line x1="896" y1="162" x2="888" y2="156" stroke="#4a8c25" stroke-width="1.5"/><line x1="904" y1="165" x2="912" y2="159" stroke="#4a8c25" stroke-width="1.5"/>
-    <line x1="1300" y1="168" x2="1300" y2="148" stroke="#4a8c25" stroke-width="2"/><line x1="1296" y1="155" x2="1288" y2="149" stroke="#4a8c25" stroke-width="1.5"/><line x1="1304" y1="158" x2="1312" y2="152" stroke="#4a8c25" stroke-width="1.5"/>
-</svg></div>
-
-<div class="bg-cloud bg-cloud-1"><svg width="180" height="80" viewBox="0 0 180 80"><ellipse cx="60" cy="50" rx="55" ry="28" fill="white" stroke="#d0d0d0" stroke-width="2"/><ellipse cx="90" cy="35" rx="40" ry="30" fill="white" stroke="#d0d0d0" stroke-width="2"/><ellipse cx="120" cy="50" rx="50" ry="25" fill="white" stroke="#d0d0d0" stroke-width="2"/><ellipse cx="90" cy="50" rx="70" ry="22" fill="white"/></svg></div>
-<div class="bg-cloud bg-cloud-2"><svg width="220" height="90" viewBox="0 0 220 90"><ellipse cx="70" cy="55" rx="60" ry="30" fill="white" stroke="#d0d0d0" stroke-width="2"/><ellipse cx="110" cy="38" rx="50" ry="33" fill="white" stroke="#d0d0d0" stroke-width="2"/><ellipse cx="155" cy="52" rx="55" ry="28" fill="white" stroke="#d0d0d0" stroke-width="2"/><ellipse cx="110" cy="55" rx="85" ry="24" fill="white"/></svg></div>
-<div class="bg-cloud bg-cloud-3"><svg width="150" height="70" viewBox="0 0 150 70"><ellipse cx="50" cy="45" rx="45" ry="22" fill="white" stroke="#d0d0d0" stroke-width="2"/><ellipse cx="75" cy="30" rx="35" ry="25" fill="white" stroke="#d0d0d0" stroke-width="2"/><ellipse cx="100" cy="45" rx="42" ry="20" fill="white" stroke="#d0d0d0" stroke-width="2"/><ellipse cx="75" cy="45" rx="58" ry="18" fill="white"/></svg></div>
 
 <main>
 
