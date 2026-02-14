@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="no">
 <head>
     <meta charset="UTF-8">
@@ -6,22 +6,19 @@
 
     <title>Capy Clicker – gratis Flodsvin klikkespill med oppgraderinger</title>
 
-    <meta name="description" content="Spill gratis klikkespill på Flodsvin.no! Et morsomt idle game der du klikker, oppgraderer og samler poeng. Perfekt for deg som liker enkle og gratis nettspill.
-">
+    <meta name="description" content="Spill gratis klikkespill på Flodsvin.no! Et morsomt idle game der du klikker, oppgraderer og samler poeng. Perfekt for deg som liker enkle og gratis nettspill.">
 
     <!-- Open Graph (Discord, Snapchat, Facebook, Instagram osv.) -->
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://flodsvin.no/">
     <meta property="og:title" content="Flodsvin.no | Capy Clicker">
-    <meta property="og:description" content="Spill gratis klikkespill på Flodsvin.no! Et morsomt idle game der du klikker, oppgraderer og samler poeng. Perfekt for deg som liker enkle og gratis nettspill.
-">
+    <meta property="og:description" content="Spill gratis klikkespill på Flodsvin.no! Et morsomt idle game der du klikker, oppgraderer og samler poeng. Perfekt for deg som liker enkle og gratis nettspill.">
     <meta property="og:image" content="https://flodsvin.no/meta.png">
 
     <!-- Twitter Card -->
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="Flodsvin.no | Capy Clicker">
-    <meta name="twitter:description" content="Spill gratis klikkespill på Flodsvin.no! Et morsomt idle game der du klikker, oppgraderer og samler poeng. Perfekt for deg som liker enkle og gratis nettspill.
-">
+    <meta name="twitter:description" content="Spill gratis klikkespill på Flodsvin.no! Et morsomt idle game der du klikker, oppgraderer og samler poeng. Perfekt for deg som liker enkle og gratis nettspill.">
     <meta name="twitter:image" content="https://flodsvin.no/meta.png">
 
     <!-- Google Fonts -->
@@ -29,39 +26,23 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600;700&display=swap" rel="stylesheet">
 
-
-<!-- PNG fallback -->
-<link rel="icon" type="image/png" href="/favicon.png">
-
-<!-- SVG favicon -->
-<link rel="icon" type="image/svg+xml" href="/faviconsvg.svg">
-
-<!-- 96x96 PNG favicon -->
-<link rel="icon" type="image/png" sizes="96x96" href="/favicon96.png">
-
-<!-- ICO fallback -->
-<link rel="icon" href="/favicon.ico">
-
-<!-- Apple iOS home screen icon -->
-<link rel="apple-touch-icon" href="/apple-touch-icon.png">
-
+    <!-- Favicons -->
+    <link rel="icon" type="image/png" href="/favicon.png">
+    <link rel="icon" type="image/svg+xml" href="/faviconsvg.svg">
+    <link rel="icon" type="image/png" sizes="96x96" href="/favicon96.png">
+    <link rel="icon" href="/favicon.ico">
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png">
 
     <style>
-
         :root {
-            /* Farger */
             --bg-color: #FFF8E1;
             --bg-warm: linear-gradient(135deg, #ffb75e 0%, #ff9a44 100%);
-
-            
             --primary: #00b894;
             --primary-dark: #009174;
             --accent: #e17055;
             --secondary: #ffeaa7;
-            
             --text-dark: #2d3436;
             --border-color: #2d3436;
-            
             --border-thick: 3px solid var(--border-color);
             --shadow-hard: 5px 5px 0px var(--border-color);
             --radius: 24px;
@@ -79,21 +60,21 @@
         }
 
         h1, h2, h3 { color: var(--text-dark); }
-        
-        h1 { 
-            font-size: 3.5rem; 
-            line-height: 1.1; 
-            margin-bottom: 10px; 
-            color: #fff; 
-            -webkit-text-stroke: 2px var(--border-color); 
-            text-shadow: 4px 4px 0px var(--border-color); 
+
+        h1 {
+            font-size: 3.5rem;
+            line-height: 1.1;
+            margin-bottom: 10px;
+            color: #fff;
+            -webkit-text-stroke: 2px var(--border-color);
+            text-shadow: 4px 4px 0px var(--border-color);
         }
-        
+
         h2 { font-size: 2.2rem; margin-bottom: 25px; text-align: center; text-transform: uppercase; letter-spacing: 1px; }
 
         section { padding: 60px 20px; max-width: 1000px; margin: 0 auto; }
 
-        /* --- UI KOMPONENTER --- */
+        /* --- BUTTONS --- */
         .btn {
             display: inline-block;
             background: var(--accent);
@@ -108,9 +89,11 @@
             transition: all 0.1s;
             cursor: pointer;
             text-transform: uppercase;
+            font-family: 'Fredoka', sans-serif;
         }
         .btn:hover { transform: translate(-2px, -2px); box-shadow: 7px 7px 0px var(--border-color); filter: brightness(1.1); }
         .btn:active { transform: translate(2px, 2px); box-shadow: 0px 0px 0px var(--border-color); }
+        .btn:disabled { background-color: #bdc3c7; cursor: not-allowed; }
 
         .card-box {
             background: white;
@@ -122,15 +105,16 @@
             position: relative;
         }
 
-.hero {
-    min-height: 40vh;
-    padding-top: 40px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: flex-start;
-    text-align: center;
-}
+        /* --- HERO --- */
+        .hero {
+            min-height: 40vh;
+            padding-top: 40px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start;
+            text-align: center;
+        }
         .hero-inner {
             background: rgba(255, 255, 255, 0.6);
             backdrop-filter: blur(10px);
@@ -141,14 +125,13 @@
         }
         @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
 
-        /* --- GAME SECTION --- */
+        /* --- GAME LAYOUT --- */
         #game-layout {
             display: grid;
             grid-template-columns: 1fr 1.3fr;
             gap: 25px;
         }
 
-        /* Spillområde */
         .click-area {
             background: #a8e6cf;
             background-image: radial-gradient(#8bd3ba 15%, transparent 16%);
@@ -167,25 +150,39 @@
             text-shadow: 3px 3px 0px var(--border-color);
             font-weight: 900;
             margin: 10px 0;
-            word-break: break-all; /* For store tall */
+            word-break: break-all;
         }
 
-        /* Capybara SVG Character */
+        /* --- CAPYBARA CHARACTER --- */
         .capy-char {
             width: 250px;
             height: 250px;
             cursor: pointer;
-            transition: transform 0.05s;
+            transition: transform 0.12s cubic-bezier(.3,1.6,.3,1);
             filter: drop-shadow(0 10px 0 rgba(0,0,0,0.1));
             position: relative;
+            animation: capyIdle 3s ease-in-out infinite;
         }
         .capy-char:hover { transform: scale(1.02); }
         .capy-char:active { transform: scale(0.95); }
-        
+        .capy-char.clicked { transform: scale(0.85) rotate(-2deg); }
+
+        @keyframes capyIdle {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-4px); }
+        }
+        @keyframes capyPop {
+            0%   { transform: scale(1) rotate(0deg); }
+            40%  { transform: scale(1.07) rotate(1deg); }
+            80%  { transform: scale(0.97) rotate(-0.5deg); }
+            100% { transform: scale(1) rotate(0deg); }
+        }
+        .capy-char.pop { animation: capyPop 0.20s ease-out; }
+
         .cosmetic-layer { display: none; }
         .cosmetic-layer.equipped { display: block; }
 
-        /* Butikk */
+        /* --- SHOP --- */
         .shop-area {
             display: flex;
             flex-direction: column;
@@ -227,9 +224,7 @@
         }
         .upgrade-card:hover { transform: translateY(-2px); box-shadow: 0 6px 0 #ccc; border-color: var(--primary); }
         .upgrade-card:active { transform: translateY(2px); box-shadow: 0 0 0 #ccc; }
-        
         .upgrade-card.locked { opacity: 0.5; filter: grayscale(1); cursor: not-allowed; transform: none; box-shadow: none; background: #eee; }
-        
         .upgrade-card.purchased {
             background: #dff9fb;
             border-color: #7ed6df;
@@ -249,7 +244,7 @@
             margin-right: 15px;
             position: relative;
         }
-        
+
         .type-badge {
             position: absolute;
             bottom: -5px; right: -5px;
@@ -270,7 +265,7 @@
             font-weight: bold;
         }
 
-        /* --- UI Elements --- */
+        /* --- FLOATERS --- */
         .floater {
             position: absolute; font-weight: 900; color: var(--primary);
             -webkit-text-stroke: 1px #fff; pointer-events: none;
@@ -278,623 +273,355 @@
         }
         @keyframes floatUp { to { transform: translateY(-80px) scale(1.2); opacity: 0; } }
 
-        /* Quiz UI */
-        .quiz-container { max-width: 700px; margin: 0 auto; background: #fff; padding: 40px; }
+        /* --- STATS --- */
+        #stat-box {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 5px;
+            margin-top: 20px;
+        }
+        .stat-badge {
+            background: #ffffffcc;
+            padding: 8px 20px;
+            border-radius: 15px;
+            border: 3px solid var(--border-color);
+            box-shadow: var(--shadow-hard);
+            display: flex;
+            gap: 6px;
+            align-items: center;
+            font-weight: 900;
+            font-size: 1.3rem;
+        }
+        .stat-sec { color: #00b894; }
+        .stat-click { color: #e17055; }
+        .stat-number { font-size: 1.5rem; font-weight: 900; }
+        .stat-label { opacity: 0.8; }
+
+        /* --- CAPY NAME --- */
+        #capy-name-bar {
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            margin-bottom: 30px;
+            margin-top: -30px;
+        }
+        #capy-name-input {
+            padding: 18px 30px;
+            border-radius: 30px;
+            font-size: 2rem;
+            font-weight: 700;
+            text-align: center;
+            border: var(--border-thick);
+            box-shadow: var(--shadow-hard);
+            background: #fff;
+            font-family: 'Fredoka', sans-serif;
+            width: 350px;
+            animation: nameFloat 3s ease-in-out infinite;
+        }
+        @keyframes nameFloat {
+            0%, 100% { transform: translateY(0); }
+            50%      { transform: translateY(-6px); }
+        }
+
+        /* --- SECTION TITLE --- */
+        .section-title {
+            text-align: center;
+            font-size: 2rem;
+            font-weight: 900;
+            margin: 60px 0 20px;
+            color: #2d3436;
+            text-transform: uppercase;
+            position: relative;
+        }
+        .section-title::before,
+        .section-title::after {
+            content: "";
+            position: absolute;
+            top: 50%;
+            width: 120px;
+            height: 4px;
+            background: #2d3436;
+            border-radius: 4px;
+        }
+        .section-title::before { left: calc(50% + 120px); }
+        .section-title::after { right: calc(50% + 120px); }
+
+        /* --- QUIZ --- */
+        .quiz-container {
+            background: #fff;
+            border: var(--border-thick);
+            box-shadow: var(--shadow-hard);
+            position: relative;
+            overflow: hidden;
+        }
+        .quiz-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: #888;
+        }
         .quiz-progress { width: 100%; height: 15px; background: #eee; border-radius: 10px; border: 2px solid var(--border-color); margin-bottom: 30px; overflow: hidden; }
         .progress-bar { height: 100%; background: var(--primary); width: 0%; transition: width 0.3s ease; }
         .quiz-options-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
-        .quiz-btn { background: white; border: 2px solid var(--border-color); padding: 20px; border-radius: 15px; font-size: 1rem; font-weight: 600; cursor: pointer; box-shadow: 0 4px 0 #eee; transition: 0.1s; }
+
+        .quiz-btn {
+            background: white;
+            border: 2px solid var(--border-color);
+            padding: 20px;
+            border-radius: 15px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            box-shadow: 0 4px 0 #eee;
+            transition: all 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            position: relative;
+            overflow: hidden;
+            font-family: 'Fredoka', sans-serif;
+        }
         .quiz-btn:hover { background: var(--bg-color); transform: translateY(-2px); box-shadow: 0 6px 0 #ccc; }
-        .quiz-btn.correct { background: #6ab04c; color: white; border-color: #2e7d32; }
-        .quiz-btn.wrong { background: #eb4d4b; color: white; border-color: #c0392b; }
+        .quiz-btn:active { transform: scale(0.95); }
+
+        @keyframes popGreen {
+            0% { transform: scale(1); background: #6ab04c; }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+        .quiz-btn.correct {
+            animation: popGreen 0.4s ease forwards;
+            border-color: #2e7d32;
+            color: white;
+        }
+
+        @keyframes shakeRed {
+            0%, 100% { transform: translateX(0); background: #eb4d4b; }
+            25% { transform: translateX(-5px); }
+            75% { transform: translateX(5px); }
+        }
+        .quiz-btn.wrong {
+            animation: shakeRed 0.4s ease forwards;
+            opacity: 0.6;
+            color: white;
+        }
+
         .result-screen { text-align: center; display: none; }
+
+        .reward-box {
+            background: var(--bg-warm);
+            padding: 20px;
+            border-radius: 15px;
+            border: 2px solid var(--border-color);
+            margin: 20px 0;
+            animation: float 3s ease-in-out infinite;
+        }
+        .coin-icon { display: inline-block; animation: spin 3s linear infinite; }
+        @keyframes spin { 100% { transform: rotateY(360deg); } }
+
+        .timer-display {
+            font-size: 2.5rem;
+            font-weight: 900;
+            color: var(--accent);
+            font-family: monospace;
+            background: #f1f1f1;
+            display: inline-block;
+            padding: 10px 20px;
+            border-radius: 10px;
+            border: 2px solid var(--border-color);
+        }
 
         #map-container { padding: 0; height: 400px; }
         #map { width: 100%; height: 100%; }
+        #quiz-cooldown { margin-top: 20px; }
 
+        /* --- FLAPPY STYLES --- */
+        @keyframes floatBox {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-12px); }
+        }
+
+        .flappy-locked {
+            background: #fff;
+            border: var(--border-thick);
+            box-shadow: var(--shadow-hard);
+            border-radius: var(--radius);
+            padding: 30px;
+            text-align: center;
+            color: #888;
+            position: relative;
+            opacity: 0.9;
+        }
+        .flappy-locked h2 {
+            font-size: 2rem;
+            color: #555;
+            -webkit-text-stroke: 0;
+            text-shadow: none;
+            margin-bottom: 10px;
+        }
+
+        .bar-container {
+            background: #eee;
+            height: 25px;
+            width: 100%;
+            max-width: 300px;
+            margin: 15px auto;
+            border-radius: 20px;
+            border: 2px solid var(--border-color);
+            overflow: hidden;
+        }
+        .bar-fill {
+            height: 100%;
+            background: var(--accent);
+            width: 0%;
+            transition: width 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .flappy-unlocked {
+            background: linear-gradient(135deg, #81ecec 0%, #74b9ff 100%);
+            position: relative;
+            overflow: hidden;
+            text-align: center;
+            border: var(--border-thick);
+            box-shadow: var(--shadow-hard);
+            border-radius: var(--radius);
+            color: var(--text-dark);
+            cursor: pointer;
+            padding: 20px;
+            animation: floatBox 3s ease-in-out infinite;
+            transition: filter 0.2s;
+            display: none;
+        }
+        .flappy-unlocked:hover { filter: brightness(1.05); }
+
+        .cloud-bg {
+            position: absolute;
+            background: rgba(255, 255, 255, 0.4);
+            border-radius: 50%;
+            z-index: 0;
+            pointer-events: none;
+        }
+        .c1 { width: 100px; height: 100px; top: -40px; left: -20px; }
+        .c2 { width: 150px; height: 150px; bottom: -50px; right: -30px; }
+        .c3 { width: 80px; height: 80px; top: 40px; right: 10%; opacity: 0.3; }
+
+        .flappy-content { position: relative; z-index: 2; padding: 10px 0; }
+
+        .rate-badge {
+            background: #fff;
+            border: 3px solid var(--text-dark);
+            padding: 10px 20px;
+            border-radius: 15px;
+            font-weight: 800;
+            font-size: 1.1rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            box-shadow: 4px 4px 0 rgba(0,0,0,0.1);
+            margin: 20px 0;
+        }
+        .btn-flappy { background: #fab1a0; border-color: var(--text-dark); }
+        .btn-flappy:hover { background: #ff7675; }
+
+        .flappy-icon {
+            font-size: 3.5rem;
+            filter: drop-shadow(4px 4px 0 rgba(0,0,0,0.1));
+            animation: float 3s ease-in-out infinite;
+            display: inline-block;
+            transform: rotate(-10deg);
+            margin-bottom: 10px;
+        }
+
+        /* --- CONFIRMATION MODAL --- */
+        .confirmation-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+        .modal-content {
+            background: #fff;
+            padding: 30px;
+            border-radius: 12px;
+            width: 350px;
+            text-align: center;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+        .modal-content h3 {
+            font-size: 1.5rem;
+            color: #333;
+            margin-bottom: 15px;
+        }
+        .modal-content p {
+            font-size: 1rem;
+            color: #555;
+            margin-bottom: 20px;
+        }
+        .modal-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+        }
+        .modal-buttons .btn {
+            font-size: 1rem;
+            padding: 12px 25px;
+            border: none;
+            border-radius: 8px;
+            width: 120px;
+            box-shadow: none;
+            text-transform: none;
+        }
+        .confirm-btn { background-color: #27ae60; color: white; }
+        .confirm-btn:hover { background-color: #2ecc71; }
+        .cancel-btn { background-color: #95a5a6; color: white; }
+        .cancel-btn:hover { background-color: #7f8c8d; }
+
+        /* --- MOBILE FLAPPY MESSAGE --- */
+        .mobile-only-msg {
+            display: none;
+            text-align: center;
+            padding: 20px;
+            background: #fff;
+            border: var(--border-thick);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow-hard);
+            color: #888;
+            font-weight: 600;
+        }
+
+        /* --- RESPONSIVE --- */
         @media (max-width: 800px) {
             #game-layout { grid-template-columns: 1fr; }
             .shop-area { height: 450px; }
             h1 { font-size: 2.5rem; }
             .quiz-options-grid { grid-template-columns: 1fr; }
+            #flappy-locked-view,
+            #flappy-unlocked-view {
+                display: none !important;
+            }
+            .mobile-only-msg { display: block; }
         }
-
-        /* --- NY QUIZ CSS --- */
-.quiz-container {
-    background: #fff;
-    border: var(--border-thick);
-    box-shadow: var(--shadow-hard);
-    position: relative;
-    overflow: hidden;
-}
-
-.quiz-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 20px;
-    font-size: 1.2rem;
-    font-weight: 700;
-    color: #888;
-}
-
-.quiz-btn {
-    position: relative;
-    overflow: hidden;
-    transition: all 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-}
-
-.quiz-btn:active { transform: scale(0.95); }
-
-/* Animasjon for riktig svar */
-@keyframes popGreen {
-    0% { transform: scale(1); background: #6ab04c; }
-    50% { transform: scale(1.1); }
-    100% { transform: scale(1); }
-}
-.quiz-btn.correct { 
-    animation: popGreen 0.4s ease forwards; 
-    border-color: #2e7d32;
-    color: white;
-}
-
-/* Animasjon for feil svar */
-@keyframes shakeRed {
-    0%, 100% { transform: translateX(0); background: #eb4d4b; }
-    25% { transform: translateX(-5px); }
-    75% { transform: translateX(5px); }
-}
-.quiz-btn.wrong { 
-    animation: shakeRed 0.4s ease forwards; 
-    opacity: 0.6;
-    color: white;
-}
-
-.reward-box {
-    background: var(--bg-warm);
-    padding: 20px;
-    border-radius: 15px;
-    border: 2px solid var(--border-color);
-    margin: 20px 0;
-    animation: float 3s ease-in-out infinite;
-}
-
-.coin-icon { display: inline-block; animation: spin 3s linear infinite; }
-@keyframes spin { 100% { transform: rotateY(360deg); } }
-
-.timer-display {
-    font-size: 2.5rem;
-    font-weight: 900;
-    color: var(--accent);
-    font-family: monospace; /* For at tallene ikke skal hoppe */
-    background: #f1f1f1;
-    display: inline-block;
-    padding: 10px 20px;
-    border-radius: 10px;
-    border: 2px solid var(--border-color);
-}
-
-@keyframes capyIdle {
-    0%, 100% { transform: translateY(0); }
-    50% { transform: translateY(-4px); }
-}
-
-.capy-char {
-    animation: capyIdle 3s ease-in-out infinite;
-}
-
-.capy-char {
-    width: 250px;
-    height: 250px;
-    cursor: pointer;
-    transition: transform 0.12s cubic-bezier(.3,1.6,.3,1);
-}
-
-.capy-char.clicked {
-    transform: scale(0.85) rotate(-2deg);
-}
-
-@keyframes capyPop {
-    0%   { transform: scale(1) rotate(0deg); }
-    40%  { transform: scale(1.07) rotate(1deg); }
-    80%  { transform: scale(0.97) rotate(-0.5deg); }
-    100% { transform: scale(1) rotate(0deg); }
-}
-
-.capy-char.pop {
-    animation: capyPop 0.20s ease-out;
-}
-
-#stat-box {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 5px;
-    margin-top: 20px;
-}
-
-.stat-badge {
-    background: #ffffffcc;
-    padding: 8px 20px;
-    border-radius: 15px;
-    border: 3px solid var(--border-color);
-    box-shadow: var(--shadow-hard);
-    display: flex;
-    gap: 6px;
-    align-items: center;
-    font-weight: 900;
-    font-size: 1.3rem;
-}
-
-.stat-sec {
-    color: #00b894;
-}
-
-.stat-click {
-    color: #e17055;
-}
-
-.stat-number {
-    font-size: 1.5rem;
-    font-weight: 900;
-}
-
-.stat-label {
-    opacity: 0.8;
-}
-#capy-name-bar {
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    margin-bottom: 30px; 
-    margin-top: -30px; /* løft opp */
-}
-
-#capy-name-input {
-    padding: 18px 30px;         /* større høyde og bredde */
-    border-radius: 30px;        /* mer rund */
-    font-size: 2rem;            /* større tekst */
-    font-weight: 700;
-    text-align: center;
-    border: var(--border-thick);
-    box-shadow: var(--shadow-hard);
-    background: #fff;
-    font-family: 'Fredoka', sans-serif;
-    width: 350px;               /* bredere */
-}
-
-body {
-    zoom: 1.20;
-}
-@keyframes nameFloat {
-    0%, 100% { transform: translateY(0); }
-    50%      { transform: translateY(-6px); }
-}
-
-#capy-name-input {
-    animation: nameFloat 3s ease-in-out infinite;
-}
-.section-title {
-    text-align: center;
-    font-size: 2rem;
-    font-weight: 900;
-    margin: 60px 0 20px;
-    color: #2d3436;
-    text-transform: uppercase;
-    position: relative;
-}
-
-.section-title::before,
-.section-title::after {
-    content: "";
-    position: absolute;
-    top: 50%;
-    width: 120px;
-    height: 4px;
-    background: #2d3436;
-    border-radius: 4px;
-}
-
-.section-title::before {
-    left: calc(50% + 120px);
-}
-
-.section-title::after {
-    right: calc(50% + 120px);
-}
-
-
-
-
-body {
-    font-family: 'Fredoka', sans-serif;
-    background: var(--bg-warm);
-    color: var(--text-dark);
-    min-height: 100vh;
-    padding-bottom: 50px;
-    user-select: none;
-    /* Fjernet zoom for å unngå at alt blir for stort på mobil */
-}
-
-/* Responsiv justering for små skjermer */
-@media (max-width: 800px) {
-    body {
-        zoom: 1; /* Fjerner zoom-effekten på små skjermer */
-    }
-
-    #game-layout { 
-        grid-template-columns: 1fr; 
-    }
-    
-    .shop-area { 
-        height: 450px; 
-    }
-
-    h1 { 
-        font-size: 2.5rem; 
-    }
-    
-    .quiz-options-grid { 
-        grid-template-columns: 1fr; 
-    }
-}
-
-    /* Tidsboksen skal forbli plassert riktig */
-    #quiz-cooldown {
-        margin-top: 20px;
-    }
-
-/* --- FLAPPY PROMO BOX --- */
-.flappy-container {
-    background: linear-gradient(135deg, #81ecec 0%, #74b9ff 100%);
-    position: relative;
-    overflow: hidden;
-    text-align: center;
-    border: var(--border-thick);
-    box-shadow: var(--shadow-hard);
-    color: var(--text-dark);
-}
-
-/* Skyer i bakgrunnen */
-.cloud-bg {
-    position: absolute;
-    background: rgba(255, 255, 255, 0.4);
-    border-radius: 50%;
-    z-index: 0;
-}
-.c1 { width: 100px; height: 100px; top: -40px; left: -20px; }
-.c2 { width: 150px; height: 150px; bottom: -50px; right: -30px; }
-.c3 { width: 80px; height: 80px; top: 40px; right: 10%; opacity: 0.3; }
-
-.flappy-content {
-    position: relative;
-    z-index: 2; /* Sørg for at tekst ligger over skyene */
-}
-
-.flappy-icon {
-    font-size: 3.5rem;
-    filter: drop-shadow(4px 4px 0 rgba(0,0,0,0.1));
-    animation: float 3s ease-in-out infinite;
-    display: inline-block;
-    transform: rotate(-10deg);
-    margin-bottom: 10px;
-}
-
-.rate-badge {
-    background: #fff;
-    border: 3px solid var(--text-dark);
-    padding: 10px 20px;
-    border-radius: 15px;
-    font-weight: 800;
-    font-size: 1.1rem;
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    box-shadow: 4px 4px 0 rgba(0,0,0,0.1);
-    margin: 15px 0 20px;
-}
-
-.btn-flappy {
-    background: #fab1a0; /* En kontrastfarge til det blå */
-    border-color: var(--text-dark);
-}
-.btn-flappy:hover {
-    background: #ff7675;
-}
-
-/* --- FLAPPY PROMO BOX --- */
-/* Definer selve sveve-animasjonen */
-@keyframes floatBox {
-    0%, 100% { transform: translateY(0); }
-    50% { transform: translateY(-12px); }
-}
-
-.flappy-container {
-    background: linear-gradient(135deg, #81ecec 0%, #74b9ff 100%);
-    position: relative;
-    overflow: hidden;
-    text-align: center;
-    border: var(--border-thick);
-    box-shadow: var(--shadow-hard);
-    color: var(--text-dark);
-    cursor: pointer; /* Viser at hele boksen kan klikkes */
-    
-    /* Her aktiveres svevingen for hele boksen */
-    animation: floatBox 3s ease-in-out infinite; 
-    transition: filter 0.2s;
-}
-
-.flappy-container:hover {
-    filter: brightness(1.05); /* Lyser opp litt når du holder over */
-}
-
-/* Skyer i bakgrunnen */
-.cloud-bg {
-    position: absolute;
-    background: rgba(255, 255, 255, 0.4);
-    border-radius: 50%;
-    z-index: 0;
-    pointer-events: none;
-}
-.c1 { width: 100px; height: 100px; top: -40px; left: -20px; }
-.c2 { width: 150px; height: 150px; bottom: -50px; right: -30px; }
-.c3 { width: 80px; height: 80px; top: 40px; right: 10%; opacity: 0.3; }
-
-.flappy-content {
-    position: relative;
-    z-index: 2;
-    padding: 10px 0;
-}
-
-.rate-badge {
-    background: #fff;
-    border: 3px solid var(--text-dark);
-    padding: 10px 20px;
-    border-radius: 15px;
-    font-weight: 800;
-    font-size: 1.1rem;
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    box-shadow: 4px 4px 0 rgba(0,0,0,0.1);
-    margin: 20px 0;
-}
-
-.btn-flappy {
-    background: #fab1a0;
-    border-color: var(--text-dark);
-}
-
-/* --- FLAPPY LOCKED & UNLOCKED STYLES --- */
-
-/* Låst boks (Grå og kjedelig) */
-.flappy-locked {
-    background: #fff;
-    border: var(--border-thick);
-    box-shadow: var(--shadow-hard);
-    border-radius: var(--radius);
-    padding: 30px;
-    text-align: center;
-    color: #888;
-    position: relative;
-    opacity: 0.9;
-}
-
-/* Låst tittel */
-.flappy-locked h2 {
-    font-size: 2rem; 
-    color: #555; 
-    -webkit-text-stroke: 0; /* Ingen outline på låst tekst */
-    text-shadow: none;
-    margin-bottom: 10px;
-}
-
-/* Progress bar container */
-.bar-container {
-    background: #eee;
-    height: 25px;
-    width: 100%;
-    max-width: 300px;
-    margin: 15px auto;
-    border-radius: 20px;
-    border: 2px solid var(--border-color);
-    overflow: hidden;
-}
-
-/* Selve baren som fylles opp */
-.bar-fill {
-    height: 100%;
-    background: var(--accent); /* Oransje farge */
-    width: 0%;
-    transition: width 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-}
-
-/* --- ÅPEN BOKS (Svevende himmel) --- */
-@keyframes floatBox {
-    0%, 100% { transform: translateY(0); }
-    50% { transform: translateY(-12px); }
-}
-
-.flappy-unlocked {
-    background: linear-gradient(135deg, #81ecec 0%, #74b9ff 100%);
-    position: relative;
-    overflow: hidden;
-    text-align: center;
-    border: var(--border-thick);
-    box-shadow: var(--shadow-hard);
-    border-radius: var(--radius);
-    color: var(--text-dark);
-    cursor: pointer;
-    padding: 20px;
-    
-    /* Sveve-animasjon KUN på den åpne boksen */
-    animation: floatBox 3s ease-in-out infinite; 
-    transition: filter 0.2s;
-    display: none; /* Skjult som standard */
-}
-
-.flappy-unlocked:hover {
-    filter: brightness(1.05);
-}
-
-/* Skyer */
-.cloud-bg {
-    position: absolute;
-    background: rgba(255, 255, 255, 0.4);
-    border-radius: 50%;
-    z-index: 0;
-    pointer-events: none;
-}
-.c1 { width: 100px; height: 100px; top: -40px; left: -20px; }
-.c2 { width: 150px; height: 150px; bottom: -50px; right: -30px; }
-.c3 { width: 80px; height: 80px; top: 40px; right: 10%; opacity: 0.3; }
-
-.flappy-content { position: relative; z-index: 2; padding: 10px 0; }
-.rate-badge {
-    background: #fff;
-    border: 3px solid var(--text-dark);
-    padding: 10px 20px;
-    border-radius: 15px;
-    font-weight: 800;
-    font-size: 1.1rem;
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    box-shadow: 4px 4px 0 rgba(0,0,0,0.1);
-    margin: 20px 0;
-}
-.btn-flappy { background: #fab1a0; border-color: var(--text-dark); }
-
-    /* Modal bakgrunn */
-    .confirmation-modal {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background: rgba(0, 0, 0, 0.5);
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        z-index: 1000;
-    }
-
-    .modal-content {
-        background: #fff;
-        padding: 20px;
-        border-radius: 10px;
-        width: 300px;
-        text-align: center;
-    }
-
-    .modal-buttons {
-        margin-top: 20px;
-    }
-
-    .modal-buttons .btn {
-        font-size: 1rem;
-        padding: 10px 20px;
-        border: none;
-        border-radius: 5px;
-        cursor: pointer;
-        margin: 0 10px;
-    }
-        /* Modal bakgrunn */
-    .confirmation-modal {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background: rgba(0, 0, 0, 0.7); /* Mørkere bakgrunn for å få modal til å skille seg ut */
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        z-index: 1000;
-    }
-
-    .modal-content {
-        background: #fff;
-        padding: 30px;
-        border-radius: 12px;
-        width: 350px;  /* Størrelse på modal */
-        text-align: center;
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    }
-
-    .modal-content h3 {
-        font-size: 1.5rem;
-        color: #333;
-        margin-bottom: 15px;
-    }
-
-    .modal-content p {
-        font-size: 1rem;
-        color: #555;
-        margin-bottom: 20px;
-    }
-
-    .modal-buttons {
-        display: flex;
-        justify-content: center;
-        gap: 15px; /* Legger litt plass mellom knappene */
-    }
-
-    .btn {
-        font-size: 1rem;
-        padding: 12px 25px;
-        border: none;
-        border-radius: 8px;
-        cursor: pointer;
-        transition: all 0.3s ease;
-        width: 120px;
-    }
-
-    /* Bekreftelsesknapp (grønn) */
-    .confirm-btn {
-        background-color: #27ae60;
-        color: white;
-    }
-
-    .confirm-btn:hover {
-        background-color: #2ecc71;
-    }
-
-    /* Avbryt-knapp (grå) */
-    .cancel-btn {
-        background-color: #95a5a6;
-        color: white;
-    }
-
-    .cancel-btn:hover {
-        background-color: #7f8c8d;
-    }
-
-    /* Knappene når de er inaktiv (disabled) */
-    .btn:disabled {
-        background-color: #bdc3c7;
-        cursor: not-allowed;
-    }
-
-    @media (max-width: 800px) {
-    #flappy-locked-view,
-    #flappy-unlocked-view {
-        display: none !important;
-    }
-}
-
     </style>
 </head>
 
 <body>
 
+<main>
+
 <!-- =====================
      GAME SECTION
 ====================== -->
-<section id="spill">
-<div id="capy-name-bar">
-    <input type="text" id="capy-name-input" maxlength="20" placeholder="Navngi Flodsvinet.." />
-</div>
+<section id="spill" aria-label="Capy Clicker spill">
+    <div id="capy-name-bar">
+        <input type="text" id="capy-name-input" maxlength="20" placeholder="Navngi Flodsvinet.." aria-label="Navn på flodsvinet" />
+    </div>
 
     <div id="game-layout">
         <!-- LEFT SIDE (CLICKER) -->
@@ -903,12 +630,11 @@ body {
                 RANK: <span id="rank-name" style="color:var(--accent); font-weight:700;">Nybegynner</span>
             </div>
 
-            <div id="score-display">0</div>
+            <div id="score-display" aria-live="polite">0</div>
             <div style="opacity:0.7; margin-bottom:15px; font-weight:700;">Capy Coins</div>
 
-            <div class="capy-char" id="main-capy">
-                <!-- (Behold din eksisterende SVG-kode her, den er lang så jeg kortet den ned for oversikten) -->
-                <svg viewBox="0 0 200 220">
+            <div class="capy-char" id="main-capy" role="button" tabindex="0" aria-label="Klikk for å samle mynter">
+                <svg viewBox="0 0 200 220" aria-hidden="true">
                     <g id="base-body">
                         <rect x="40" y="80" width="120" height="100" rx="40" fill="#8D6E63" stroke="#3E2723" stroke-width="4"/>
                         <circle cx="50" cy="85" r="12" fill="#8D6E63" stroke="#3E2723" stroke-width="3"/>
@@ -923,38 +649,31 @@ body {
                     <g id="cosmetic-monocle" class="cosmetic-layer"><circle cx="130" cy="110" r="10" stroke="#FFD700" stroke-width="2" fill="rgba(255,255,255,0.4)"/><path d="M140 110 Q160 150 140 180" stroke="#FFD700"/></g>
                     <g id="cosmetic-chain" class="cosmetic-layer"><path d="M60 160 Q100 210 140 160" stroke="#FFD700" stroke-width="6" fill="none"/><circle cx="100" cy="185" r="8" fill="#FFD700" stroke="#B8860B" stroke-width="2"/></g>
                     <g id="cosmetic-glasses" class="cosmetic-layer"><line x1="50" y1="110" x2="150" y2="110" stroke="#000" stroke-width="4"/><rect x="55" y="100" width="35" height="20" fill="#000" rx="5"/><rect x="110" y="100" width="35" height="20" fill="#000" rx="5"/></g>
-<g id="cosmetic-heart-glasses" class="cosmetic-layer"><path d="M70 128 C55 105 50 90 70 98 C90 90 85 105 70 128 Z" fill="#ff9ff3" stroke="#ff4757" stroke-width="3"/><path d="M130 128 C115 105 110 90 130 98 C150 90 145 105 130 128 Z" fill="#ff9ff3" stroke="#ff4757" stroke-width="3"/><path d="M85 105 Q100 95 115 105" fill="none" stroke="#ff4757" stroke-width="3"/><circle cx="65" cy="105" r="3" fill="white" opacity="0.6"/><circle cx="125" cy="105" r="3" fill="white" opacity="0.6"/></g>
-<g id="cosmetic-music" class="cosmetic-layer"></g>
-
-
+                    <g id="cosmetic-heart-glasses" class="cosmetic-layer"><path d="M70 128 C55 105 50 90 70 98 C90 90 85 105 70 128 Z" fill="#ff9ff3" stroke="#ff4757" stroke-width="3"/><path d="M130 128 C115 105 110 90 130 98 C150 90 145 105 130 128 Z" fill="#ff9ff3" stroke="#ff4757" stroke-width="3"/><path d="M85 105 Q100 95 115 105" fill="none" stroke="#ff4757" stroke-width="3"/><circle cx="65" cy="105" r="3" fill="white" opacity="0.6"/><circle cx="125" cy="105" r="3" fill="white" opacity="0.6"/></g>
+                    <g id="cosmetic-music" class="cosmetic-layer"></g>
                     <g id="cosmetic-tophat" class="cosmetic-layer"><rect x="60" y="20" width="80" height="60" fill="#2d3436" stroke="#000"/><rect x="40" y="75" width="120" height="15" fill="#2d3436" stroke="#000"/></g>
                     <g id="cosmetic-crown" class="cosmetic-layer"><path d="M60 70 L60 30 L80 50 L100 20 L120 50 L140 30 L140 70 Z" fill="#FFD700" stroke="#B8860B" stroke-width="3"/></g>
                     <g id="cosmetic-space" class="cosmetic-layer"><circle cx="100" cy="110" r="75" fill="rgba(200,230,255,0.2)" stroke="#aaa" stroke-width="3"/><rect x="60" y="180" width="80" height="20" fill="#aaa" rx="5"/></g>
-
-<g id="cosmetic-dog" class="cosmetic-layer"><path d="M125 55 Q135 40 125 35 Q115 40 120 55" fill="#eccc68" stroke="#cca145" stroke-width="2"/><ellipse cx="100" cy="70" rx="28" ry="18" fill="#f7f1e3" stroke="#dcdde1" stroke-width="2"/><circle cx="85" cy="82" r="6" fill="#f7f1e3" stroke="#dcdde1" stroke-width="2"/><circle cx="115" cy="82" r="6" fill="#f7f1e3" stroke="#dcdde1" stroke-width="2"/><circle cx="100" cy="55" r="16" fill="#f7f1e3" stroke="#dcdde1" stroke-width="2"/><path d="M85 45 Q75 55 80 65 L84 60 Z" fill="#eccc68" stroke="#cca145" stroke-width="2"/><path d="M115 45 Q125 55 120 65 L116 60 Z" fill="#eccc68" stroke="#cca145" stroke-width="2"/><circle cx="94" cy="52" r="2.5" fill="#2d3436"/><circle cx="106" cy="52" r="2.5" fill="#2d3436"/><ellipse cx="100" cy="58" rx="5" ry="3" fill="#2d3436" opacity="0.2"/><ellipse cx="100" cy="57" rx="3" ry="2" fill="#000"/><path d="M90 68 Q100 75 110 68" fill="none" stroke="#f7f1e3" stroke-width="4"/></g>
-
+                    <g id="cosmetic-dog" class="cosmetic-layer"><path d="M125 55 Q135 40 125 35 Q115 40 120 55" fill="#eccc68" stroke="#cca145" stroke-width="2"/><ellipse cx="100" cy="70" rx="28" ry="18" fill="#f7f1e3" stroke="#dcdde1" stroke-width="2"/><circle cx="85" cy="82" r="6" fill="#f7f1e3" stroke="#dcdde1" stroke-width="2"/><circle cx="115" cy="82" r="6" fill="#f7f1e3" stroke="#dcdde1" stroke-width="2"/><circle cx="100" cy="55" r="16" fill="#f7f1e3" stroke="#dcdde1" stroke-width="2"/><path d="M85 45 Q75 55 80 65 L84 60 Z" fill="#eccc68" stroke="#cca145" stroke-width="2"/><path d="M115 45 Q125 55 120 65 L116 60 Z" fill="#eccc68" stroke="#cca145" stroke-width="2"/><circle cx="94" cy="52" r="2.5" fill="#2d3436"/><circle cx="106" cy="52" r="2.5" fill="#2d3436"/><ellipse cx="100" cy="58" rx="5" ry="3" fill="#2d3436" opacity="0.2"/><ellipse cx="100" cy="57" rx="3" ry="2" fill="#000"/><path d="M90 68 Q100 75 110 68" fill="none" stroke="#f7f1e3" stroke-width="4"/></g>
                 </svg>
             </div>
 
-<div id="stat-box">
-    <div class="stat-badge stat-sec">
-        <span class="stat-number" id="pps">0</span>
-        <span class="stat-label">/ sek</span>
-    </div>
-
-    <div class="stat-badge stat-click">
-        <span class="stat-number" id="ppc">1</span>
-        <span class="stat-label">/ klikk</span>
-    </div>
-</div>
-
-            <button onclick="resetGame()" style="margin-top:10px; background:none; border:none; color:#666; text-decoration:underline; cursor:pointer;">
+            <div id="stat-box">
+                <div class="stat-badge stat-sec">
+                    <span class="stat-number" id="pps">0</span>
+                    <span class="stat-label">/ sek</span>
+                </div>
+                <div class="stat-badge stat-click">
+                    <span class="stat-number" id="ppc">1</span>
+                    <span class="stat-label">/ klikk</span>
+                </div>
+            </div>
         </div>
 
         <!-- RIGHT SIDE (SHOP) -->
         <div class="card-box shop-area">
             <div class="shop-header">
-                🛒 BUTIKK
+                BUTIKK
             </div>
             <div class="shop-items" id="shop-list"></div>
         </div>
@@ -962,19 +681,17 @@ body {
 </section>
 
 <!-- =====================
-     QUIZ SECTION (Locked & Unlocked Views)
+     QUIZ SECTION
 ====================== -->
-<section>
-    <!-- VIEW 1: LÅST (Vises når PPS < 100) -->
+<section aria-label="Quiz">
+    <!-- LOCKED VIEW -->
     <div id="quiz-locked-view" class="card-box" style="text-align:center; padding:40px 20px; opacity:0.8;">
-        <div style="font-size:4rem; margin-bottom:10px;">🔒</div>
+        <div style="font-size:4rem; margin-bottom:10px;" aria-hidden="true">&#x1f512;</div>
         <h2 style="margin-bottom:10px;">Capy Academy</h2>
         <p style="margin-bottom:20px; font-weight:bold; color:var(--text-dark);">
             Krever 100 mynter / sek
         </p>
-        
-        <!-- Progress bar for unlock -->
-        <div style="background:#ddd; height:20px; border-radius:10px; border:2px solid var(--border-color); overflow:hidden; max-width:300px; margin:0 auto;">
+        <div style="background:#ddd; height:20px; border-radius:10px; border:2px solid var(--border-color); overflow:hidden; max-width:300px; margin:0 auto;" role="progressbar" aria-valuemin="0" aria-valuemax="100">
             <div id="unlock-bar" style="height:100%; background:var(--accent); width:0%; transition:width 0.3s;"></div>
         </div>
         <div style="margin-top:5px; font-size:0.9rem;">
@@ -982,32 +699,27 @@ body {
         </div>
     </div>
 
-<div id="quiz-unlocked-view" class="card-box quiz-container" style="display:none; position:relative;">
-    
+    <!-- UNLOCKED VIEW -->
+    <div id="quiz-unlocked-view" class="card-box quiz-container" style="display:none; position:relative;">
+        <h2 style="text-align:center; margin-bottom:10px;">Flodsvin quiz</h2>
 
-    <h2 style="text-align:center; margin-bottom:10px;">Flodsvin quiz</h2>
-
-<!-- HUB -->
-<div id="quiz-hub" style="text-align:center; padding:20px;">
-    <p style="margin-bottom:20px; opacity:0.8;">
-        Ny quiz hver 15. minutt.
-    </p>
-    
-
-
-    <button id="btn-start-quiz" class="btn" onclick="tryStartQuiz()">Start Quiz ▶</button>
-    
-    <div id="quiz-cooldown" style="display:none;">
-        <div style="font-size:0.9rem; margin-bottom:5px;">Neste quiz om:</div>
-        <div class="timer-display" id="timer-text">--:--</div>
-    </div>
-</div>
+        <!-- HUB -->
+        <div id="quiz-hub" style="text-align:center; padding:20px;">
+            <p style="margin-bottom:20px; opacity:0.8;">
+                Ny quiz hver 15. minutt.
+            </p>
+            <button id="btn-start-quiz" class="btn" onclick="tryStartQuiz()">Start Quiz</button>
+            <div id="quiz-cooldown" style="display:none;">
+                <div style="font-size:0.9rem; margin-bottom:5px;">Neste quiz om:</div>
+                <div class="timer-display" id="timer-text" aria-live="polite">--:--</div>
+            </div>
+        </div>
 
         <!-- GAME -->
         <div id="quiz-game" style="display:none;">
             <div class="quiz-header">
                 <span id="q-counter">Spørsmål 1/5</span>
-                <span>🏆 <span id="current-correct">0</span> Riktige</span>
+                <span>&#x1f3c6; <span id="current-correct">0</span> Riktige</span>
             </div>
             <div class="quiz-progress"><div class="progress-bar" id="q-bar"></div></div>
             <h3 id="q-text" style="text-align:center; min-height:60px; display:flex; align-items:center; justify-content:center; margin:20px 0;">Laster...</h3>
@@ -1020,7 +732,7 @@ body {
             <div class="reward-box">
                 <div style="font-size:1.2rem;">Du vant:</div>
                 <div style="font-size:2.5rem; font-weight:900; color:#fff; text-shadow:2px 2px 0 #000;">
-                    <span class="coin-icon">💰</span> <span id="reward-amount">0</span>
+                    <span class="coin-icon" aria-hidden="true">&#x1f4b0;</span> <span id="reward-amount">0</span>
                 </div>
             </div>
             <p id="result-msg" style="margin-bottom:20px; font-weight:bold;"></p>
@@ -1032,34 +744,26 @@ body {
 <!-- =====================
      FLAPPY PROMO SECTION
 ====================== -->
-<section style="padding-top: 0;">
-    
-    <!-- VIEW 1: LÅST (Vises til du har 50 per klikk) -->
-<div id="flappy-locked-view" class="flappy-locked">
-    <div style="font-size: 3rem; margin-bottom: 5px;">🔒</div>
-    <h2>Flappy Capy</h2>
-    
-    <!-- ENDRET HER: -->
-    <p style="font-weight:bold;">Krever 500 mynter / klikk</p>
-    
-    <div class="bar-container">
-        <div id="flappy-progress" class="bar-fill"></div>
-    </div>
-    
-    <div style="font-size: 0.9rem; font-weight:bold;">
-        <!-- ENDRET HER OGSÅ: -->
-        <span id="current-cp-display">0</span> / 500
-    </div>
-</div>
+<section style="padding-top: 0;" aria-label="Flappy Capy">
 
-    <!-- VIEW 2: ÅPEN (Vises når du har klart det) -->
-    <div id="flappy-unlocked-view" class="flappy-unlocked" onclick="window.location.href='/flappy/'">
+    <!-- LOCKED VIEW -->
+    <div id="flappy-locked-view" class="flappy-locked">
+        <div style="font-size: 3rem; margin-bottom: 5px;" aria-hidden="true">&#x1f512;</div>
+        <h2>Flappy Capy</h2>
+        <p style="font-weight:bold;">Krever 500 mynter / klikk</p>
+        <div class="bar-container" role="progressbar" aria-valuemin="0" aria-valuemax="100">
+            <div id="flappy-progress" class="bar-fill"></div>
+        </div>
+        <div style="font-size: 0.9rem; font-weight:bold;">
+            <span id="current-cp-display">0</span> / 500
+        </div>
+    </div>
 
-        <!-- Skyer -->
+    <!-- UNLOCKED VIEW -->
+    <div id="flappy-unlocked-view" class="flappy-unlocked" onclick="window.location.href='/flappy/'" role="link" tabindex="0" aria-label="Spill Flappy Capy">
         <div class="cloud-bg c1"></div>
         <div class="cloud-bg c2"></div>
         <div class="cloud-bg c3"></div>
-
         <div class="flappy-content">
             <h2 style="font-size: 2.8rem; margin-bottom: 5px; color: #fff; -webkit-text-stroke: 2px var(--text-dark);">
                 Flappy Capy
@@ -1067,42 +771,47 @@ body {
             <p style="opacity: 0.9; font-weight: 700; font-size: 1.1rem;">
                 Fly for å tjene cash!
             </p>
-
-            <!-- Reward info -->
             <div class="rate-badge">
-                <span style="font-size: 1.4rem;">💰</span> 
+                <span style="font-size: 1.4rem;" aria-hidden="true">&#x1f4b0;</span>
                 <span>
                     Belønning: <span id="flappy-reward-val" style="color:#0984e3; font-size:1.3rem;">0</span> / poeng
                 </span>
             </div>
-
             <br>
-            <span class="btn btn-flappy">SPILL NÅ ▶</span>
+            <span class="btn btn-flappy">SPILL NÅ</span>
         </div>
     </div>
 
-<div style="text-align: center; margin-top: 20px;">
-    <button id="restart-button" class="btn" style="font-size: 1rem; padding: 8px 16px; background: red; color: #fff; border: none; border-radius: 20px; opacity: 0.8; transition: opacity 0.3s;">Restart</button>
-</div>
+    <!-- Mobile message -->
+    <div class="mobile-only-msg">
+        Flappy Capy er kun tilgjengelig på PC.
+    </div>
 
-<!-- Custom Confirmation Modal -->
-<div id="confirmation-modal" class="confirmation-modal" style="display: none;">
-    <div class="modal-content">
-        <h3>Er du sikker på at du vil starte på nytt?</h3>
-        <p>All fremgang vil bli tapt.</p>
-        <div class="modal-buttons">
-            <button id="confirm-restart" class="btn confirm-btn">Bekreft</button>
-            <button id="cancel-restart" class="btn cancel-btn">Avbryt</button>
+    <!-- Restart button -->
+    <div style="text-align: center; margin-top: 20px;">
+        <button id="restart-button" class="btn" style="font-size: 1rem; padding: 8px 16px; background: red; color: #fff; border: none; border-radius: 20px; opacity: 0.8; transition: opacity 0.3s;">Restart</button>
+    </div>
+
+    <!-- Confirmation Modal -->
+    <div id="confirmation-modal" class="confirmation-modal" style="display: none;" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+        <div class="modal-content">
+            <h3 id="modal-title">Er du sikker på at du vil starte på nytt?</h3>
+            <p>All fremgang vil bli tapt.</p>
+            <div class="modal-buttons">
+                <button id="confirm-restart" class="btn confirm-btn">Bekreft</button>
+                <button id="cancel-restart" class="btn cancel-btn">Avbryt</button>
+            </div>
         </div>
     </div>
-</div>
 
 </section>
 
+</main>
 
 <footer style="text-align:center; padding:20px; opacity:0.6;">
     flodsvin.no
 </footer>
+
 <!-- =====================
      SCRIPTS
 ====================== -->
@@ -1119,70 +828,71 @@ let game = {
     quizCategoryIndex: 0,
 };
 
-// Last inn lagret spill
-if (localStorage.getItem("capyRichEdition")) {
+// Last inn lagret spill med validering
+const savedData = localStorage.getItem("capyRichEdition");
+if (savedData) {
     try {
-        const saved = JSON.parse(localStorage.getItem("capyRichEdition"));
-        game = { ...game, ...saved };
+        const saved = JSON.parse(savedData);
+        if (saved && typeof saved === "object" && typeof saved.score === "number") {
+            game = { ...game, ...saved };
+        }
     } catch (e) {
-        console.error("Kunne ikke laste lagring", e);
+        console.warn("Kunne ikke laste lagring, starter på nytt.", e);
     }
 }
 
 /* =====================================================
-   UPGRADE LIST (original + nye)
+   UPGRADE LIST
 ===================================================== */
 const UPGRADES = [
     /* --- TIER 1: Starten (0 - 1.000 mynter) --- */
-    { id: 'c1', name: 'Kli bak øret', icon: '🤏', cost: 15, power: 0.5, type: 'click' },       // Den første du kjøper. Halver klikkene dine.
-    { id: 'a1', name: 'Løvetann', icon: '🌻', cost: 25, power: 0.5, type: 'auto' },        // Første auto. Halver 1 mynt i sekundet.
-    { id: 'c2', name: 'Gi en kjeks', icon: '🍪', cost: 120, power: 2, type: 'click' },      // Liten boost for aktive spillere, halveres til 2.
-    { id: 'a2', name: 'Badeand', icon: '🦆', cost: 250, power: 2.5, type: 'auto' },        // Første merkbare auto-oppgradering, halveres til 2.5.
-    { id: 'c3', name: 'Massasje', icon: '💆', cost: 600, power: 5, type: 'click' },      // Broen mot 1000-tallet, halveres til 5.
+    { id: 'c1', name: 'Kli bak øret', icon: '🤏', cost: 15, power: 0.5, type: 'click' },
+    { id: 'a1', name: 'Løvetann', icon: '🌻', cost: 25, power: 0.5, type: 'auto' },
+    { id: 'c2', name: 'Gi en kjeks', icon: '🍪', cost: 120, power: 2, type: 'click' },
+    { id: 'a2', name: 'Badeand', icon: '🦆', cost: 250, power: 2.5, type: 'auto' },
+    { id: 'c3', name: 'Massasje', icon: '💆', cost: 600, power: 5, type: 'click' },
 
     /* --- TIER 2: Early Game (1.000 - 50.000 mynter) --- */
-    { id: 'a3', name: 'Vannmelon', icon: '🍉', cost: 1200, power: 7.5, type: 'auto' },      // Nå begynner det å rulle, halveres til 7.5.
+    { id: 'a3', name: 'Vannmelon', icon: '🍉', cost: 1200, power: 7.5, type: 'auto' },
     { id: 'cos1', name: 'Solbriller', icon: '😎', cost: 2500, type: 'cosmetic', target: 'cosmetic-glasses' },
-    { id: 'c4', name: 'Yoga-instruktør', icon: '🧘', cost: 4000, power: 20, type: 'click' }, // Halveres til 20.
-    { id: 'a4', name: 'Yuzu Bad', icon: '🍊', cost: 8500, power: 25, type: 'auto' },       // Halveres til 25.
+    { id: 'c4', name: 'Yoga-instruktør', icon: '🧘', cost: 4000, power: 20, type: 'click' },
+    { id: 'a4', name: 'Yuzu Bad', icon: '🍊', cost: 8500, power: 25, type: 'auto' },
     { id: 'cos2', name: 'Flosshatt', icon: '🎩', cost: 15000, type: 'cosmetic', target: 'cosmetic-tophat' },
-    { id: 'c5', name: 'Magisk Tommel', icon: '👍', cost: 30000, power: 75, type: 'click' }, // Halveres til 75.
+    { id: 'c5', name: 'Magisk Tommel', icon: '👍', cost: 30000, power: 75, type: 'click' },
 
     /* --- TIER 3: Mid Game (50.000 - 1 Million) --- */
     { id: 'cos3', name: 'Gullkjede', icon: '🪙', cost: 60000, type: 'cosmetic', target: 'cosmetic-chain' },
-    { id: 'a5', name: 'Pelikan-hær', icon: '🐦', cost: 120000, power: 200, type: 'auto' }, // Halveres til 200.
-    { id: 'c6', name: 'Guddommelig Klapp', icon: '⚡', cost: 350000, power: 500, type: 'click' }, // Halveres til 500.
+    { id: 'a5', name: 'Pelikan-hær', icon: '🐦', cost: 120000, power: 200, type: 'auto' },
+    { id: 'c6', name: 'Guddommelig Klapp', icon: '⚡', cost: 350000, power: 500, type: 'click' },
     { id: 'cos5', name: 'Monokkel', icon: '🧐', cost: 750000, type: 'cosmetic', target: 'cosmetic-monocle' },
-    
+
     /* --- TIER 4: The Grind (1 Million - 100 Millioner) --- */
-    { id: 'a6', name: 'Capy Spa Resort', icon: '🧖', cost: 1200000, power: 1500, type: 'auto' }, // Halveres til 1500.
+    { id: 'a6', name: 'Capy Spa Resort', icon: '🧖', cost: 1200000, power: 1500, type: 'auto' },
     { id: 'cos_heart', name: 'Hjertebriller', icon: '😍', cost: 2500000, type: 'cosmetic', target: 'cosmetic-heart-glasses' },
-    { id: 'c7', name: 'Universets Hersker', icon: '🌌', cost: 5000000, power: 4000, type: 'click' }, // Halveres til 4000.
+    { id: 'c7', name: 'Universets Hersker', icon: '🌌', cost: 5000000, power: 4000, type: 'click' },
     { id: 'cos_dog', name: 'Hund på hodet', icon: '🐶', cost: 10000000, type: 'cosmetic', target: 'cosmetic-dog' },
-    { id: 'a7', name: 'Månebase Alpha', icon: '🌑', cost: 25000000, power: 17500, type: 'auto' }, // Halveres til 17500.
+    { id: 'a7', name: 'Månebase Alpha', icon: '🌑', cost: 25000000, power: 17500, type: 'auto' },
     { id: 'cos4', name: 'Kongekrone', icon: '👑', cost: 75000000, type: 'cosmetic', target: 'cosmetic-crown' },
 
     /* --- TIER 5: Late Game (100 Millioner - Milliarder) --- */
-    { id: 'a8', name: 'Tidsmaskin', icon: '⏳', cost: 150000000, power: 75000, type: 'auto' }, // Halveres til 75000.
-    { id: 'c8', name: 'Galaktisk Kosehånd', icon: '🖐️', cost: 500000000, power: 250000, type: 'click' }, // Halveres til 250000.
-    { id: 'cos6', name: 'Romhjelm', icon: '🧑‍🚀', cost: 1000000000, type: 'cosmetic', target: 'cosmetic-space' }, // 1 mrd
-    { id: 'a9', name: 'Multivers Portal', icon: '🌀', cost: 3500000000, power: 600000, type: 'auto' }, // Halveres til 600000.
+    { id: 'a8', name: 'Tidsmaskin', icon: '⏳', cost: 150000000, power: 75000, type: 'auto' },
+    { id: 'c8', name: 'Galaktisk Kosehånd', icon: '🖐️', cost: 500000000, power: 250000, type: 'click' },
+    { id: 'cos6', name: 'Romhjelm', icon: '🧑‍🚀', cost: 1000000000, type: 'cosmetic', target: 'cosmetic-space' },
+    { id: 'a9', name: 'Multivers Portal', icon: '🌀', cost: 3500000000, power: 600000, type: 'auto' },
 
-    /* --- TIER 6: Endgame (Trilliarder - Spillere som ikke gir seg) --- */
-    { id: 'c9', name: 'Kosmisk High-Five', icon: '✋', cost: 15000000000, power: 2500000, type: 'click' }, // Halveres til 2500000.
-    { id: 'a10', name: 'Hyperdimensjons Farm', icon: '🏭', cost: 50000000000, power: 5000000, type: 'auto' }, // Halveres til 5000000.
-    { id: 'c10', name: 'Meta-Klapp', icon: '👏', cost: 250000000000, power: 12500000, type: 'click' }, // Halveres til 12500000.
-    { id: 'a11', name: 'Solstorm Generator', icon: '☀️', cost: 1000000000000, power: 40000000, type: 'auto' }, // Halveres til 40000000
-    
-    /* --- TIER 7: Absurd (For de som lar PCen stå på om natta) --- */
-    { id: 'a12', name: 'Kvante-Flokkleder', icon: '🧬', cost: 5000000000000, power: 150000000, type: 'auto' }, // Halveres til 150000000.
-    { id: 'c11', name: 'Ultimat Capy Klapp', icon: '🐾', cost: 25000000000000, power: 500000000, type: 'click' }, // Halveres til 500000000.
-    { id: 'a13', name: 'Singularitetsmaskin', icon: '🕳️', cost: 150000000000000, power: 2500000000, type: 'auto' }, // Halveres til 2500000000.
-    { id: 'a14', name: 'Capyverse Kontroller', icon: '🎮', cost: 800000000000000, power: 10000000000, type: 'auto' }, // Halveres til 10000000000.
-    { id: 'a15', name: 'Evighetsmotor', icon: '♾️', cost: 5000000000000000, power: 50000000000, type: 'auto' } // Halveres til 50000000000
+    /* --- TIER 6: Endgame --- */
+    { id: 'c9', name: 'Kosmisk High-Five', icon: '✋', cost: 15000000000, power: 2500000, type: 'click' },
+    { id: 'a10', name: 'Hyperdimensjons Farm', icon: '🏭', cost: 50000000000, power: 5000000, type: 'auto' },
+    { id: 'c10', name: 'Meta-Klapp', icon: '👏', cost: 250000000000, power: 12500000, type: 'click' },
+    { id: 'a11', name: 'Solstorm Generator', icon: '☀️', cost: 1000000000000, power: 40000000, type: 'auto' },
+
+    /* --- TIER 7: Absurd --- */
+    { id: 'a12', name: 'Kvante-Flokkleder', icon: '🧬', cost: 5000000000000, power: 150000000, type: 'auto' },
+    { id: 'c11', name: 'Ultimat Capy Klapp', icon: '🐾', cost: 25000000000000, power: 500000000, type: 'click' },
+    { id: 'a13', name: 'Singularitetsmaskin', icon: '🕳️', cost: 150000000000000, power: 2500000000, type: 'auto' },
+    { id: 'a14', name: 'Capyverse Kontroller', icon: '🎮', cost: 800000000000000, power: 10000000000, type: 'auto' },
+    { id: 'a15', name: 'Evighetsmotor', icon: '♾️', cost: 5000000000000000, power: 50000000000, type: 'auto' }
 ];
-
-
 
 /* =====================================================
    CORE GAME LOGIC
@@ -1217,6 +927,8 @@ function updateCosmetics() {
     });
 }
 
+const FLAPPY_REQ = 500;
+
 function updateGameUI() {
     const { cp, ap } = getPowers();
 
@@ -1231,22 +943,17 @@ function updateGameUI() {
     // SCORE & STATS
     scoreEl.innerText = Math.floor(game.score).toLocaleString();
     ppsEl.innerText   = ap.toLocaleString();
-
-    if (ppcEl) {
-        ppcEl.innerText = cp.toLocaleString(); // 🔥 per klikk lagt til her!
-    }
+    if (ppcEl) ppcEl.innerText = cp.toLocaleString();
 
     // RANK
     let rank = "Nybegynner";
-    if (game.score > 1_000)        rank = "Lærling";
-    if (game.score > 100_000)      rank = "Millionær";
-    if (game.score > 100_000_000)  rank = "Milliardær";
+    if (game.score > 1_000)          rank = "Lærling";
+    if (game.score > 100_000)        rank = "Millionær";
+    if (game.score > 100_000_000)    rank = "Milliardær";
     if (game.score > 10_000_000_000) rank = "Capy God";
     rankEl.innerText = rank;
 
-    /* ===============================
-       QUIZ LOCK / UNLOCK PROGRESS
-    =============================== */
+    /* --- QUIZ LOCK/UNLOCK --- */
     const lockedView        = document.getElementById("quiz-locked-view");
     const unlockedView      = document.getElementById("quiz-unlocked-view");
     const unlockBar         = document.getElementById("unlock-bar");
@@ -1266,10 +973,9 @@ function updateGameUI() {
         if (unlockedView) unlockedView.style.display = "none";
     }
 
-
-
     updateCosmetics();
 
+    // SHOP
     list.innerHTML = "";
     UPGRADES.forEach(u => {
         const owned = game.inventory[u.id] || 0;
@@ -1312,40 +1018,25 @@ function updateGameUI() {
             </div>
         `;
         list.appendChild(div);
-        // --- OPPDATER FLAPPY REWARD DISPLAY ---
-const flappyRewardEl = document.getElementById("flappy-reward-val");
-if (flappyRewardEl) {
-    // 5x din klikk-styrke
-    const flappyRate = cp * 5; 
-    flappyRewardEl.innerText = flappyRate.toLocaleString();
-}
+    });
 
-/* ===============================
-       FLAPPY LOCK / UNLOCK LOGIC
-    =============================== */
-const flappyLocked   = document.getElementById("flappy-locked-view");
-const flappyUnlocked = document.getElementById("flappy-unlocked-view");
-const flappyBar      = document.getElementById("flappy-progress");
-const currentCpDisp  = document.getElementById("current-cp-display");
-const flappyRewVal   = document.getElementById("flappy-reward-val");
+    /* --- FLAPPY LOCK/UNLOCK (utenfor forEach) --- */
+    const flappyLocked   = document.getElementById("flappy-locked-view");
+    const flappyUnlocked = document.getElementById("flappy-unlocked-view");
+    const flappyBar      = document.getElementById("flappy-progress");
+    const currentCpDisp  = document.getElementById("current-cp-display");
+    const flappyRewVal   = document.getElementById("flappy-reward-val");
 
-// --- ENDRE TALLET HER FRA 50 TIL 500 ---
-const FLAPPY_REQ = 500; 
-// ---------------------------------------
+    if (flappyBar && currentCpDisp) {
+        let percent = Math.min(100, (cp / FLAPPY_REQ) * 100);
+        flappyBar.style.width = percent + "%";
+        currentCpDisp.innerText = cp.toLocaleString();
+    }
 
-if (flappyBar && currentCpDisp) {
-    // Resten av koden er lik, den bruker nå 500 automatisk
-    let percent = Math.min(100, (cp / FLAPPY_REQ) * 100);
-    flappyBar.style.width = percent + "%";
-    currentCpDisp.innerText = cp.toLocaleString();
-}
-
-    // Oppdater reward-tallet i den åpne boksen
     if (flappyRewVal) {
         flappyRewVal.innerText = (cp * 5).toLocaleString();
     }
 
-    // Sjekk om vi skal vise Låst eller Åpen boks
     if (cp >= FLAPPY_REQ) {
         if (flappyLocked) flappyLocked.style.display = "none";
         if (flappyUnlocked) flappyUnlocked.style.display = "block";
@@ -1353,7 +1044,6 @@ if (flappyBar && currentCpDisp) {
         if (flappyLocked) flappyLocked.style.display = "block";
         if (flappyUnlocked) flappyUnlocked.style.display = "none";
     }
-    });
 }
 
 function buy(id) {
@@ -1373,47 +1063,32 @@ function buy(id) {
 
 function toggleCosmetic(u) {
     if (!game.inventory[u.id]) return;
-
     game.cosmetics[u.target] = !game.cosmetics[u.target];
-
     save();
     updateGameUI();
 }
 
 function save() {
-    // Lagre selve spillet
     localStorage.setItem("capyRichEdition", JSON.stringify(game));
-
-    // NYTT: Beregn og lagre "Per Klikk" (PPC) så Flappy Bird vet om det
     const { cp } = getPowers();
     localStorage.setItem("capy_ppc", cp);
 }
-function resetGame() {
-    if (confirm("Slette alt og starte på nytt?")) {
-        localStorage.removeItem("capyRichEdition");
-        location.reload();
-    }
-}
 
-// Legg til en lyd når flodsvinet blir klikket
-const clickSound = new Audio('click.mp3'); // Sett riktig sti til filen, f.eks. 'sounds/click.mp3'
-// Musikklyd (du kan bytte filnavn)
-const musicAudio = new Audio('8bit.mp3');
-musicAudio.loop = true;
-musicAudio.volume = 0.5;
-
+/* =====================================================
+   AUDIO (med feilhåndtering)
+===================================================== */
+const clickSound = new Audio('click.mp3');
 
 const capyEl = document.getElementById("main-capy");
 if (capyEl) {
-    capyEl.addEventListener("mousedown", e => {
-        // Spill av klikkelyden
-        clickSound.play();
+    function handleCapyClick(e) {
+        clickSound.play().catch(() => {});
 
         const { cp } = getPowers();
         game.score += cp;
 
-        capyEl.classList.remove("pop"); // reset for rapid clicking
-        void capyEl.offsetWidth;        // forces reflow so animation can retrigger
+        capyEl.classList.remove("pop");
+        void capyEl.offsetWidth;
         capyEl.classList.add("pop");
         setTimeout(() => capyEl.classList.remove("pop"), 200);
 
@@ -1421,20 +1096,30 @@ if (capyEl) {
         f.className = "floater";
         f.innerText = `+${cp}`;
 
-        // Plasser floater der du klikker
         const rect = capyEl.getBoundingClientRect();
-        const x = e.clientX - rect.left;
-        const y = e.clientY - rect.top;
+        const clientX = e.clientX || (e.touches && e.touches[0] && e.touches[0].clientX) || rect.left + rect.width / 2;
+        const clientY = e.clientY || (e.touches && e.touches[0] && e.touches[0].clientY) || rect.top + rect.height / 2;
+        const x = clientX - rect.left;
+        const y = clientY - rect.top;
 
         f.style.left = x + "px";
         f.style.top = y + "px";
 
         capyEl.appendChild(f);
-
         setTimeout(() => f.remove(), 800);
 
         updateGameUI();
         save();
+    }
+
+    capyEl.addEventListener("mousedown", handleCapyClick);
+
+    // Tastaturstøtte
+    capyEl.addEventListener("keydown", e => {
+        if (e.key === "Enter" || e.key === " ") {
+            e.preventDefault();
+            handleCapyClick(e);
+        }
     });
 }
 
@@ -1442,52 +1127,42 @@ if (capyEl) {
    AUTO LOOP & SYNC WITH FLAPPY
 ===================================================== */
 setInterval(() => {
-    // 1. Legg til Auto-production (PPS)
     const { ap } = getPowers();
     if (ap > 0) {
         game.score += ap;
     }
 
-    // 2. Sjekk om vi har fått mynter fra Flappy Capy!
     const pendingCoins = parseInt(localStorage.getItem('capy_pending_coins') || '0');
     if (pendingCoins > 0) {
         game.score += pendingCoins;
-        
-        // Nullstill "postkassen"
         localStorage.setItem('capy_pending_coins', '0');
 
-        // Vis en liten beskjed (floater) om at du fikk penger
         const f = document.createElement("div");
         f.className = "floater";
         f.innerText = `+${pendingCoins} fra Flappy!`;
         f.style.left = "50%";
         f.style.top = "50%";
-        f.style.color = "#FFD700"; // Gullfarge
+        f.style.color = "#FFD700";
         f.style.fontSize = "2rem";
         f.style.zIndex = "9999";
         document.body.appendChild(f);
         setTimeout(() => f.remove(), 1500);
     }
 
-    // Oppdater skjermen og lagre
     updateGameUI();
     save();
 }, 1000);
 
-
 /* =====================================================
-   ADVANCED QUIZ LOGIC (CATEGORIES & ROTATION)
+   QUIZ LOGIC
 ===================================================== */
-const COOLDOWN_MINUTES = 15; 
+const COOLDOWN_MINUTES = 15;
 const COOLDOWN_MS = COOLDOWN_MINUTES * 60 * 1000;
 const QUESTIONS_PER_ROUND = 5;
 
-// Data structure: List of Categories
-// c = riktig indeks (correct index) i 'a'-listen.
 const QUIZ_CATEGORIES = [
     {
-        id: 'capy',
-        title: 'Capybara',
+        id: 'capy', title: 'Capybara',
         questions: [
             { q: "Hva er flodsvinets latinske navn?", a: ["Hydrochoerus hydrochaeris", "Cavia porcellus", "Sus scrofa"], c: 0 },
             { q: "Hvor lenge kan de holde pusten under vann?", a: ["Ca. 5 minutter", "Ca. 1 minutt", "Ca. 30 minutter"], c: 0 },
@@ -1502,8 +1177,7 @@ const QUIZ_CATEGORIES = [
         ]
     },
     {
-        id: 'fotball',
-        title: 'Fotball',
+        id: 'fotball', title: 'Fotball',
         questions: [
             { q: "Hvem vant VM i fotball for herrer i 2022?", a: ["Argentina", "Frankrike", "Brasil"], c: 0 },
             { q: "Hvilken norsk spiss spiller for Manchester City?", a: ["Erling Braut Haaland", "Martin Ødegaard", "Alexander Sørloth"], c: 0 },
@@ -1516,8 +1190,7 @@ const QUIZ_CATEGORIES = [
         ]
     },
     {
-        id: 'geo',
-        title: 'Geografi',
+        id: 'geo', title: 'Geografi',
         questions: [
             { q: "Hva er hovedstaden i Norge?", a: ["Oslo", "Bergen", "Trondheim"], c: 0 },
             { q: "Hvilket land er verdens største i areal?", a: ["Russland", "USA", "Kina"], c: 0 },
@@ -1530,8 +1203,7 @@ const QUIZ_CATEGORIES = [
         ]
     },
     {
-        id: 'historie',
-        title: 'Historie',
+        id: 'historie', title: 'Historie',
         questions: [
             { q: "Når sluttet andre verdenskrig?", a: ["1945", "1918", "1990"], c: 0 },
             { q: "Hvilket år landet det første mennesket på månen?", a: ["1969", "1955", "1975"], c: 0 },
@@ -1542,8 +1214,7 @@ const QUIZ_CATEGORIES = [
         ]
     },
     {
-        id: 'natur',
-        title: 'Naturfag',
+        id: 'natur', title: 'Naturfag',
         questions: [
             { q: "Hvilken planet er nærmest solen?", a: ["Merkur", "Venus", "Mars"], c: 0 },
             { q: "Hva trenger planter for å vokse?", a: ["Sollys og vann", "Pizza og brus", "Mørke og stillhet"], c: 0 },
@@ -1554,8 +1225,7 @@ const QUIZ_CATEGORIES = [
         ]
     },
     {
-        id: 'gaming',
-        title: 'Spill & Gaming',
+        id: 'gaming', title: 'Spill & Gaming',
         questions: [
             { q: "Hva heter broren til Mario?", a: ["Luigi", "Wario", "Toad"], c: 0 },
             { q: "Hvilket spill handler om å bygge med blokker?", a: ["Minecraft", "Fortnite", "Roblox"], c: 0 },
@@ -1566,8 +1236,7 @@ const QUIZ_CATEGORIES = [
         ]
     },
     {
-        id: 'film',
-        title: 'Film & Serier',
+        id: 'film', title: 'Film & Serier',
         questions: [
             { q: "Hvilken skole går Harry Potter på?", a: ["Galtvort", "Durmstrang", "Beauxbatons"], c: 0 },
             { q: "Hva heter snømannen i Frost?", a: ["Olaf", "Sven", "Kristoff"], c: 0 },
@@ -1578,8 +1247,7 @@ const QUIZ_CATEGORIES = [
         ]
     },
     {
-        id: 'mat',
-        title: 'Mat & Drikke',
+        id: 'mat', title: 'Mat & Drikke',
         questions: [
             { q: "Hvilket land kommer pizza fra?", a: ["Italia", "USA", "Frankrike"], c: 0 },
             { q: "Hva er hovedingrediensen i guacamole?", a: ["Avokado", "Tomat", "Potet"], c: 0 },
@@ -1590,8 +1258,7 @@ const QUIZ_CATEGORIES = [
         ]
     },
     {
-        id: 'musikk',
-        title: 'Musikk',
+        id: 'musikk', title: 'Musikk',
         questions: [
             { q: "Hvor mange strenger har en vanlig gitar?", a: ["6", "4", "8"], c: 0 },
             { q: "Hvilket instrument har svarte og hvite tangenter?", a: ["Piano", "Trompet", "Fiolin"], c: 0 },
@@ -1601,14 +1268,8 @@ const QUIZ_CATEGORIES = [
             { q: "Fullfør teksten: 'Ja, vi elsker dette...'", a: ["Landet", "Vannet", "Fjellet"], c: 0 }
         ]
     },
-
-    /* ------------------------------
-       ⭐ NYE KATEGORIER (5 stk)
-       ------------------------------ */
-
     {
-        id: 'dyr',
-        title: 'Dyr i Naturen',
+        id: 'dyr', title: 'Dyr i Naturen',
         questions: [
             { q: "Hva kalles verdens største kattdyr?", a: ["Tiger", "Løve", "Gepard"], c: 0 },
             { q: "Hva er en pingvin?", a: ["En fugl", "En fisk", "Et krypdyr"], c: 0 },
@@ -1619,8 +1280,7 @@ const QUIZ_CATEGORIES = [
         ]
     },
     {
-        id: 'tech',
-        title: 'Teknologi',
+        id: 'tech', title: 'Teknologi',
         questions: [
             { q: "Hva står 'AI' for?", a: ["Kunstig intelligens", "Automatisk internett", "Arealindeks"], c: 0 },
             { q: "Hva bruker man for å koble til trådløst internett?", a: ["Wi-Fi", "HDMI", "USB"], c: 0 },
@@ -1631,8 +1291,7 @@ const QUIZ_CATEGORIES = [
         ]
     },
     {
-        id: 'reise',
-        title: 'Reise & Verdensbyer',
+        id: 'reise', title: 'Reise & Verdensbyer',
         questions: [
             { q: "Hvor ligger Eiffeltårnet?", a: ["Paris", "London", "Roma"], c: 0 },
             { q: "Hva heter verdens største øy?", a: ["Grønland", "Australia", "Madagaskar"], c: 0 },
@@ -1643,8 +1302,7 @@ const QUIZ_CATEGORIES = [
         ]
     },
     {
-        id: 'science',
-        title: 'Enkel Vitenskap',
+        id: 'science', title: 'Enkel Vitenskap',
         questions: [
             { q: "Hva bruker mennesker for å puste?", a: ["Lunger", "Gjeller", "Vinger"], c: 0 },
             { q: "Hva er sentrum av solsystemet?", a: ["Solen", "Jorden", "Mars"], c: 0 },
@@ -1655,8 +1313,7 @@ const QUIZ_CATEGORIES = [
         ]
     },
     {
-        id: 'norsk',
-        title: 'Norsk & Språk',
+        id: 'norsk', title: 'Norsk & Språk',
         questions: [
             { q: "Hva er et verb?", a: ["Et ord som beskriver en handling", "Et navn på ting", "Et beskrivelserord"], c: 0 },
             { q: "Hva betyr 'motsatt'?", a: ["Det omvendte", "Det samme", "Det litt like"], c: 0 },
@@ -1667,7 +1324,6 @@ const QUIZ_CATEGORIES = [
         ]
     }
 ];
-
 
 let currentQuiz = [];
 let qIdx = 0;
@@ -1689,26 +1345,19 @@ function checkCooldown() {
     const quizBox   = document.getElementById("quiz-unlocked-view");
     const hubMsg    = document.querySelector("#quiz-hub p");
 
-    // Bestem neste kategori
     const nextCat = getNextCategory();
 
-    /* -------------------------------
-       VIS BONUSINFO I HUB-TEKSTEN
-    -------------------------------- */
     if (hubMsg) {
         hubMsg.innerHTML = `
             Neste tema: <strong>${nextCat.title}</strong><br>
             ${
-                game.quizDouble 
-                ? `<div class="quiz-bonus-alert"> <strong>Normal rewards!</strong> </div>`
+                game.quizDouble
+                ? `<div class="quiz-bonus-alert"><strong>Normal rewards!</strong></div>`
                 : `<div style="opacity:0.6;">Normal reward</div>`
             }
         `;
     }
 
-    /* -----------------------------------
-       SETT PÅ / AV GULLANIMASJON PÅ BOKS
-    ------------------------------------ */
     if (quizBox) {
         if (game.quizDouble) {
             quizBox.classList.add("quiz-bonus-active");
@@ -1717,9 +1366,6 @@ function checkCooldown() {
         }
     }
 
-    /* -------------------------------
-       HÅNDTER COOLDOWN / KNAPP
-    -------------------------------- */
     if (!btn || !cdDiv) return;
 
     if (diff >= COOLDOWN_MS) {
@@ -1740,10 +1386,8 @@ function checkCooldown() {
 
 setInterval(checkCooldown, 1000);
 
-
 function tryStartQuiz() {
     const now = Date.now();
-
     if (now - game.lastQuizTime >= COOLDOWN_MS) {
         startQuiz();
     } else {
@@ -1762,20 +1406,13 @@ function shuffleArray(array) {
 function startQuiz() {
     qIdx = 0;
     correctCount = 0;
-// 20% sjanse for 2x bonus
 
-// Finn quiz-containeren (hele hvite boksen)
-const quizBox = document.getElementById("quiz-unlocked-view");
-
-    // Hent riktig kategori basert på lagret indeks
     const categoryData = getNextCategory();
     activeCategoryName = categoryData.title;
 
-    // Klon spørsmålene så vi ikke ødelegger originalen
-    const pool = [...categoryData.questions]; 
-    const shuffledPool = shuffleArray(pool); 
-    
-    // Ta maks 5, eller så mange som finnes i kategorien
+    const pool = [...categoryData.questions];
+    const shuffledPool = shuffleArray(pool);
+
     const count = Math.min(QUESTIONS_PER_ROUND, shuffledPool.length);
     currentQuiz = shuffledPool.slice(0, count);
 
@@ -1798,23 +1435,19 @@ function renderQ() {
     const optsDiv = document.getElementById("q-opts");
     optsDiv.innerHTML = "";
 
-    // 1. Lag en liste med svar-objekter som vet om de er rette eller gale
     let answerObjects = qData.a.map((text, index) => {
-        return { 
-            text: text, 
-            isCorrect: (index === qData.c) // Sjekker mot original 'c' indeks
+        return {
+            text: text,
+            isCorrect: (index === qData.c)
         };
     });
 
-    // 2. Stokk svarene tilfeldig! (Løser "alltid første alternativ"-problemet)
     answerObjects = shuffleArray(answerObjects);
 
-    // 3. Lag knapper basert på den stokkede listen
     answerObjects.forEach((ansObj) => {
         const btn = document.createElement("button");
         btn.className = "quiz-btn";
         btn.innerText = ansObj.text;
-        
         btn.onclick = () => handleAnswer(btn, ansObj.isCorrect);
         optsDiv.appendChild(btn);
     });
@@ -1822,23 +1455,13 @@ function renderQ() {
 
 function handleAnswer(clickedBtn, isCorrect) {
     const allBtns = document.querySelectorAll(".quiz-btn");
-    allBtns.forEach(b => b.disabled = true); // Deaktiver alle
+    allBtns.forEach(b => b.disabled = true);
 
     if (isCorrect) {
         clickedBtn.classList.add("correct");
         correctCount++;
     } else {
         clickedBtn.classList.add("wrong");
-        // Finn den rette knappen og vis den
-        // Vi må søke gjennom knappene fordi rekkefølgen er stokket
-        /*
-           Siden vi ikke vet hvilken knapp som er rett indeks lenger (pga shuffle),
-           må vi stole på at vi kun markerer den som ble klikket feil.
-           Hvis du vil vise fasiten ("Grønt på den rette"), krever det litt mer logikk,
-           men ofte er det nok å vite at man svarte feil.
-           
-           (Valgfritt: Hvis du vil vise fasit ved feil svar, kan vi legge data-attributt på knappene).
-        */
     }
 
     setTimeout(() => {
@@ -1857,27 +1480,17 @@ function finishQuiz() {
     document.getElementById("quiz-result").style.display = "block";
 
     game.lastQuizTime = Date.now();
-
-    // Neste kategori
     game.quizCategoryIndex = (game.quizCategoryIndex || 0) + 1;
 
-    /* --------------------------------------------
-       BONUS — nullstill og trekk for NESTE runde
-       -------------------------------------------- */
-    // Nullstill dagens bonus
-    const oldBonus = game.quizDouble;   // (Så vi kan vise riktig farge i resultatskjermen)
+    const oldBonus = game.quizDouble;
     game.quizDouble = false;
 
-    // Trekk ny bonus for neste quiz (1% sjanse)
     if (Math.random() < 0.01) {
         game.quizDouble = true;
     }
 
     save();
 
-    /* --------------------------------------------
-       REWARD-BEREGNING (nå basert på *oldBonus*)
-       -------------------------------------------- */
     const { ap } = getPowers();
     const baseProduction = ap > 0 ? ap : 10;
     const multiplier = [0, 10, 30, 60, 90, 120];
@@ -1887,12 +1500,10 @@ function finishQuiz() {
 
     let reward = baseProduction * timeBonus;
 
-    // Hvis DENNE runden hadde bonus, bruk den (oldBonus)
     if (oldBonus) {
         reward *= 2;
     }
 
-    // Fallback hvis alt er null
     if (reward === 0 && correctCount > 0) {
         reward = correctCount * 50;
     }
@@ -1901,28 +1512,22 @@ function finishQuiz() {
     save();
     updateGameUI();
 
-    /* --------------------------------------------
-       VIS RESULTAT
-       -------------------------------------------- */
     document.getElementById("reward-amount").innerText =
         Math.floor(reward).toLocaleString();
 
-    // Tittel
     document.getElementById("result-title").innerText =
         `${correctCount} av ${currentQuiz.length} Riktige`;
 
-    // Bonusmelding under tittelen
     if (oldBonus) {
         document.getElementById("result-title").innerHTML +=
             `<br><span style="color:#d4a100; font-size:1.4rem;"> 2x Coins </span>`;
     }
 
-    // Kommentar
     let msg = "";
-    if (correctCount === currentQuiz.length) msg = "ALT RIKTIG! Genialt! 🧠👑";
-    else if (correctCount >= 3) msg = "Bra jobba! Godt med lommepenger. 🤑";
-    else if (correctCount >= 1) msg = "Litt å lære, men god innsats! 📚";
-    else msg = "Oisann! Bedre lykke neste gang. 🍂";
+    if (correctCount === currentQuiz.length) msg = "ALT RIKTIG! Genialt!";
+    else if (correctCount >= 3) msg = "Bra jobba! Godt med lommepenger.";
+    else if (correctCount >= 1) msg = "Litt å lære, men god innsats!";
+    else msg = "Oisann! Bedre lykke neste gang.";
 
     document.getElementById("result-msg").innerText = msg;
 }
@@ -1933,41 +1538,53 @@ function backToHub() {
     checkCooldown();
 }
 
+/* =====================================================
+   INIT
+===================================================== */
 document.addEventListener("DOMContentLoaded", function() {
     const nameInput = document.getElementById("capy-name-input");
 
-    // last navn hvis det finnes
     if (game.capyName) {
         nameInput.value = game.capyName;
     }
 
-    // lagre når brukeren skriver
     nameInput.addEventListener("input", () => {
         game.capyName = nameInput.value;
         save();
     });
 
-// Legg til en event listener for Restart-knappen
-document.getElementById("restart-button").addEventListener("click", function() {
-    // Vis custom confirmation modal
-    document.getElementById("confirmation-modal").style.display = "flex";
-});
+    // Restart med modal
+    document.getElementById("restart-button").addEventListener("click", function() {
+        document.getElementById("confirmation-modal").style.display = "flex";
+    });
 
-// Håndter bekreftelse (Restart)
-document.getElementById("confirm-restart").addEventListener("click", function() {
-    // Slett all fremgang fra localStorage hvis bekreftelse er gitt
-    localStorage.removeItem("capyRichEdition");
-    localStorage.removeItem("capy_ppc");
+    document.getElementById("confirm-restart").addEventListener("click", function() {
+        localStorage.removeItem("capyRichEdition");
+        localStorage.removeItem("capy_ppc");
+        location.reload();
+    });
 
-    // Last inn spillet på nytt
-    location.reload();
-});
+    document.getElementById("cancel-restart").addEventListener("click", function() {
+        document.getElementById("confirmation-modal").style.display = "none";
+    });
 
-// Håndter avbrytelse (Steng modal)
-document.getElementById("cancel-restart").addEventListener("click", function() {
-    // Skjul modal uten å gjøre noe
-    document.getElementById("confirmation-modal").style.display = "none";
-});
+    // Lukk modal med Escape
+    document.addEventListener("keydown", function(e) {
+        if (e.key === "Escape") {
+            document.getElementById("confirmation-modal").style.display = "none";
+        }
+    });
+
+    // Flappy tastaturstøtte
+    const flappyUnlocked = document.getElementById("flappy-unlocked-view");
+    if (flappyUnlocked) {
+        flappyUnlocked.addEventListener("keydown", function(e) {
+            if (e.key === "Enter" || e.key === " ") {
+                e.preventDefault();
+                window.location.href = '/flappy/';
+            }
+        });
+    }
 
     checkCooldown();
     updateGameUI();
