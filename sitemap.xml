@@ -6,92 +6,97 @@
     <changefreq>weekly</changefreq>
   </url>
   <url>
-    <loc>https://flodsvin.no/fakta.html</loc>
+    <loc>https://flodsvin.no/fakta</loc>
     <priority>0.9</priority>
     <changefreq>monthly</changefreq>
   </url>
   <url>
-    <loc>https://flodsvin.no/kjaeledyr.html</loc>
+    <loc>https://flodsvin.no/kjaeledyr</loc>
     <priority>0.9</priority>
     <changefreq>monthly</changefreq>
   </url>
   <url>
-    <loc>https://flodsvin.no/meme.html</loc>
+    <loc>https://flodsvin.no/meme</loc>
     <priority>0.8</priority>
     <changefreq>monthly</changefreq>
   </url>
   <url>
-    <loc>https://flodsvin.no/dyreparken.html</loc>
+    <loc>https://flodsvin.no/dyreparken</loc>
     <priority>0.8</priority>
     <changefreq>monthly</changefreq>
   </url>
   <url>
-    <loc>https://flodsvin.no/hva-spiser-flodsvin.html</loc>
+    <loc>https://flodsvin.no/flappy</loc>
+    <priority>0.6</priority>
+    <changefreq>monthly</changefreq>
+  </url>
+  <url>
+    <loc>https://flodsvin.no/hva-spiser-flodsvin</loc>
     <priority>0.8</priority>
     <changefreq>monthly</changefreq>
   </url>
   <url>
-    <loc>https://flodsvin.no/er-flodsvin-farlige.html</loc>
+    <loc>https://flodsvin.no/er-flodsvin-farlige</loc>
     <priority>0.8</priority>
     <changefreq>monthly</changefreq>
   </url>
   <url>
-    <loc>https://flodsvin.no/kan-flodsvin-svomme.html</loc>
+    <loc>https://flodsvin.no/kan-flodsvin-svomme</loc>
     <priority>0.8</priority>
     <changefreq>monthly</changefreq>
   </url>
   <url>
-    <loc>https://flodsvin.no/verdens-storste-gnager.html</loc>
+    <loc>https://flodsvin.no/verdens-storste-gnager</loc>
     <priority>0.8</priority>
     <changefreq>monthly</changefreq>
   </url>
   <url>
-    <loc>https://flodsvin.no/flodsvin-vs-marsvin.html</loc>
+    <loc>https://flodsvin.no/flodsvin-vs-marsvin</loc>
     <priority>0.8</priority>
     <changefreq>monthly</changefreq>
   </url>
   <url>
-    <loc>https://flodsvin.no/hvorfor-liker-dyr-flodsvin.html</loc>
+    <loc>https://flodsvin.no/hvorfor-liker-dyr-flodsvin</loc>
     <priority>0.8</priority>
     <changefreq>monthly</changefreq>
   </url>
   <url>
-    <loc>https://flodsvin.no/kan-flodsvin-gi-sykdommer.html</loc>
+    <loc>https://flodsvin.no/kan-flodsvin-gi-sykdommer</loc>
     <priority>0.7</priority>
     <changefreq>monthly</changefreq>
   </url>
   <url>
-    <loc>https://flodsvin.no/hvor-lenge-lever-flodsvin.html</loc>
+    <loc>https://flodsvin.no/hvor-lenge-lever-flodsvin</loc>
     <priority>0.8</priority>
     <changefreq>monthly</changefreq>
   </url>
   <url>
-    <loc>https://flodsvin.no/raskeste-dyr-i-verden.html</loc>
+    <loc>https://flodsvin.no/raskeste-dyr-i-verden</loc>
     <priority>0.8</priority>
     <changefreq>monthly</changefreq>
   </url>
   <url>
-    <loc>https://flodsvin.no/farligste-dyr-i-verden.html</loc>
+    <loc>https://flodsvin.no/farligste-dyr-i-verden</loc>
     <priority>0.8</priority>
     <changefreq>monthly</changefreq>
   </url>
   <url>
-    <loc>https://flodsvin.no/smarteste-dyr-i-verden.html</loc>
+    <loc>https://flodsvin.no/smarteste-dyr-i-verden</loc>
     <priority>0.8</priority>
     <changefreq>monthly</changefreq>
   </url>
   <url>
-    <loc>https://flodsvin.no/kan-hunder-spise-sjokolade.html</loc>
+    <loc>https://flodsvin.no/kan-hunder-spise-sjokolade</loc>
     <priority>0.8</priority>
     <changefreq>monthly</changefreq>
   </url>
   <url>
-    <loc>https://flodsvin.no/storste-dyr-i-verden.html</loc>
+    <loc>https://flodsvin.no/storste-dyr-i-verden</loc>
     <priority>0.8</priority>
     <changefreq>monthly</changefreq>
   </url>
   <url>
-    <loc>https://flodsvin.no/utrydningstruede-dyr-norge.html</loc>
+    <loc>https://flodsvin.no/utrydningstruede-dyr-norge</loc>
     <priority>0.8</priority>
     <changefreq>monthly</changefreq>
   </url>
